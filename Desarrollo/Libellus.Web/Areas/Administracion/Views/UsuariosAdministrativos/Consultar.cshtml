@@ -1,0 +1,130 @@
+﻿@model PagedList.IPagedList<Libellus.Web.Areas.Administracion.Models.UsuariosAdministrativos.UsuarioAdministrativoViewModelConsulta>
+@using PagedList.Mvc;
+
+@{
+    ViewBag.Title = "Usuarios administrativos";
+}
+
+<div class="content-header">
+    <h2 class="content-header-title">@ViewBag.Title</h2>
+</div>
+
+@Html.ActionLink("Crear usuarios administrativos", "Crear")
+
+<br /><br />
+
+@using (Html.BeginForm("Consultar", "UsuariosAdministrativos", FormMethod.Get))
+{
+    <div class="row">
+        <div class="col-md-4 form-group">
+            <strong>Tipo documento</strong>
+            @Html.DropDownList("tipoIdentificacion", new SelectList(ViewBag.TiposIdentificaciones, "Id", "Descripcion"), "Seleccione", new { @class = "form-control" })
+        </div>
+        <div class="col-md-4 form-group">
+            <strong>Documento de identidad</strong>
+            @Html.TextBox("identificacion", ViewBag.Identificacion as string, new { @class = "form-control", maxlength = "14" })
+        </div>
+        <div class="col-md-4 form-group">
+            <strong>Rol</strong>
+            @Html.DropDownList("rol", new SelectList(ViewBag.Roles, "Id", "Nombre"), "Seleccione", new { @class = "form-control" })
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-4 form-group">
+            <strong>Cargo</strong>
+            @Html.DropDownList("cargo", new SelectList(ViewBag.Cargos, "Id", "Descripcion"), "Seleccione", new { @class = "form-control" })
+        </div>
+    </div>
+    <br />
+    <div class="form-group centered">
+        <input type="submit" value="Consultar" class="btn btn-primary" />
+    </div>
+    <br />
+}
+@if (Model.Count() > 0)
+{
+    <div class="row">
+        <div class="col-md-12">
+            <div class="table-responsive">
+                <table class="@EstilosHelper.TablaLibellus">
+                    <tr>
+                        <th>
+                            Tipo documento
+                        </th>
+                        <th>
+                            Documento de identidad
+                        </th>
+                        <th>
+                            Nombres
+                        </th>
+                        <th>
+                            Apellidos
+                        </th>
+                        <th>
+                            Rol
+                        </th>
+                        <th>
+                            Cargo
+                        </th>
+                        <th>
+                            Estado
+                        </th>
+                        <th>
+                            Acciones
+                        </th>
+                    </tr>
+
+                    @foreach (var item in Model)
+                    {
+                        <tr>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.TipoIdentificacion)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.Identificacion)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.Nombres)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.Apellidos)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.Rol)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.Cargo)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.Activo)
+                            </td>
+                            <td>
+                                @Html.ActionLink("Editar", "Editar", "UsuariosAdministrativos", new { area = "Administracion", id = item.Id }, null)
+                            </td>
+                        </tr>
+                    }
+                </table>
+            </div>
+        </div>
+    </div>
+    <div class="centered">
+        @Html.PagedListPager(Model, pagina => Url.Action("Consultar", new { pagina }))
+    </div>
+    <div class="form-group" style="text-align: center !important;">
+        <button type="button" id="exportarExcel" class="btn btn-success centered">Exportar a Excel</button>
+    </div>
+}
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jquerycookies")
+
+    <script type="text/javascript">
+        $("#exportarExcel").bind("click", function () {
+            $('[name="tokenExportarExcel"]').val(new Date().getTime());
+            IniciarDescargaArchivo("exportarExcel");
+            window.location.href = "@Url.Action("ExportarInformacionExcel")" + "?token=" + $('[name="tokenExportarExcel"]').val();
+        });
+    </script>
+}
+
+

@@ -1,0 +1,1 @@
+﻿ALTER TABLE dbo.DocentesEstudios ALTER COLUMN FechaTerminacion DATE NULL;

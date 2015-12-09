@@ -1,0 +1,237 @@
+﻿@model Libellus.Web.Areas.Administracion.Models.Docente.DocenteViewModel
+
+<div class="row">
+    <div class="col-md-4 form-group">
+        @Html.LabelFor(model => model.EstudiosRealizados.First().InstitucionEducativa)
+        @Html.TextBox("Institucion", null, new { id = "Institucion", @class = "form-control", maxlength = "150", tabindex = "1", data_val = "true", data_val_required = @Mensaje.Mensaje1001 })
+        @Html.ValidationMessage("Institucion", "", new { @class = "text-danger" })
+    </div>
+
+    <div class="col-md-4 form-group">
+        @Html.LabelFor(model => model.EstudiosRealizados.First().TituloEstudio)
+        @Html.TextBox("TituloEstudio", null, new { @class = "form-control", maxlength = "150", tabindex = "2", data_val = "true", data_val_required = @Mensaje.Mensaje1001 })
+        @Html.ValidationMessage("TituloEstudio", "", new { @class = "text-danger" })
+    </div>
+
+    <div class="col-md-4 form-group">
+        @Html.LabelFor(model => model.EstudiosRealizados.First().IdClasificacion)
+        @Html.DropDownList("IdClasificacion", (List<SelectListItem>)ViewBag.ClasificacionesAcademicas, new { @class = "form-control", tabindex = "3", data_val = "true", data_val_required = @Mensaje.Mensaje1001 })
+        @Html.ValidationMessage("IdClasificacion", "", new { @class = "text-danger" })
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-md-4 form-group">
+        @Html.LabelFor(model => model.EstudiosRealizados.First().FechaTerminacion)
+        <div class="input-group date" id="fechaTerminacion">
+            @Html.TextBox("FechaTerminacion", null, new { @class = "form-control", contenteditable = "false" })
+            <span class="input-group-addon">
+                <span class="glyphicon glyphicon-calendar" tabindex="4"></span>
+            </span>
+        </div>
+        @Html.ValidationMessage("FechaTerminacion", "", new { @class = "text-danger" })
+    </div>
+
+    <div class="col-md-4 form-group">
+        @Html.LabelFor(model => model.EstudiosRealizados.First().IdEstadoEstudio)
+        @Html.DropDownList("IdEstadoEstudio", (List<SelectListItem>)ViewBag.EstadosEstudio, new { @class = "form-control", tabindex = "5", data_val = "true", data_val_required = @Mensaje.Mensaje1001 })
+        @Html.ValidationMessage("IdEstadoEstudio", "", new { @class = "text-danger" })
+    </div>
+</div>
+
+@Html.Hidden("IdEstudioRealizado", "0", new { id = "IdEstudioRealizado" })
+@Html.Hidden("RegistroNuevo", "0", new { id = "RegistroNuevo" })
+
+<div class="form-group centered">
+    <a href="javascript:void(0)" id="btnCancelarAgregarEstudio" class="btn btn-link">Cancelar</a>
+    <a href="javascript:void(0)" id="btnAgregarEstudio" class="btn btn-primary">Agregar estudio</a>
+</div>
+
+<br />
+
+<table class="@EstilosHelper.TablaLibellus" id="tblEstudios">
+    <tr>
+        <th hidden="hidden"></th>
+        <th>@Html.DisplayNameFor(model => model.EstudiosRealizados.First().InstitucionEducativa)</th>
+        <th>@Html.DisplayNameFor(model => model.EstudiosRealizados.First().IdClasificacion)</th>
+        <th>@Html.DisplayNameFor(model => model.EstudiosRealizados.First().TituloEstudio)</th>
+        <th>@Html.DisplayNameFor(model => model.EstudiosRealizados.First().FechaTerminacion)</th>
+        <th>@Html.DisplayNameFor(model => model.EstudiosRealizados.First().IdEstadoEstudio)</th>
+        <th colspan="2">Acción</th>
+    </tr>
+    @if (Model.EstudiosRealizados != null && Model.EstudiosRealizados.Count() > 0)
+    {
+        foreach (var item in Model.EstudiosRealizados)
+        {
+            <tr class="@string.Format("filaEstudioRealizado id{0}", item.IdEstudioRealizado)">
+                <td hidden="hidden" class="centered idEstudioRealizado">@item.IdEstudioRealizado</td>
+                <td class="centered institucion">@Html.DisplayFor(modelItem => item.InstitucionEducativa)</td>
+                <td hidden="hidden" class="centered idClasificacion">@Html.DisplayFor(modelItem => item.IdClasificacion)</td>
+                <td class="centered clasificaciones">@Html.DisplayFor(modelItem => item.NombreClasificacion)</td>
+                <td class="centered tituloEstudio">@Html.DisplayFor(modelItem => item.TituloEstudio)</td>
+                <td class="centered fechaTerminacion">@Html.DisplayFor(modelItem => item.FechaTerminacion)</td>
+                <td hidden="hidden" class="centered idEstadoEstudio">@Html.DisplayFor(modelItem => item.IdEstadoEstudio)</td>
+                <td class="centered estadosEstudio">@Html.DisplayFor(modelItem => item.NombreEstadoEstudio)</td>
+                <td hidden="hidden" class="centered registroNuevo">@Html.DisplayFor(modelItem => item.RegistroNuevo)</td>
+                <td class="centered"><a href="javascript:void(0)" onclick="EditarEstudioRealizado(this)" id="editarEstudio">Editar</a></td>
+                <td class="centered"><a href="javascript:void(0)" onclick="EliminarEstudioRealizado(this)" id="eliminarEstudio">Eliminar</a></td>
+            </tr>
+        }
+    }
+</table>
+
+@Html.Script(
+    @<script type="text/javascript">
+
+        function ValidarCampos() {
+            /// <summary>Valida la información de los campos de ingreso.</summary>
+
+            $("#Institucion").valid();
+            $("#TituloEstudio").valid();
+            $("#IdClasificacion").valid();
+            $("#IdEstadoEstudio").valid();
+        }
+
+        function AdicionarEstudioRealizado() {
+            /// <summary>Adiciona un estudio realizado al grid de estudios.</summary>
+
+            var idEstudioRealizado = $("#IdEstudioRealizado");
+            var institucion = $("#Institucion");
+            var tituloEstudio = $("#TituloEstudio");
+            var idClasificacion = $("#IdClasificacion");
+            var fechaTerminacion = $("#FechaTerminacion");
+            var idEstadoEstudio = $("#IdEstadoEstudio");
+
+            if (institucion.valid() && tituloEstudio.valid() && idClasificacion.valid() && idEstadoEstudio.valid()) {
+
+                if (idEstudioRealizado.val() === "0") {
+
+                    var plantillaFila = _.template($("#agregarRegistroEstudioRealizado").html());
+
+                    $("#tblEstudios tbody").append(plantillaFila({
+                        val_idEstudioRealizado: $('#tblEstudios tr').length + 1,
+                        val_institucion: institucion.val(),
+                        val_idClasificacion: idClasificacion.val(),
+                        val_clasificaciones: $("#IdClasificacion option:selected").text(),
+                        val_tituloEstudio: tituloEstudio.val(),
+                        val_fechaTerminacion: fechaTerminacion.val(),
+                        val_idEstadoEstudio: idEstadoEstudio.val(),
+                        val_estadosEstudio: $("#IdEstadoEstudio option:selected").text(),
+                        val_registroNuevo: "1"
+                    }));
+
+                }
+                else {
+
+                    var fila = $("#tblEstudios").find(".id" + idEstudioRealizado.val());
+
+                    fila.find(".institucion").text(institucion.val());
+                    fila.find(".idClasificacion").text(idClasificacion.val());
+                    fila.find(".clasificaciones").text($("#IdClasificacion option:selected").text());
+                    fila.find(".tituloEstudio").text(tituloEstudio.val());
+                    fila.find(".fechaTerminacion").text(fechaTerminacion.val());
+                    fila.find(".idEstadoEstudio").text(idEstadoEstudio.val());
+                    fila.find(".estadosEstudio").text($("#IdEstadoEstudio option:selected").text());
+                    fila.find(".registroNuevo").text($("#RegistroNuevo").val());
+                }
+
+                LimpiarCamposIngreso();
+                $("#btnAgregarEstudio").text("Agregar estudio");
+                $("#btnCancelarAgregarEstudio").hide();
+            }
+        }
+
+        function EliminarEstudioRealizado(estudioRealizado) {
+            /// <summary>Elimina un estudio realizado.</summary>
+
+            ConfirmarAccion("Eliminar estudio realizado", "¿Está seguro de eliminar el registro seleccionado?", function () {
+                $(estudioRealizado).closest("tr").remove();
+            });
+        }
+
+        function EditarEstudioRealizado(estudioRealizado) {
+            /// <summary>Edita un estudio realizado.</summary>
+
+            var fila = $(estudioRealizado).closest("tr");
+
+            var idEstudioRealizado = fila.find(".idEstudioRealizado").text();
+            var institucion = fila.find(".institucion").text();
+            var idClasificacion = fila.find(".idClasificacion").text();
+            var tituloEstudio = fila.find(".tituloEstudio").text();
+            var fechaTerminacion = fila.find(".fechaTerminacion").text();
+            var idEstadoEstudio = fila.find(".idEstadoEstudio").text();
+            var idEstadoEstudio = fila.find(".idEstadoEstudio").text();
+            var estudioNuevo = fila.find(".registroNuevo").text();
+
+            $("#Institucion").val($.trim(institucion));
+            $("#IdClasificacion").val($.trim(idClasificacion));
+            $("#TituloEstudio").val($.trim(tituloEstudio));
+            $("#FechaTerminacion").val($.trim(fechaTerminacion));
+            $("#IdEstadoEstudio").val($.trim(idEstadoEstudio));
+            $("#IdEstudioRealizado").val($.trim(idEstudioRealizado));
+            $("#RegistroNuevo").val($.trim(estudioNuevo));
+
+            $("#btnAgregarEstudio").text("Editar estudio");
+            $("#btnCancelarAgregarEstudio").show();
+
+            $("#Institucion").focus();
+        }
+
+        function LimpiarCamposIngreso() {
+            /// <summary>Limpia el contenido de los campos de ingreso.</summary>
+
+            $("#Institucion").val("");
+            $("#TituloEstudio").val("");
+            $("#IdClasificacion").val("");
+            $("#FechaTerminacion").val("");
+            $("#IdEstadoEstudio").val("");
+            $("#IdEstudioRealizado").val("0");
+            $("#RegistroNuevo").val("0");
+        }
+
+        $(document).ready(function () {
+
+            $("#btnCancelarAgregarEstudio").hide();
+
+            $("#btnAgregarEstudio").click(function () {
+                ValidarCampos();
+                AdicionarEstudioRealizado();
+            });
+
+            $("#btnCancelarAgregarEstudio").click(function () {
+                LimpiarCamposIngreso();
+                $("#btnAgregarEstudio").text("Agregar estudio");
+                $("#btnCancelarAgregarEstudio").hide();
+            });
+
+        });
+
+    </script>)
+
+<script type="text/html" id="agregarRegistroEstudioRealizado">
+    <tr class="filaEstudioRealizado id<%= val_idEstudioRealizado %>">
+        <td hidden="hidden" class="centered idEstudioRealizado"><%= val_idEstudioRealizado %></td>
+        <td class="centered institucion"><%= val_institucion %></td>
+        <td hidden="hidden" class="centered idClasificacion"><%= val_idClasificacion %></td>
+        <td class="centered clasificaciones"><%= val_clasificaciones %></td>
+        <td class="centered tituloEstudio"><%= val_tituloEstudio %></td>
+        <td class="centered fechaTerminacion"><%= val_fechaTerminacion %></td>
+        <td hidden="hidden" class="centered idEstadoEstudio"><%= val_idEstadoEstudio %></td>
+        <td class="centered estadosEstudio"><%= val_estadosEstudio %></td>
+        <td hidden="hidden" class="centered registroNuevo"><%= val_registroNuevo %></td>
+        <td class="centered"><a href="javascript:void(0)" onclick="EditarEstudioRealizado(this)" id="editarEstudio">Editar</a></td>
+        <td class="centered"><a href="javascript:void(0)" onclick="EliminarEstudioRealizado(this)" id="eliminarEstudio">Eliminar</a></td>
+    </tr>
+</script>
+
+<script type="text/html" id="registroEstudioRealizado">
+    <td hidden="hidden"><input type="hidden" name="[<%= index %>].IdEstudioRealizado" value="<%= val_idEstudioRealizado %>" /></td>
+    <td hidden="hidden"><input type="hidden" name="[<%= index %>].InstitucionEducativa" value="<%= val_institucion %>" /></td>
+    <td hidden="hidden"><input type="hidden" name="[<%= index %>].TituloEstudio" value="<%= val_tituloEstudio %>" /></td>
+    <td hidden="hidden"><input type="hidden" name="[<%= index %>].IdClasificacion" value="<%= val_idClasificacion %>" /></td>
+    <td hidden="hidden"><input type="hidden" name="[<%= index %>].NombreClasificacion" value="<%= val_clasificaciones %>" /></td>
+    <td hidden="hidden"><input type="hidden" name="[<%= index %>].FechaTerminacion" value="<%= val_fechaTerminacion %>" /></td>
+    <td hidden="hidden"><input type="hidden" name="[<%= index %>].IdEstadoEstudio" value="<%= val_idEstadoEstudio %>" /></td>
+    <td hidden="hidden"><input type="hidden" name="[<%= index %>].NombreEstadoEstudio" value="<%= val_estadosEstudio %>" /></td>
+    <td hidden="hidden"><input type="hidden" name="[<%= index %>].RegistroNuevo" value="<%= val_registroNuevo %>" /></td>
+</script>

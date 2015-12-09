@@ -1,0 +1,29 @@
+﻿<html>
+	<head></head>
+	<body>
+	
+		<h2>Hola {0}!</h2>
+		<br />
+		<br />
+		<br />
+
+		Se ha generado la solicitud de cupo con éxito. Los datos para el ingreso al sistema son:</b>
+		<br />
+		<br />
+
+		<b>Usuario: </b>{1}
+		<br />
+		<b>Contraseña: </b>{2}
+		<br />
+		<b>Codigo del colegio: </b>{3}
+		<br />
+		<b>Dirección para el ingreso: http://libellustest.azurewebsites.net</b>
+
+		<br />
+		<br />
+		<br />
+		<br />
+		Feliz día!
+
+	</body>
+</html>

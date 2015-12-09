@@ -1,0 +1,70 @@
+﻿@model Libellus.Web.Areas.GestionAcademica.Models.ParametrosPromocion.ParametrosPromocionViewModels
+
+@{
+    ViewBag.Title = "Parámetros de promoción";
+    object valorAnio = ViewBag.AnioLectivo;
+}
+
+<div class="content-header">
+    <h2 class="content-header-title">@ViewBag.Title</h2>
+</div>
+
+@using (Html.BeginForm("Administrar", "ParametrosPromocion", FormMethod.Post, new { id = "formularioAdministrar" }))
+{
+    @Html.AntiForgeryToken()
+
+    <div class="row">
+        <div class="form-group col-md-4">
+            @Html.Partial("_AniosLectivos", @valorAnio)
+            @Html.ValidationMessageFor(model => model.IdAnioLectivo, "", new { @class = "text-danger" })
+            @Html.Hidden("AnioSeleccionado")
+            @Html.Hidden("AnioSeleccionadoCerrado")
+        </div>
+    </div>
+
+    <div id="informacionParametroPromocion">
+        @{
+    Html.RenderPartial("_Detalle");
+        }
+    </div>
+
+    <br />
+    <div class="form-group centered">
+        <input type="submit" value="Guardar parámetros promoción" class="btn btn-primary" tabindex="12" id="btnParametroPromocion" />
+    </div>
+}
+
+@section Scripts {
+    @Scripts.Render("~/bundles/JQuery/js")
+    @Scripts.Render("~/bundles/jqueryval")
+    @Scripts.Render("~/bundles/jquerycookies")
+    <script type="text/javascript">
+
+        function ConsultarInformacionParametrosPromocion() {
+            $.get('@Url.Action("ConsultarInformacionParametroPromocion")?anio=' + $('[name="AnioSeleccionado"]').val(), function (data) {
+                $("#informacionParametroPromocion").html(data);
+            });
+        }
+
+        $(document).ready(function () {
+
+            if ('@Model.IdAnioLectivo' != '') {
+                $('[name="AnioSeleccionado"]').val('@Model.IdAnioLectivo');
+                ConsultarInformacionParametrosPromocion();
+            }
+
+            $("#IdAnioLectivo").change(function (e) {
+
+                if ($("#IdAnioLectivo").val() != '') {
+                    $('[name="AnioSeleccionado"]').val($("#IdAnioLectivo").val());
+                    ConsultarInformacionParametrosPromocion();
+                }
+                else {
+                    $("#informacionParametroPromocion").html("");
+                    $("#btnParametroPromocion").attr('disabled', 'disabled');
+                }
+            });
+        });
+    </script>
+}
+

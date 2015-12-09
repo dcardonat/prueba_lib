@@ -1,0 +1,177 @@
+﻿@model Libellus.Web.Areas.GestionAcademica.Models.ParametrosPromocion.ParametrosPromocionViewModels
+<div class="row">
+    <div class="col-md-4 form-group">
+        @{
+            string displayMode = (Model.ConfiguracionRangos) ? "disabled = disabled" : "";
+        }
+
+        @Html.LabelFor(model => model.IdCalificacionMaxima)
+        @Html.DropDownListFor(model => model.IdCalificacionMaxima, Model.CalificacionesMaximas, new { @class = "form-control", displayMode, tabindex = "2" })
+        @Html.ValidationMessageFor(model => model.IdCalificacionMaxima, "", new { @class = "text-danger" })
+    </div>
+    <div class="col-md-4 form-group">
+        @Html.LabelFor(model => model.IdCalificacionMinima)
+        @Html.DropDownListFor(model => model.IdCalificacionMinima, Model.CalificacionesMinimas, new { @class = "form-control", displayMode, tabindex = "3" })
+        @Html.ValidationMessageFor(model => model.IdCalificacionMinima, "", new { @class = "text-danger" })
+    </div>
+    <div class="col-md-4 form-group">
+        @Html.LabelFor(model => model.MinimoAreasReprobadas)
+        @Html.EditorFor(model => model.MinimoAreasReprobadas, new { htmlAttributes = new { @class = "form-control", maxlength = "2", tabindex = "4", @placeholder = "00" } })
+        @Html.ValidationMessageFor(model => model.MinimoAreasReprobadas, "", new { @class = "text-danger" })
+    </div>
+</div>
+<div class="row">
+    <div class="col-md-4 form-group">
+        @Html.LabelFor(model => model.MaximoAreasMejoramiento)
+        @Html.EditorFor(model => model.MaximoAreasMejoramiento, new { htmlAttributes = new { @class = "form-control", maxlength = "2", tabindex = "5" } })
+        @Html.ValidationMessageFor(model => model.MaximoAreasMejoramiento, "", new { @class = "text-danger" })
+    </div>
+    <div class="col-md-4 form-group">
+        @Html.LabelFor(model => model.IdEvaluacionAprendizaje)
+        @Html.DropDownListFor(model => model.IdEvaluacionAprendizaje, Model.Evaluaciones, new { @class = "form-control", tabindex = "6" })
+        @Html.ValidationMessageFor(model => model.IdEvaluacionAprendizaje, "", new { @class = "text-danger" })
+    </div>
+    <div class="col-md-4 form-group">
+        @Html.LabelFor(model => model.MinimoAreaReprobacion)
+        @Html.EditorFor(model => model.MinimoAreaReprobacion, new { htmlAttributes = new { @class = "form-control", maxlength = "2", tabindex = "7", @placeholder = "00" } })
+        @Html.ValidationMessageFor(model => model.MinimoAreaReprobacion, "", new { @class = "text-danger" })
+    </div>
+</div>
+<div class="row">
+    <div class="col-md-4 form-group">
+        @Html.LabelFor(model => model.IdPromedioPromocion)
+        @Html.DropDownListFor(model => model.IdPromedioPromocion, Model.PromediosPromocion, "Seleccione", new { @class = "form-control", tabindex = "8" })
+        @Html.ValidationMessageFor(model => model.IdPromedioPromocion, "", new { @class = "text-danger" })
+    </div>
+    <div class="col-md-4 form-group">
+        @Html.LabelFor(model => model.CalificacionMinimaAprobacion)
+        @Html.EditorFor(model => model.CalificacionMinimaAprobacion, new { htmlAttributes = new { @class = "form-control", maxlength = "30", tabindex = "9", @placeholder = "00,00" } })
+        @Html.ValidationMessageFor(model => model.CalificacionMinimaAprobacion, "", new { @class = "text-danger" })
+    </div>
+    <div class="col-md-4 form-group">
+        @Html.LabelFor(model => model.PorcentajeInasistencia)
+        @Html.EditorFor(model => model.PorcentajeInasistencia, new { htmlAttributes = new { @class = "form-control", maxlength = "30", tabindex = "10", @placeholder = "00,00" } })
+        @Html.ValidationMessageFor(model => model.PorcentajeInasistencia, "", new { @class = "text-danger" })
+    </div>
+</div>
+@Html.HiddenFor(model => model.Id)
+@Html.HiddenFor(model => model.IdCalificacionMaxima)
+@Html.HiddenFor(model => model.IdCalificacionMinima)
+<div class="row">
+    <div class="col-md-4 form-group">
+        @Html.LabelFor(model => model.PromedioPonderado)
+        <div class="checkbox">
+            @Html.EditorFor(model => model.PromedioPonderado, new { htmlAttributes = new { tabindex = "11" } })
+        </div>
+    </div>
+</div>
+@Scripts.Render("~/bundles/JQuery/js")
+@Scripts.Render("~/bundles/jqueryval")
+<script type="text/javascript">
+
+    function ValidarMinimoAreasReprobadasPromocionMayor(MinimoAreasReprobacion, MinimoAreasReprobadasPromocion) {
+        return Number(MinimoAreasReprobadasPromocion) <= Number(MinimoAreasReprobacion);
+    }
+
+    function ValidarNumero(nota) {
+        var regularExpression = /^\d+$/;
+        return regularExpression.test(nota);
+    }
+
+    function ValidarFormulario() {
+        $.validator.addMethod("ValidarMinimoAreasReprobadasPromocionMayor", function (value, element, params) {
+            return ValidarMinimoAreasReprobadasPromocionMayor($('[name="MinimoAreaReprobacion"]').val(), $('[name="MinimoAreasReprobadas"]').val());
+        });
+
+        $.validator.addMethod("ValidarNumero", function (value, element, params) {
+            return ValidarNumero(value);
+        }, "");
+
+        $('#formularioAdministrar').validate({
+            rules: {
+                MinimoAreaReprobacion: {
+                    ValidarMinimoAreasReprobadasPromocionMayor: true,
+                    ValidarNumero: true,
+                    required: true
+                },
+                MinimoAreasReprobadas: {
+                    ValidarNumero: true,
+                    ValidarMinimoAreasReprobadasPromocionMayor: true,
+                    required: true
+                },
+                IdCalificacionMaxima: {
+                    required: true
+                },
+                IdCalificacionMinima: {
+                    required: true
+                },
+                MaximoAreasMejoramiento: {
+                    required: true
+                },
+                IdEvaluacionAprendizaje: {
+                    required: true
+                },
+                IdPromedioPromocion: {
+                    required: true
+                },
+                CalificacionMinimaAprobacion: {
+                    required: true
+                },
+                PorcentajeInasistencia: {
+                    required: true
+                }
+            },
+            messages: {
+                PorcentajeInasistencia: '@Mensaje.Mensaje1001',
+                CalificacionMinimaAprobacion: '@Mensaje.Mensaje1001',
+                IdPromedioPromocion: '@Mensaje.Mensaje1001',
+                IdEvaluacionAprendizaje: '@Mensaje.Mensaje1001',
+                MaximoAreasMejoramiento: '@Mensaje.Mensaje1001',
+                IdCalificacionMinima: '@Mensaje.Mensaje1001',
+                IdCalificacionMaxima: '@Mensaje.Mensaje1001',
+                MinimoAreasReprobadas: {
+                    ValidarMinimoAreasReprobadasPromocionMayor: ''
+                },
+                MinimoAreaReprobacion: {
+                    required: '@Mensaje.Mensaje1001',
+                    ValidarMinimoAreasReprobadasPromocionMayor: '@string.Format(Mensaje.Mensaje1011, "Mínimo áreas reprobadas/ promoción")',
+                    errorClass: 'text-danger field-validation-error',
+                    errorElement: 'span',
+                    errorPlacement: function (error, element) {
+                        element.removeClass('text-danger field-validation-error');
+                        $('[name="MinimoAreaReprobacion"]').addClass('input-validation-error valid');
+                        error.insertAfter($('[name="MinimoAreaReprobacion"]'));
+                    }
+                }
+            },
+            errorClass: 'text-danger field-validation-error',
+            errorElement: 'span'
+        });
+    }
+
+    function InhablitarControles() {
+
+        if ('@Model.AnioLectivo.Cerrado' == 'True') {
+            $(".form-control").prop('disabled', true);
+            $("#btnParametroPromocion").prop('disabled', true);
+            $("#IdAnioLectivo").removeProp('disabled');
+            $("#IdAnioLectivo").val($('[name="AnioSeleccionado"]').val());
+        }
+        else {
+            $(".form-control").removeProp('disabled');
+            $("#btnParametroPromocion").removeProp('disabled');
+            $("#IdAnioLectivo").removeProp('disabled');
+        }
+
+        if ('@Model.ConfiguracionRangos' == 'True') {
+            $('#IdCalificacionMaxima').prop('disabled', true);
+            $('#IdCalificacionMinima').prop('disabled', true);
+        }
+    }
+
+    $(document).ready(function () {
+        ValidarFormulario();
+        InhablitarControles();
+    });
+
+</script>

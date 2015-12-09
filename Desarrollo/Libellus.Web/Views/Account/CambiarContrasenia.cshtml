@@ -1,0 +1,41 @@
+﻿@model Libellus.Web.Areas.Administracion.Models.CambiarContraseniaViewModel
+@{
+    ViewBag.Title = "Cambiar contraseña";
+}
+
+<div class="content-header">
+    <h2 class="content-header-title">@ViewBag.Title</h2>
+</div>
+
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+
+    <div class="row">
+        <div class="col-md-4 form-group">
+            @Html.LabelFor(model => model.ClaveAcceso)
+            @Html.EditorFor(model => model.ClaveAcceso, new { htmlAttributes = new { @class = "form-control", @tabindex = "1",  maxlength = "15"} })
+            @Html.ValidationMessageFor(model => model.ClaveAcceso, "", new { @class = "text-danger" })
+        </div>
+        <div class="col-md-4 form-group">
+            @Html.LabelFor(model => model.NuevaContrasenia)
+            @Html.EditorFor(model => model.NuevaContrasenia, new { htmlAttributes = new { @class = "form-control", @tabindex = "2", maxlength = "15" } })
+            @Html.ValidationMessageFor(model => model.NuevaContrasenia, "", new { @class = "text-danger" })
+        </div>
+        <div class="col-md-4 form-group">
+            @Html.LabelFor(model => model.ConfirmarContrasenia)
+            @Html.EditorFor(model => model.ConfirmarContrasenia, new { htmlAttributes = new { @class = "form-control", @tabindex = "3", maxlength = "15" } })
+            @Html.ValidationMessageFor(model => model.ConfirmarContrasenia, "", new { @class = "text-danger" })
+        </div>
+    </div>
+
+    <br />
+
+    <div class="form-group centered">
+        <input type="submit" value="Cambiar contraseña" class="btn btn-primary" tabindex="4" />
+    </div>
+}
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}

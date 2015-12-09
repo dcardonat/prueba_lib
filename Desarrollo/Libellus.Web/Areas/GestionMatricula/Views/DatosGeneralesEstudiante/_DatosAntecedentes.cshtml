@@ -1,0 +1,234 @@
+﻿@model Libellus.Web.Areas.GestionMatricula.Models.DatosGeneralesEstudiante.EstudianteViewModel
+
+@{
+    bool soloLectura = ViewBag.SoloLectura;
+}
+
+@if (!soloLectura)
+{
+    <div class="row">
+        <div class="form-group col-md-4">
+            @Html.LabelFor(model => model.AntecedentesAcademicos.First().InstitucionEducativa)
+            @Html.TextBox("InstitucionEducativa", null, new { @class = "form-control ignorar", maxlength = "100", tabindex = "2", id = "txtInstitucionEducativa", data_val = "true", data_val_required = "Campo requerido." })
+            @Html.ValidationMessage("InstitucionEducativa", new { @class = "text-danger" })
+        </div>
+        <div class="form-group col-md-4">
+            @Html.LabelFor(model => model.AntecedentesAcademicos.First().IdTipoInstitucion)
+            @Html.DropDownList("IdTipoInstitucion", Model.ComboTipoInstitucion, new { @class = "form-control ignorar", id = "cmbIdTipoInstitucion", data_val = "true", data_val_required = "Campo requerido." })
+            @Html.ValidationMessage("IdTipoInstitucion", new { @class = "text-danger" })
+        </div>
+        <div class="form-group col-md-4">
+            @Html.LabelFor(model => model.AntecedentesAcademicos.First().Anio)
+            @Html.TextBox("Anio", null, new { @class = "form-control ignorar", tabindex = "2", id = "txtAnio", data_val = "true", data_val_required = "Campo requerido." })
+            @Html.ValidationMessage("Anio", new { @class = "text-danger" })
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="form-group col-md-4">
+            @Html.LabelFor(model => model.AntecedentesAcademicos.First().IdGrado)
+            @Html.DropDownList("IdGrado", Model.ComboGrados, new { @class = "form-control ignorar", id = "cmbIdGrado", data_val = "true", data_val_required = "Campo requerido." })
+            @Html.ValidationMessage("IdGrado", new { @class = "text-danger" })
+        </div>
+        <div class="form-group col-md-4">
+            @Html.LabelFor(model => model.AntecedentesAcademicos.First().IdMotivoRetiro)
+            @Html.DropDownList("IdMotivoRetiro", Model.ComboMotivosRetiro, new { @class = "form-control ignorar", id = "cmbIdMotivoRetiro", data_val = "true", data_val_required = "Campo requerido." })
+            @Html.ValidationMessage("IdMotivoRetiro", new { @class = "text-danger" })
+        </div>
+        <div class="form-group col-md-4">
+            @Html.LabelFor(model => model.AntecedentesAcademicos.First().Observacion)
+            @Html.TextBox("Observacion", null, new { @class = "form-control ignorar", tabindex = "2", id = "txtObservacion", maxlength = "600" })
+            @Html.ValidationMessage("Observacion", new { @class = "text-danger" })
+        </div>
+    </div>
+
+    <div class="form-group centered">
+        <a href="javascript:void(0)" id="btnCancelarAgregarAntecedente" class="btn btn-link">Cancelar</a>
+        <a href="javascript:void(0)" id="btnAgregarAntecedente" class="btn btn-primary">Agregar antecedente</a>
+    </div>
+
+    <br />
+}
+
+<div class="row">
+    <div class="col-md-12">
+        <div class="table-responsive">
+            <table class="@EstilosHelper.TablaLibellus" id="tblAntecedentes">
+                <thead>
+                    <tr>
+                        <th hidden="hidden"></th>
+                        <th>@Html.DisplayNameFor(model => model.AntecedentesAcademicos.First().InstitucionEducativa)</th>
+                        <th>@Html.DisplayNameFor(model => model.AntecedentesAcademicos.First().IdTipoInstitucion)</th>
+                        <th>@Html.DisplayNameFor(model => model.AntecedentesAcademicos.First().Anio)</th>
+                        <th>@Html.DisplayNameFor(model => model.AntecedentesAcademicos.First().IdGrado)</th>
+                        <th>@Html.DisplayNameFor(model => model.AntecedentesAcademicos.First().IdMotivoRetiro)</th>
+                        <th>@Html.DisplayNameFor(model => model.AntecedentesAcademicos.First().Observacion)</th>
+                        @if (!soloLectura)
+                        {
+                            <th colspan="2">Acción</th>
+                        }
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var item in Model.AntecedentesAcademicos)
+                    {
+                        <tr>
+                            <td class="id" hidden="hidden"></td>
+                            <td class="institucion">@Html.DisplayFor(modelItem => item.InstitucionEducativa)</td>
+                            <td class="tipoInstitucion">@Html.DisplayFor(modelItem => item.TipoInstitucion.Descripcion)</td>
+                            <td class="anio">@Html.DisplayFor(modelItem => item.Anio)</td>
+                            <td class="grado">@Html.DisplayFor(modelItem => item.Grado.Descripcion)</td>
+                            <td class="motivoRetiro">@Html.DisplayFor(modelItem => item.MotivoRetiro.Descripcion)</td>
+                            <td class="observacion">@Html.DisplayFor(modelItem => item.Observacion)</td>
+                            @if (!soloLectura)
+                            {
+                                <td class="centered col-md-1"><a href="javascript:void(0)" id="editarAntecedente">Editar</a></td>
+                                <td class="centered col-md-1"><a href="javascript:void(0)" id="eliminarAntecedente" onclick="EliminarRegistro(this)">Eliminar</a></td>
+                            }
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+<div id="valoresAntecedentes"></div>
+
+@Html.Script(
+    @<script type="text/javascript">
+
+        var listaAntecedentes = [];
+        var indice;
+
+        if (@Model.AntecedentesAcademicos.Count() > 0) {
+            @foreach (var a in Model.AntecedentesAcademicos)
+            {
+                @: antecedente = { Id: "@a.Id", Institucion: "@a.InstitucionEducativa", IdTipoInstitucion: "@a.IdTipoInstitucion", TipoInstitucion: "@a.TipoInstitucion.Id", Anio: "@a.Anio", IdGrado: "@a.IdGrado", Grado: "@a.Grado.Id", IdMotivoRetiro: "@a.IdMotivoRetiro", MotivoRetiro: "@a.MotivoRetiro.Id", Observacion: "@a.Observacion" };
+                @:listaAntecedentes.push(antecedente);
+            }
+        }
+
+        function EliminarRegistro(e) {
+            ConfirmarAccion("Eliminar antecedente", "¿Está seguro de eliminar el registro seleccionado?", function () {
+                var fila = $(e).closest("tbody tr");
+                indice = fila.index();
+                listaAntecedentes.splice(indice, 1);
+                fila.remove();
+                limpiarCampos();
+            });
+        };
+
+        var adicionarAntecedente = function () {
+            $("#txtInstitucionEducativa").valid();
+            $("#cmbIdTipoInstitucion").valid();
+            $("#txtAnio").valid();
+            $("#cmbIdGrado").valid();
+            $("#cmbIdMotivoRetiro").valid();
+
+            if ($("#txtInstitucionEducativa").valid() &&
+                $("#cmbIdTipoInstitucion").valid() &&
+                $("#txtAnio").valid() &&
+                $("#cmbIdGrado").valid() &&
+                $("#cmbIdMotivoRetiro").valid()) {
+
+                var antecedente = {
+                    Id: 0,
+                    Institucion: $("#txtInstitucionEducativa").val(),
+                    IdTipoInstitucion: $("#cmbIdTipoInstitucion").val(),
+                    TipoInstitucion: $("#cmbIdTipoInstitucion option:selected").text(),
+                    Anio: $("#txtAnio").val(),
+                    IdGrado: $("#cmbIdGrado").val(),
+                    Grado: $("#cmbIdGrado option:selected").text(),
+                    IdMotivoRetiro: $("#cmbIdMotivoRetiro").val(),
+                    MotivoRetiro: $("#cmbIdMotivoRetiro option:selected").text(),
+                    Observacion: $("#txtObservacion").val()
+                };
+
+                if (indice >= 0) {
+                    antecedente.Id = listaAntecedentes[indice].Id;
+                    listaAntecedentes[indice] = antecedente;
+                    editarFilaTabla(indice, antecedente);
+                }
+                else {
+                    listaAntecedentes.push(antecedente);
+                    adicionarFilaTabla(antecedente);
+                }
+
+                limpiarCampos();
+            }
+        };
+
+        var adicionarFilaTabla = function (a) {
+            var plantillaFila = _.template($("#agregarAntecedente").html());
+            $("#tblAntecedentes tbody").append(plantillaFila({
+                id: a.Id,
+                institucion: a.Institucion,
+                tipoInstitucion: a.TipoInstitucion,
+                anio: a.Anio,
+                grado: a.Grado,
+                motivoRetiro: a.MotivoRetiro,
+                observacion: a.Observacion
+            }));
+        };
+
+        var editarFilaTabla = function (i, a) {
+            var fila = $("#tblAntecedentes tbody tr").eq(i);
+            fila.find(".institucion").text(a.Institucion);
+            fila.find(".tipoInstitucion").text(a.TipoInstitucion);
+            fila.find(".anio").text(a.Anio);
+            fila.find(".grado").text(a.Grado);
+            fila.find(".motivoRetiro").text(a.MotivoRetiro);
+            fila.find(".observacion").text(a.Observacion);
+        };
+
+        var limpiarCampos = function () {
+            $("#btnAgregarAntecedente").text("Agregar antecedente");
+            $("#btnCancelarAgregarAntecedente").hide();
+            $("#txtInstitucionEducativa").val("");
+            $("#cmbIdTipoInstitucion").val("");
+            $("#txtAnio").val("");
+            $("#cmbIdGrado").val("");
+            $("#cmbIdMotivoRetiro").val("");
+            $("#txtObservacion").val("");
+
+            indice = -1;
+        };
+
+        var editarRegistro = function () {
+            $("#btnAgregarAntecedente").text("Editar antecedente");
+            $("#btnCancelarAgregarAntecedente").show();
+            indice = $(this).closest("tbody tr").index();
+            a = listaAntecedentes[indice];
+            $("#txtInstitucionEducativa").val(a.Institucion);
+            $("#cmbIdTipoInstitucion").val(a.IdTipoInstitucion);
+            $("#txtAnio").val(a.Anio);
+            $("#cmbIdGrado").val(a.IdGrado);
+            $("#cmbIdMotivoRetiro").val(a.IdMotivoRetiro);
+            $("#txtObservacion").val(a.Observacion);
+        };
+
+        $(document).ready(function() {
+
+            $("#btnCancelarAgregarAntecedente").hide();
+            indice = -1;
+            $("#btnAgregarAntecedente").click(adicionarAntecedente);
+            $("#btnCancelarAgregarAntecedente").click(limpiarCampos);
+            $(document).on("click", "#editarAntecedente", editarRegistro);
+        });
+
+    </script>)
+
+<script type="text/html" id="agregarAntecedente">
+    <tr>
+        <td class="id" hidden="hidden"><%= id %></td>
+        <td class="institucion"><%= institucion %></td>
+        <td class="tipoInstitucion"><%= tipoInstitucion %></td>
+        <td class="anio"><%= anio %></td>
+        <td class="grado"><%= grado %></td>
+        <td class="motivoRetiro"><%= motivoRetiro %></td>
+        <td class="observacion"><%= observacion %></td>
+        <td class="centered col-md-1"><a href="javascript:void(0)" id="editarAntecedente">Editar</a></td>
+        <td class="centered col-md-1"><a href="javascript:void(0)" id="eliminarAntecedente" onclick="EliminarRegistro(this)">Eliminar</a></td>
+    </tr>
+</script>

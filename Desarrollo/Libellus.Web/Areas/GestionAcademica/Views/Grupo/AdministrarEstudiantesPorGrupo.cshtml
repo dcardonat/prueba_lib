@@ -1,0 +1,344 @@
+﻿@model Libellus.Web.Areas.GestionAcademica.Models.Grupo.EstudianteGrupoViewModel
+
+@{
+    Html.EnableClientValidation(false);
+    int gruposPorNivel = Model.DistribucionEstudiantesGrupo.Count;
+    int gruposPorGrado = 1;
+    int contadorGruposPorNivel = 1;
+    int contadorGruposPorGrado = 1;
+    int contadorFila = 1;
+    string inhabilitar = string.Empty;
+}
+
+<div class="content-header">
+    <h2 class="content-header-title">Estudianes por grupo</h2>
+</div>
+
+<form id="formulario-estudiantes-grupo">
+    <div class="row">
+        <div class="col-md-4 form-group">
+            @Html.Partial("_AniosLectivos", Model.IdAnioLectivo)
+        </div>
+        <div class="col-md-4 form-group">
+            <label>Nivel</label>
+            @Html.DropDownListFor(model => model.IdNivel, Model.Niveles, "Seleccione", new { @class = "form-control" })
+        </div>
+        @Html.Hidden("consultar", true)
+        @Html.Hidden("habilitarCampos", true)
+    </div>
+    <br />
+    <div class="form-group centered">
+        <input id="submit-consultar-estudiantes-grupo" type="submit" value="Consultar" class="btn btn-primary" />
+    </div>
+    <br />
+    @if (Model != null && Model.DistribucionEstudiantesGrupo.Count > 0)
+    {
+        <div class="row">
+            <div class="col-md-12">
+                <div class="table-responsive">
+                    <table class="@EstilosHelper.TablaLibellus">
+                        <thead>
+                            <tr>
+                                <th>
+                                    Nivel
+                                </th>
+                                <th>
+                                    Estudiantes por grupo
+                                </th>
+                                <th>
+                                    Estudiantes matriculados
+                                </th>
+                                <th>
+                                    Grado
+                                </th>
+                                <th>
+                                    Grupo
+                                </th>
+                                <th>
+                                    Horario
+                                </th>
+                                <th colspan="3">
+                                    Acciones
+                                </th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @if (!(bool)ViewBag.HabilitarCampos)
+                            {
+                                inhabilitar = "inhabilitar-campo";
+                            }
+
+                            @foreach (var distribucionEstudiantesGrupo in Model.DistribucionEstudiantesGrupo)
+                            {
+                                if (distribucionEstudiantesGrupo.EstudiantesMatriculados == 0)
+                                {
+                                    gruposPorGrado = 1;
+                                    if ((bool)ViewBag.HabilitarCampos)
+                                    {
+                                        inhabilitar = "inhabilitar-campo";
+                                    }
+                                }
+                                else
+                                {
+                                    gruposPorGrado = distribucionEstudiantesGrupo.CantidadGruposPorGrado;
+                                    if ((bool)ViewBag.HabilitarCampos)
+                                    {
+                                        inhabilitar = string.Empty;
+                                    }
+                                }
+
+
+                                <tr data-id="@distribucionEstudiantesGrupo.Id" data-id-nivel="@distribucionEstudiantesGrupo.IdNivel" data-cantidad-estudiantes="@distribucionEstudiantesGrupo.EstudiantesPorGrupo">
+                                    @if (contadorGruposPorNivel == 1)
+                                    {
+                                        <td rowspan="@gruposPorNivel">@Html.DisplayFor(modelItem => distribucionEstudiantesGrupo.Nivel)</td>
+                                        <td rowspan="@gruposPorNivel" name="estudiantes-por-grupo">@Html.DisplayFor(modelItem => distribucionEstudiantesGrupo.EstudiantesPorGrupo)</td>
+                                    }
+
+                                    @if (contadorGruposPorGrado == 1)
+                                    {
+                                        <td rowspan="@gruposPorGrado" name="estudiantes-matriculados">@Html.DisplayFor(modelItem => distribucionEstudiantesGrupo.EstudiantesMatriculados)</td>
+                                        <td rowspan="@gruposPorGrado" name="grados" data-id-grado="@distribucionEstudiantesGrupo.IdGrado">@Html.DisplayFor(modelItem => distribucionEstudiantesGrupo.Grado)</td>
+                                    }
+
+                                    <td>
+                                        @Html.DropDownList("grupos-" + distribucionEstudiantesGrupo.IdGrado, distribucionEstudiantesGrupo.Grupos, "Seleccione", new { id = "grupo" + contadorFila, @class = "form-control " + inhabilitar })
+                                    </td>
+                                    <td>
+                                        @Html.DropDownList("horarios-" + distribucionEstudiantesGrupo.IdGrado, distribucionEstudiantesGrupo.Horarios, "Seleccione", new { id = "horario" + contadorFila, @class = "form-control " + inhabilitar })
+                                    </td>
+
+                                    @if (contadorGruposPorGrado == 1)
+                                    {
+                                        <td rowspan="@distribucionEstudiantesGrupo.CantidadGruposPorGrado"><a href="#" onclick="validarRegitros(@distribucionEstudiantesGrupo.IdNivel, @(contadorGruposPorNivel - 1), @distribucionEstudiantesGrupo.CantidadGruposPorGrado, 'Asignar')" class="@inhabilitar">Asignar</a></td>
+                                    }
+
+                                    <td><a href="#" onclick="validarRegitros(@distribucionEstudiantesGrupo.IdNivel, @(contadorGruposPorNivel - 1), 1, 'Guardar')" class="@inhabilitar">Guardar</a></td>
+
+                                    <td>@Html.ActionLink("Ver", "ListarEstudiantesPorGrupo", new { id = distribucionEstudiantesGrupo.Id, idAnioLectivo = Model.IdAnioLectivo, idNivel = distribucionEstudiantesGrupo.IdNivel, nivel = distribucionEstudiantesGrupo.Nivel, grado = distribucionEstudiantesGrupo.Grado, grupo = distribucionEstudiantesGrupo.Grupo, horario = distribucionEstudiantesGrupo.Horario }, new { @class = inhabilitar })</td>
+
+                                    @if (contadorGruposPorNivel == gruposPorNivel)
+                                    {
+                                        contadorGruposPorNivel = 1;
+                                    }
+                                    else
+                                    {
+                                        contadorGruposPorNivel++;
+                                    }
+
+                                    @if (contadorGruposPorGrado == gruposPorGrado)
+                                    {
+                                        contadorGruposPorGrado = 1;
+                                    }
+                                    else
+                                    {
+                                        contadorGruposPorGrado++;
+                                    }
+
+                                    @{contadorFila++;}
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    }
+</form>
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+    @Scripts.Render("~/js/underscore")
+
+    <script type="text/javascript">
+
+        function grupo(id, idNivel, idGrado, idGrupo, idHorario, estudiantesPorGrupo) {
+            this.Id = id,
+            this.IdNivel = idNivel;
+            this.IdGrado = idGrado;
+            this.IdGrupo = idGrupo;
+            this.IdHorario = idHorario;
+            this.EstudiantesPorGrupo = estudiantesPorGrupo;
+        }
+
+        function obtenerInformacion(filasPorGrado, idNivel, idGrado) {
+            var informacion = [];
+            filasPorGrado.each(function (index, element) {
+                var filaActual = $(element);
+                informacion.push(new grupo(
+                    filaActual.data('id'),
+                    idNivel,
+                    idGrado,
+                    filaActual.find('[name="grupos-' + idGrado + '"]').val(),
+                    filaActual.find('[name="horarios-' + idGrado + '"]').val(),
+                    filaActual.data('cantidad-estudiantes')
+                ));
+            });
+
+            return informacion;
+        }
+
+        function asignarEstudiantesAGrupos(filasPorGrado, idNivel, idGrado) {
+            $.ajax({
+                url: '@Url.Action("AsociarEstudiantesAGrupos")',
+                data: JSON.stringify({
+                    informacionGrupos: obtenerInformacion(filasPorGrado, idNivel, idGrado),
+                    anio: $('#IdAnioLectivo').val()
+                }),
+                type: 'POST',
+                dataType: 'json',
+                contentType: 'application/json',
+                async: false,
+                success: function (respuesta) {
+                    if(respuesta.estado === true) {
+                        filasPorGrado.each(function (index, element) {
+                            $(element).data('id', respuesta.idsGrupo[index])
+                        });
+                        VisualizarMensajeNegocio(respuesta.mensaje.Tipo, respuesta.mensaje.Texto, 2000);
+                    } else {
+                        window.location.reload();
+                    }
+                }
+            });
+        }
+
+        function guardarGrupo(filasPorGrado, idNivel, idGrado) {
+            $.ajax({
+                url: '@Url.Action("Guardar")',
+                data: JSON.stringify({
+                    informacionGrupo: _.first(obtenerInformacion(filasPorGrado, idNivel, idGrado)),
+                    anio: $('#IdAnioLectivo').val()
+                }),
+                type: 'POST',
+                dataType: 'json',
+                contentType: 'application/json',
+                async: false,
+                success: function (respuesta) {
+                    if(respuesta.estado === true){
+                        filasPorGrado.data('id', respuesta.idGrupo);
+                        VisualizarMensajeNegocio(respuesta.mensaje.Tipo, respuesta.mensaje.Texto, 2000);
+                    } else {
+
+                        window.location.reload();
+                    }
+                }
+            });
+        }
+
+        function validarGruposDuplicados(filasPorGrado, idGrado, valor) {
+            return _.filter(_.map(filasPorGrado.find('[name="grupos-' + idGrado + '"]'), function (element) { return element.value }), function (grupo) { return grupo == valor }).length === 1;
+        }
+
+        function validarGruposPorGrado(filasPorGrado, idGrado) {
+            var elementosNoValidos = 0;
+
+            $.validator.addMethod("validarGruposDuplicados", function (value, element, params) {
+                return validarGruposDuplicados(filasPorGrado, idGrado, value);
+            }, "Existen grupos duplicados");
+
+            var gruposPorGrado = filasPorGrado.find('[name="grupos-' + idGrado + '"]');
+            gruposPorGrado.each(function () {
+                $(this).rules("add", {
+                    required: true,
+                    validarGruposDuplicados: true,
+                    messages: {
+                        required: "@Mensaje.Mensaje1001"
+                    }
+                });
+
+                if (!window.validador.element(this)) {
+                    elementosNoValidos++;
+                }
+            }).on('change', function() {
+                gruposPorGrado.blur();
+            });
+
+            return elementosNoValidos;
+        }
+
+        function validarHorariosPorGrado(filasPorGrado, idGrado) {
+            var elementosNoValidos = 0
+            filasPorGrado.find('[name="horarios-' + idGrado + '"]').each(function () {
+                $(this).rules("add", {
+                    required: true,
+                    messages: {
+                        required: "@Mensaje.Mensaje1001"
+                    }
+                });
+
+                if (!window.validador.element(this)) {
+                    elementosNoValidos++;
+                }
+            });
+
+            return elementosNoValidos;
+        }
+
+        function validarRegitros(idNivel, posicion, cantidad, accion) {
+            var filasPorNivel = $('tr[data-id-nivel="' + idNivel + '"]');
+            var filasPorGrado = filasPorNivel.slice(posicion, cantidad + posicion);
+            var idGrado = $(filasPorGrado[0]).find('[name="grados"]').data('id-grado');
+
+            while(idGrado === null || idGrado === undefined) {
+                posicion--;
+                idGrado = $(filasPorNivel.slice(posicion, cantidad + posicion)[0]).find('[name="grados"]').data('id-grado');
+            }
+
+            if (validarGruposPorGrado(filasPorGrado, idGrado) + validarHorariosPorGrado(filasPorGrado, idGrado) === 0) {
+                seleccionarAccion(accion, filasPorGrado, idNivel, idGrado);
+            }
+        }
+
+        function seleccionarAccion(accion, filasPorGrado, idNivel, idGrado) {
+            if(accion === 'Asignar') {
+                asignarEstudiantesAGrupos(filasPorGrado, idNivel, idGrado);
+            } else if(accion === 'Guardar') {
+                guardarGrupo(filasPorGrado, idNivel, idGrado);
+            }
+        }
+
+        function mostrarMensajeSinInformacion() {
+            if ($('table').length < 1 && '@ViewBag.Consultar') {
+                var mensaje = @Html.Raw(Json.Encode(new Mensaje(CodigoMensaje.Mensaje1005)));
+                VisualizarMensajeNegocio(mensaje.Tipo, mensaje.Texto, 7000);
+            }
+        }
+
+        function validarFormulario() {
+            validador = $('#formulario-estudiantes-grupo').validate({
+                rules: {
+                    IdAnioLectivo: {
+                        required: true
+                    },
+                    IdNivel: {
+                        required: true
+                    }
+                },
+                messages: {
+                    IdAnioLectivo: '@Mensaje.Mensaje1001',
+                    IdNivel: '@Mensaje.Mensaje1001'
+                },
+                errorClass: "input-validation-error field-validation-error",
+                errorElement: "div"
+            });
+        }
+
+        function asignarPropiedadesTabla() {
+            $('.inhabilitar-campo').prop({ disabled: true });
+            $('a.inhabilitar-campo').hide();
+        }
+
+        function establecerEstadoAnio() {
+            $("#submit-consultar-estudiantes-grupo").on('click', function (e) {
+                $('[name="habilitarCampos"]').val($("#IdAnioLectivo").trigger("EstadoAnio").data("resultado"));
+            });
+        }
+
+        $(document).ready(function () {
+            mostrarMensajeSinInformacion();
+            validarFormulario();
+            asignarPropiedadesTabla();
+            establecerEstadoAnio();
+        });
+    </script>
+}

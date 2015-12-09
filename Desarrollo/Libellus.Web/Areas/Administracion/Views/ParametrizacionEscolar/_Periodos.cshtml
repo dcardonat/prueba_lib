@@ -1,0 +1,286 @@
+﻿@model Libellus.Web.Areas.Administracion.Models.ParametrizacionEscolar.ParametrizacionEscolarViewModel
+
+<div class="row">
+    <div class="form-group col-md-4">
+        @Html.LabelFor(model => model.PeriodosParametrizacion.First().Periodo)
+        @Html.TextBox("Periodo", null, new { @class = "form-control ignorar", id = "txtPeriodo", disabled = "disabled" })
+        @Html.ValidationMessage("Periodo", new { @class = "text-danger" })
+    </div>
+
+    <div class="form-group col-md-4">
+        @Html.LabelFor(model => model.PeriodosParametrizacion.First().FechaInicial)
+        <div class="input-group date" id="fechaInicial">
+            @Html.TextBox("FechaInicial", null, new { @class = "form-control ignorar", id = "txtFechaInicial", contenteditable = "false", data_val = "true", data_val_required = "Campo requerido.", maxlength = "10" })
+            <span class="input-group-addon">
+                <span class="glyphicon glyphicon-calendar"></span>
+            </span>
+        </div>
+        @Html.ValidationMessage("FechaInicial", new { @class = "text-danger" })
+    </div>
+
+    <div class="form-group col-md-4">
+        @Html.LabelFor(model => model.PeriodosParametrizacion.First().FechaFinal)
+        <div class="input-group date" id="fechaFinal">
+            @Html.TextBox("FechaFinal", null, new { @class = "form-control ignorar", id = "txtFechaFinal", contenteditable = "false", data_val = "true", data_val_required = "Campo requerido.", maxlength = "10" })
+            <span class="input-group-addon">
+                <span class="glyphicon glyphicon-calendar"></span>
+            </span>
+        </div>
+        @Html.ValidationMessage("FechaFinal", new { @class = "text-danger" })
+    </div>
+
+</div>
+
+<div class="form-group centered">
+    <a href="javascript:void(0)" id="btnCancelarAgregarPeriodo" class="btn btn-link">Cancelar</a>
+    <a href="javascript:void(0)" id="btnAgregarPeriodo" class="btn btn-primary">Agregar periodo</a>
+</div>
+
+<br />
+
+<table class="@EstilosHelper.TablaLibellus" id="tblPeriodos">
+    <thead>
+        <tr>
+            <th hidden="hidden"></th>
+            <th>@Html.DisplayNameFor(model => model.PeriodosParametrizacion.First().Periodo)</th>
+            <th>@Html.DisplayNameFor(model => model.PeriodosParametrizacion.First().FechaInicial)</th>
+            <th>@Html.DisplayNameFor(model => model.PeriodosParametrizacion.First().FechaFinal)</th>
+            <th colspan="2" >Apertura extemporánea</th>
+            <th class="col-md-2" colspan="2">Acción</th>
+        </tr>
+    </thead>
+    <tbody>
+        @if (Model.PeriodosParametrizacion.Count() > 0)
+        {
+            foreach (var item in Model.PeriodosParametrizacion)
+            {
+                <tr>
+                    <td class="centered id" hidden="hidden">@Html.DisplayFor(modelItem => item.Id)</td>
+                    <td class="centered periodo">@Html.DisplayFor(modelItem => item.Periodo)</td>
+                    <td class="centered fechaInicial">@item.FechaInicial.ToShortDateString()</td>
+                    <td class="centered fechaFinal">@item.FechaFinal.ToShortDateString()</td>
+                    <td class="centered">
+                        @{
+                            if (item.TieneApertura)
+                            {
+                                string detalle = string.Format("<strong>Fecha inicial:</strong> {0} <br /><strong>Fecha final:</strong> {1} <br /><strong>Motivo de apertura:</strong><br />{2}", item.FechaAperturaInicial, item.FechaAperturaFinal, item.MotivoApertura);
+                                <a href="javascript:void(0)" data-toggle="popover" title="Detalle apertura" data-content="@detalle">Ver detalle</a>
+                            }
+                        }
+                    </td>
+                    <td class="centered">
+                        @{string nombreAccion = item.TieneApertura ? "Editar apertura" : "Crear apertura";}
+                        @Html.ActionLink(@nombreAccion, "Administrar", "AperturaPeriodos", new { idPeriodo = item.Id }, null)
+                    </td>
+                    <td class="centered col-md-1"><a href="javascript:void(0)" id="editarPeriodo">Editar</a></td>
+                    <td class="centered eliminar col-md-1"></td>
+                </tr>
+            }
+        }
+    </tbody>
+</table>
+
+<div id="valoresPeriodos"></div>
+
+@Html.Script(
+    @<script type="text/javascript">
+
+        var periodo;
+        var editar;
+        var indice;
+        var listaPeriodos = [];
+
+        if (@Model.PeriodosParametrizacion.Count() > 0) {
+            @foreach (var p in @Model.PeriodosParametrizacion)
+            {
+                @: periodo = { Id: "@p.Id", Periodo: "@p.Periodo", FechaInicial: "@p.FechaInicial.ToShortDateString()", FechaFinal: "@p.FechaFinal.ToShortDateString()" };
+                @: listaPeriodos.push(periodo);
+            }
+        }
+
+        var adicionarPeriodo = function () {
+            $("#txtFechaInicial").valid();
+            $("#txtFechaFinal").valid();
+            if($("#txtFechaInicial").valid() && $("#txtFechaFinal").valid()){
+                var resul = validarFechasIngreso();
+                if(resul) {
+                    var p = {
+                        Id: 0,
+                        Periodo: $("#txtPeriodo").val(),
+                        FechaInicial: $("#txtFechaInicial").val(),
+                        FechaFinal: $("#txtFechaFinal").val()
+                    };
+
+                    if (indice >= 0) {
+                        p.Id = listaPeriodos[indice].Id;
+                        listaPeriodos[indice] = p;
+                        editarFilaTabla(indice, p);
+                    }
+                    else {
+                        listaPeriodos.push(p);
+                        adicionarFilaTabla(p);
+                        periodo++;
+                    }
+
+                    limpiarCampos();
+                }
+            }
+        };
+
+        var adicionarFilaTabla = function (p) {
+            var plantillaFila = _.template($("#agregarPeriodo").html());
+            $("#tblPeriodos tbody").append(plantillaFila({
+                id: p.Id,
+                periodo: p.Periodo,
+                fechaInicial: p.FechaInicial,
+                fechaFinal: p.FechaFinal
+            }));
+
+            activarEliminar();
+        };
+
+        var editarFilaTabla = function (i, p) {
+            var fila = $("#tblPeriodos tbody tr").eq(i);
+            fila.find(".periodo").text(p.Periodo);
+            fila.find(".fechaInicial").text(p.FechaInicial);
+            fila.find(".fechaFinal").text(p.FechaFinal);
+        }
+
+        var limpiarCampos = function () {
+            $("#btnAgregarPeriodo").text("Agregar periodo");
+            $("#btnCancelarAgregarPeriodo").hide();
+            $("#fechaInicial").data("DateTimePicker").clear();
+            $("#fechaFinal").data("DateTimePicker").clear();
+            $("#txtPeriodo").val(periodo);
+            $("#txtFechaInicial").val("");
+            $("#txtFechaFinal").val("");
+            indice = -1;
+        };
+
+        var retornarFecha = function(texto) {
+            var vFecha = texto.split("/");
+            var _fecha = new Date(vFecha[2], vFecha[1] - 1, parseInt(vFecha[0]));
+            return _fecha;
+        };
+
+        var activarEliminar = function() {
+            $("#tblPeriodos tbody tr").each(function(index, element) {
+                $(element).find(".eliminar").html("");
+            });
+
+            var fila = $("#tblPeriodos tr:last");
+            fila.find(".eliminar").html("<a href='javascript:void(0)' onclick='EliminarRegistro(this)' id='eliminarPeriodo'>Eliminar</a>");
+        };
+
+        var validarFechasIngreso = function() {
+            var resultado = true;
+            var fi = retornarFecha($("#txtFechaInicial").val());
+            var ff = retornarFecha($("#txtFechaFinal").val());
+            var anio = $("#IdAnioLectivo option:selected").text();
+            var p1Ff, p2Fi;
+
+            if (fi.getFullYear() != anio || ff.getFullYear() != anio) {
+                VisualizarMensajeNegocio(3, "@Mensaje.Mensaje022");
+                resultado = false;
+            }
+
+            if (listaPeriodos.length > 0) {
+                if (indice == -1) {
+                    p1Ff = retornarFecha(listaPeriodos[listaPeriodos.length - 1].FechaFinal);
+                    if (fi <= p1Ff) {
+                        VisualizarMensajeNegocio(3, "@Mensaje.Mensaje020");
+                        resultado = false;
+                    }
+                }
+                else {
+                    if (indice == 0) {
+                        if (listaPeriodos.length > 1) {
+                            p2Fi = retornarFecha(listaPeriodos[indice + 1].FechaInicial);
+                            if (ff >= p2Fi) {
+                                VisualizarMensajeNegocio(3, "@Mensaje.Mensaje020");
+                                resultado = false;
+                            }
+                        }
+                    }
+                    else if (indice >= 1 && indice + 1 != listaPeriodos.length) {
+                        p1Ff = retornarFecha(listaPeriodos[indice - 1].FechaFinal);
+                        p2Fi = retornarFecha(listaPeriodos[indice + 1].FechaInicial);
+
+                        if (fi <= p1Ff) {
+                            VisualizarMensajeNegocio(3, "@Mensaje.Mensaje020");
+                            resultado = false;
+                        }
+
+                        if (ff >= p2Fi) {
+                            VisualizarMensajeNegocio(3, "@Mensaje.Mensaje020");
+                            resultado = false;
+                        }
+                    }
+                    else {
+                        p1Ff = retornarFecha(listaPeriodos[indice - 1].FechaFinal);
+                        if (fi <= p1Ff) {
+                            VisualizarMensajeNegocio(3, "@Mensaje.Mensaje020");
+                            resultado = false;
+                        }
+                    }
+                }
+            }
+
+            return resultado;
+        };
+
+        function EliminarRegistro(e) {
+            ConfirmarAccion("Eliminar período", "¿Está seguro de eliminar el registro seleccionado?", function () {
+                $(e).closest("tr").remove();
+                listaPeriodos.pop();
+                periodo--;
+                limpiarCampos();
+                activarEliminar();
+            });
+
+        };
+
+        var editarRegistro = function () {
+            $("#btnAgregarPeriodo").text("Editar periodo");
+            $("#btnCancelarAgregarPeriodo").show();
+            indice = $(this).closest("tbody tr").index();
+            p = listaPeriodos[indice];
+            $("#txtPeriodo").val(p.Periodo);
+            $("#txtFechaInicial").val(p.FechaInicial);
+            $("#txtFechaFinal").val(p.FechaFinal);
+        };
+
+        $(document).ready(function () {
+
+            $('[data-toggle="popover"]').popover({
+                html:true
+            });
+
+            $("#btnCancelarAgregarPeriodo").hide();
+
+            indice = -1;
+            periodo = @Model.Periodos +1;
+            $("#txtPeriodo").val(periodo);
+            activarEliminar();
+
+            $("#btnAgregarPeriodo").click(adicionarPeriodo);
+            $("#btnCancelarAgregarPeriodo").click(limpiarCampos);
+            $(document).on("click", "#editarPeriodo", editarRegistro);
+
+        });
+
+    </script>
+            )
+
+<script type="text/html" id="agregarPeriodo">
+    <tr>
+        <td class="centered id" hidden="hidden"><%= id %></td>
+        <td class="centered periodo"><%= periodo %></td>
+        <td class="centered fechaInicial"><%= fechaInicial %></td>
+        <td class="centered fechaFinal"><%= fechaFinal %></td>
+        <td class="centered"></td>
+        <td class="centered"></td>
+        <td class="centered col-md-1"><a href="javascript:void(0)" id="editarPeriodo">Editar</a></td>
+        <td class="centered eliminar col-md-1"></td>
+    </tr>
+</script>

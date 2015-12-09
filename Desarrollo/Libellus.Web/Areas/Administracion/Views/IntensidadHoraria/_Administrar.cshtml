@@ -1,0 +1,103 @@
+﻿@model Libellus.Web.Areas.Administracion.Models.IntensidadHoraria.IntensidadHorariaViewModel
+@{
+    object momentosTotales = ViewBag.MomentosTotales;
+    object momentosGradoArea = ViewBag.MomentosGradoArea;
+}
+<div class="row">
+    <div class="form-group col-md-4">
+        @Html.LabelFor(model => model.IdAnioLectivo)
+        @Html.DropDownListFor(model => model.IdAnioLectivo, Model.AniosLectivos, new { @class = "form-control", tabindex = "1" })
+        @Html.ValidationMessageFor(model => model.IdAnioLectivo, "", new { @class = "text-danger" })
+    </div>
+
+    <div class="form-group col-md-4">
+        @Html.LabelFor(model => model.IdGrado)
+        @Html.DropDownListFor(model => model.IdGrado, Model.Grados, new { @class = "form-control", tabindex = "2" })
+        @Html.ValidationMessageFor(model => model.IdGrado, "", new { @class = "text-danger" })
+    </div>
+
+    <div class="form-group col-md-4">
+        @Html.Label("Momentos totales")
+        @Html.TextBox("MomentosTotales", momentosTotales, new { @class = "form-control", disabled = "disabled", tabindex = "3" })
+    </div>
+</div>
+
+<div class="row">
+    <div class="form-group col-md-4">
+        @Html.LabelFor(model => model.IdArea)
+        @Html.DropDownListFor(model => model.IdArea, Model.Areas, new { @class = "form-control", id = "area", tabindex = "4" })
+        @Html.ValidationMessageFor(model => model.IdArea, "", new { @class = "text-danger" })
+    </div>
+
+    <div class="form-group col-md-4">
+        @Html.LabelFor(model => model.IdAsignatura)
+        @Html.DropDownListFor(model => model.IdAsignatura, Model.Asignaturas, new { @class = "form-control", id = "asignatura", tabindex = "5" })
+        @Html.ValidationMessageFor(model => model.IdAsignatura, "", new { @class = "text-danger" })
+    </div>
+
+    <div class="form-group col-md-4">
+        @Html.Label("Momentos área/grado")
+        @Html.TextBox("MomentosGradoArea", momentosGradoArea, new { @class = "form-control", disabled = "disabled", tabindex = "6" })
+    </div>
+</div>
+
+<div class="row">
+    <div class="form-group col-md-4">
+        @Html.LabelFor(model => model.HorasSemana)
+        @Html.DropDownListFor(model => model.HorasSemana, Model.HorasSemanas, new { @class = "form-control", tabindex = "7" })
+        @Html.ValidationMessageFor(model => model.HorasSemana, "", new { @class = "text-danger" })
+    </div>
+</div>
+
+@Html.Script(
+    @<script type="text/javascript">
+
+    var actualizarMomentosTotales = function () {
+        var datos = {
+            IdAnioLectivo: $("#IdAnioLectivo").val(),
+            IdGrado: $("#IdGrado").val(),
+            IdArea: $("#area").val()
+        };
+
+        var opciones = {
+            url: '@Url.Action("ObtenerMomentosTotales")',
+            data: datos,
+            type: 'POST'
+        };
+        $("#area").val("").change();
+        $("#MomentosGradoArea").val("0");
+        $.ajax(opciones).success(function (data) {
+            $("#MomentosTotales").val(data);
+        }).error(function () {
+            InformarAccion("Mensaje de error", "@Mensaje.Mensaje1000");
+            });
+        };
+
+        var actualizarMomentosGradoArea = function () {
+            var datos = {
+                IdAnioLectivo: $("#IdAnioLectivo").val(),
+                IdGrado: $("#IdGrado").val(),
+                IdArea: $("#area").val()
+            };
+
+            var opciones = {
+                url: '@Url.Action("ObtenerMomentosGradoArea")',
+                data: datos,
+                type: 'POST'
+            };
+
+            $.ajax(opciones).success(function (data) {
+                $("#MomentosGradoArea").val(data);
+            }).error(function () {
+                InformarAccion("Mensaje de error", "@Mensaje.Mensaje1000");
+            });
+        };
+
+        $("#IdAnioLectivo").change(actualizarMomentosTotales);
+        $("#IdGrado").change(actualizarMomentosTotales);
+        $("#area").change(actualizarMomentosGradoArea);
+
+    </script>)
+
+
+

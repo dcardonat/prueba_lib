@@ -1,0 +1,632 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="12.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProductVersion>
+    </ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{36C65686-A27D-44DD-9ED9-07DE82ECB19E}</ProjectGuid>
+    <ProjectTypeGuids>{349c5851-65df-11da-9384-00065b846f21};{fae04ec0-301f-11d3-bf4b-00c04f79efbc}</ProjectTypeGuids>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>Libellus.Web</RootNamespace>
+    <AssemblyName>Libellus.Web</AssemblyName>
+    <TargetFrameworkVersion>v4.5.1</TargetFrameworkVersion>
+    <UseIISExpress>true</UseIISExpress>
+    <IISExpressSSLPort />
+    <IISExpressAnonymousAuthentication />
+    <IISExpressWindowsAuthentication />
+    <IISExpressUseClassicPipelineMode />
+    <SccProjectName>SAK</SccProjectName>
+    <SccLocalPath>SAK</SccLocalPath>
+    <SccAuxPath>SAK</SccAuxPath>
+    <SccProvider>SAK</SccProvider>
+    <WebGreaseLibPath>..\packages\WebGrease.1.5.2\lib</WebGreaseLibPath>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="Antlr3.Runtime">
+      <HintPath>..\packages\Antlr.3.4.1.9004\lib\Antlr3.Runtime.dll</HintPath>
+    </Reference>
+    <Reference Include="DocumentFormat.OpenXml, Version=2.5.5631.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <Private>True</Private>
+      <HintPath>..\packages\DocumentFormat.OpenXml.2.5\lib\DocumentFormat.OpenXml.dll</HintPath>
+    </Reference>
+    <Reference Include="Elmah, Version=1.2.14706.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\elmah.corelibrary.1.2.2\lib\Elmah.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="EntityFramework, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\EntityFramework.6.1.0\lib\net45\EntityFramework.dll</HintPath>
+    </Reference>
+    <Reference Include="EntityFramework.SqlServer, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\EntityFramework.6.1.0\lib\net45\EntityFramework.SqlServer.dll</HintPath>
+    </Reference>
+    <Reference Include="Glimpse.Ado">
+      <HintPath>..\packages\Glimpse.Ado.1.7.3\lib\net45\Glimpse.Ado.dll</HintPath>
+    </Reference>
+    <Reference Include="Glimpse.AspNet">
+      <HintPath>..\packages\Glimpse.AspNet.1.8.0\lib\net45\Glimpse.AspNet.dll</HintPath>
+    </Reference>
+    <Reference Include="Glimpse.Core">
+      <HintPath>..\packages\Glimpse.1.8.6\lib\net45\Glimpse.Core.dll</HintPath>
+    </Reference>
+    <Reference Include="Glimpse.EF6">
+      <HintPath>..\packages\Glimpse.EF6.1.6.5\lib\net45\Glimpse.EF6.dll</HintPath>
+    </Reference>
+    <Reference Include="Glimpse.Mvc5">
+      <HintPath>..\packages\Glimpse.Mvc5.1.5.3\lib\net45\Glimpse.Mvc5.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="MvcCheckBoxList">
+      <HintPath>..\packages\MvcCheckBoxList.1.4.4.5\lib\net45\MvcCheckBoxList.dll</HintPath>
+    </Reference>
+    <Reference Include="Newtonsoft.Json, Version=6.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\Newtonsoft.Json.6.0.8\lib\net45\Newtonsoft.Json.dll</HintPath>
+    </Reference>
+    <Reference Include="PagedList">
+      <HintPath>..\packages\PagedList.1.17.0.0\lib\net40\PagedList.dll</HintPath>
+    </Reference>
+    <Reference Include="PagedList.Mvc">
+      <HintPath>..\packages\PagedList.Mvc.4.5.0.0\lib\net40\PagedList.Mvc.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Net.Http" />
+    <Reference Include="System.Net.Http.WebRequest" />
+    <Reference Include="System.Web.DynamicData" />
+    <Reference Include="System.Web.Entity" />
+    <Reference Include="System.Web.ApplicationServices" />
+    <Reference Include="System.ComponentModel.DataAnnotations" />
+    <Reference Include="System" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="System.Web.Extensions" />
+    <Reference Include="System.Web.Helpers, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\Microsoft.AspNet.WebPages.3.2.3\lib\net45\System.Web.Helpers.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.Mvc, Version=5.2.3.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\Microsoft.AspNet.Mvc.5.2.3\lib\net45\System.Web.Mvc.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.Optimization">
+      <HintPath>..\packages\Microsoft.AspNet.Web.Optimization.1.1.3\lib\net40\System.Web.Optimization.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.Razor, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\Microsoft.AspNet.Razor.3.2.3\lib\net45\System.Web.Razor.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.WebPages, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\Microsoft.AspNet.WebPages.3.2.3\lib\net45\System.Web.WebPages.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.WebPages.Deployment, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\Microsoft.AspNet.WebPages.3.2.3\lib\net45\System.Web.WebPages.Deployment.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.WebPages.Razor, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\Microsoft.AspNet.WebPages.3.2.3\lib\net45\System.Web.WebPages.Razor.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Web" />
+    <Reference Include="System.Xml" />
+    <Reference Include="System.Configuration" />
+    <Reference Include="System.Web.Services" />
+    <Reference Include="System.EnterpriseServices" />
+    <Reference Include="WebGrease">
+      <HintPath>..\packages\WebGrease.1.5.2\lib\WebGrease.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+  <ItemGroup>
+    <Reference Include="Microsoft.Web.Infrastructure">
+      <HintPath>..\packages\Microsoft.Web.Infrastructure.1.0.0.0\lib\net40\Microsoft.Web.Infrastructure.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="App_Start\FilterConfig.cs" />
+    <Compile Include="Areas\Administracion\Controllers\AdministracionBaseController.cs" />
+    <Compile Include="Areas\Administracion\Controllers\AnioLectivoController.cs" />
+    <Compile Include="Areas\Administracion\Controllers\AperturaPeriodosController.cs" />
+    <Compile Include="Areas\Administracion\Controllers\CuposPorNivelController.cs" />
+    <Compile Include="Areas\Administracion\Controllers\DocenteController.cs" />
+    <Compile Include="Areas\Administracion\Controllers\DocumentacionSoporteRolesController.cs" />
+    <Compile Include="Areas\Administracion\Controllers\FuncionalidadesController.cs" />
+    <Compile Include="Areas\Administracion\Controllers\GradosPorNivelController.cs" />
+    <Compile Include="Areas\Administracion\Controllers\GruposPorGradoController.cs" />
+    <Compile Include="Areas\Administracion\Controllers\InstitucionEducativaController.cs" />
+    <Compile Include="Areas\Administracion\Controllers\IntensidadHorariaController.cs" />
+    <Compile Include="Areas\Administracion\Controllers\ParametrizacionEscolarController.cs" />
+    <Compile Include="Areas\Administracion\Controllers\ParametrizacionInstitucionalController.cs" />
+    <Compile Include="Areas\Administracion\Controllers\SalidasOcupacionalesController.cs" />
+    <Compile Include="Areas\Administracion\Controllers\SedesController.cs" />
+    <Compile Include="Areas\Administracion\Controllers\UsuariosAdministrativosController.cs" />
+    <Compile Include="Areas\Administracion\Controllers\RolesController.cs" />
+    <Compile Include="Areas\Administracion\Controllers\UsuariosController.cs" />
+    <Compile Include="Areas\Administracion\Models\Account\CambiarContraseniaViewModel.cs" />
+    <Compile Include="Areas\Administracion\Models\Account\FuncionalidadesRolViewModel.cs" />
+    <Compile Include="Areas\Administracion\Models\Account\GestionFuncionalidadViewModel.cs" />
+    <Compile Include="Areas\Administracion\Models\Account\UsuarioViewModel.cs" />
+    <Compile Include="Areas\Administracion\Models\Account\RolViewModel.cs" />
+    <Compile Include="Areas\Administracion\Models\AnioLectivo\AnioLectivoViewModel.cs" />
+    <Compile Include="Areas\Administracion\Models\AperturaPeriodos\AperturaPeriodosViewModel.cs" />
+    <Compile Include="Areas\Administracion\Models\Aulas\AulaViewModel.cs" />
+    <Compile Include="Areas\Administracion\Models\CuposPorNivel\CuposPorNivelConsultaViewModels.cs" />
+    <Compile Include="Areas\Administracion\Models\CuposPorNivel\CuposPorNivelViewModels.cs" />
+    <Compile Include="Areas\Administracion\Models\Docente\ConsultarDocenteViewModel.cs" />
+    <Compile Include="Areas\Administracion\Models\Docente\DatosPersonalesViewModel.cs" />
+    <Compile Include="Areas\Administracion\Models\Docente\DatosResidencialesViewModel.cs" />
+    <Compile Include="Areas\Administracion\Models\Docente\DocenteViewModel.cs" />
+    <Compile Include="Areas\Administracion\Models\Docente\DocumentosSoporteViewModel.cs" />
+    <Compile Include="Areas\Administracion\Models\Docente\EstadoHorarioViewModel.cs" />
+    <Compile Include="Areas\Administracion\Models\Docente\EstudiosRealizadosViewModel.cs" />
+    <Compile Include="Areas\Administracion\Models\Docente\ExperienciaDocenteViewModel.cs" />
+    <Compile Include="Areas\Administracion\Models\Docente\ResultadoConsultaDocentesViewModel.cs" />
+    <Compile Include="Areas\Administracion\Models\DocumentacionSoporteRoles\Posteados.cs" />
+    <Compile Include="Areas\Administracion\Models\DocumentacionSoporteRoles\SoporteRolViewModel.cs" />
+    <Compile Include="Areas\Administracion\Models\DocumentacionSoporteRoles\TipoDocumentoViewModel.cs" />
+    <Compile Include="Areas\Administracion\Models\GradosPorNivel\GradosPorNivelViewModel.cs" />
+    <Compile Include="Areas\Administracion\Models\GruposPorGrado\GruposPorGradoViewModel.cs" />
+    <Compile Include="Areas\Administracion\Models\InstitucionEducativa\InstitucionEducativaViewModel.cs" />
+    <Compile Include="Areas\Administracion\Models\InstitucionEducativa\RegistroLegalizacionViewModel.cs" />
+    <Compile Include="Areas\Administracion\Models\InstitucionEducativa\SedeViewModel.cs" />
+    <Compile Include="Areas\Administracion\Models\IntensidadHoraria\IntensidadHorariaViewModel.cs" />
+    <Compile Include="Areas\Administracion\Models\ParametrizacionEscolar\AreasNivelViewModel.cs" />
+    <Compile Include="Areas\Administracion\Models\ParametrizacionEscolar\ParametrizacionEscolarViewModel.cs" />
+    <Compile Include="Areas\Administracion\Models\ParametrizacionEscolar\PeriodoViewModel.cs" />
+    <Compile Include="Areas\Administracion\Models\ParametrosInstitucionales\ParametroInstitucionalViewModel.cs" />
+    <Compile Include="Areas\Administracion\Models\SalidasOcupacionales\SalidaOcupacionalViewModel.cs" />
+    <Compile Include="Areas\Administracion\Models\UsuariosAdministrativos\UsuarioAdministrativoViewModelConsulta.cs" />
+    <Compile Include="Areas\Administracion\Models\Sedes\SedesViewModel.cs" />
+    <Compile Include="Areas\Administracion\Models\UsuariosAdministrativos\UsuarioAdministrativoViewModel.cs" />
+    <Compile Include="Areas\GestionAcademica\Controllers\AspectoEvaluativoController.cs" />
+    <Compile Include="Areas\GestionAcademica\Controllers\GestionAcademicaBaseController.cs" />
+    <Compile Include="Areas\GestionAcademica\Controllers\GrupoController.cs" />
+    <Compile Include="Areas\GestionAcademica\Controllers\ParametrosPromocionController.cs" />
+    <Compile Include="Areas\GestionAcademica\Controllers\RangosDesempenioController.cs" />
+    <Compile Include="Areas\GestionAcademica\GestionAcademicaAreaRegistration.cs" />
+    <Compile Include="Areas\GestionAcademica\Models\AspectoEvaluativo\AspectoEvaluativoViewModel.cs" />
+    <Compile Include="Areas\GestionAcademica\Models\Grupo\EstudianteViewModel.cs" />
+    <Compile Include="Areas\GestionAcademica\Models\Grupo\EstudianteGrupoViewModel.cs" />
+    <Compile Include="Areas\GestionAcademica\Models\Grupo\DistribucionEstudianteGrupoViewModel.cs" />
+    <Compile Include="Areas\GestionAcademica\Models\ParametrosPromocion\ParametrosPromocionViewModels.cs" />
+    <Compile Include="Areas\GestionAcademica\Models\RangosDesempenio\RangoDesempenioConsultaViewModels.cs" />
+    <Compile Include="Areas\GestionAcademica\Models\RangosDesempenio\RangosDesempenioViewModels.cs" />
+    <Compile Include="Areas\GestionMatricula\Controllers\CancelacionMatriculaController.cs" />
+    <Compile Include="Areas\GestionMatricula\Controllers\CuposController.cs" />
+    <Compile Include="Areas\GestionMatricula\Controllers\DatosGeneralesEstudianteController.cs" />
+    <Compile Include="Areas\GestionMatricula\Controllers\DatosRestringidosEstudianteController.cs" />
+    <Compile Include="Areas\GestionMatricula\Controllers\GestionMatriculaBaseController.cs" />
+    <Compile Include="Areas\GestionMatricula\Controllers\MatriculasController.cs" />
+    <Compile Include="Areas\GestionMatricula\GestionMatriculaAreaRegistration.cs" />
+    <Compile Include="Areas\GestionMatricula\Models\CancelacionMatricula\CancelacionMatriculaViewModel.cs" />
+    <Compile Include="Areas\GestionMatricula\Models\CancelacionMatricula\ConsultaCancelacionMatriculaViewModel.cs" />
+    <Compile Include="Areas\GestionMatricula\Models\CancelacionMatricula\ResultadoConsultaCancelacionMatriculaViewModel.cs" />
+    <Compile Include="Areas\GestionMatricula\Models\Cupos\CuposViewModel.cs">
+      <ExcludeFromStyleCop>False</ExcludeFromStyleCop>
+    </Compile>
+    <Compile Include="Areas\GestionMatricula\Models\DatosGeneralesEstudiante\AntecedentesAcademicosViewModel.cs" />
+    <Compile Include="Areas\GestionMatricula\Models\DatosGeneralesEstudiante\DatosEstadoViewModel.cs" />
+    <Compile Include="Areas\GestionMatricula\Models\DatosGeneralesEstudiante\DatosFamiliaresViewModel.cs" />
+    <Compile Include="Areas\GestionMatricula\Models\DatosGeneralesEstudiante\DatosResidencialesViewModel.cs" />
+    <Compile Include="Areas\GestionMatricula\Models\DatosGeneralesEstudiante\EstudianteViewModel.cs" />
+    <Compile Include="Areas\GestionMatricula\Models\DatosGeneralesEstudiante\FamiliarViewModel.cs" />
+    <Compile Include="Areas\GestionMatricula\Models\DatosGeneralesEstudiante\UsuarioViewModel.cs" />
+    <Compile Include="Areas\GestionMatricula\Models\Matriculas\ConsultarMatriculaViewModel.cs" />
+    <Compile Include="Areas\GestionMatricula\Models\Matriculas\DocumentosMatriculaViewModels.cs" />
+    <Compile Include="Areas\GestionMatricula\Models\Matriculas\RegistroMatriculaViewModel.cs" />
+    <Compile Include="Areas\GestionMatricula\Models\Matriculas\ResultadoConsultaMatriculaViewModel.cs" />
+    <Compile Include="Attributes\ElmahAttribute.cs" />
+    <Compile Include="Attributes\EmailAttribute.cs" />
+    <Compile Include="Attributes\MayoriaEdadAttribute.cs" />
+    <Compile Include="Attributes\TimeAmPmAttribute.cs" />
+    <Compile Include="Autorizacion\AutorizacionFuncionalidad.cs" />
+    <Compile Include="Controllers\GeneralController.cs" />
+    <Compile Include="Controllers\GeografiaController.cs" />
+    <Compile Include="GlimpseSecurityPolicy.cs" />
+    <Compile Include="Helpers\BotonCancelarHelper.cs" />
+    <Compile Include="Helpers\BotonEliminarHelper.cs" />
+    <Compile Include="Helpers\EstilosHelper.cs" />
+    <Compile Include="Helpers\MensajesHelper.cs" />
+    <Compile Include="Helpers\ScriptHelper.cs" />
+    <Compile Include="Areas\Administracion\Models\Account\RecuperarContraseniaViewModels.cs" />
+    <Compile Include="Helpers\TextoSoloLecturaHelper.cs" />
+    <Compile Include="Startup.cs" />
+    <Content Include="Content\admin.css" />
+    <Content Include="Content\bootstrap.min.css" />
+    <Content Include="Content\BootstrapFileInput\fileinput.css" />
+    <Content Include="Content\BootstrapFileInput\fileinput.min.css" />
+    <Content Include="Content\DateTimePicker\bootstrap-datetimepicker.css" />
+    <Content Include="Content\font-openSansCondensed.css" />
+    <Content Include="Content\font-oswald.css" />
+    <Content Include="Content\img\favicon.ico" />
+    <Content Include="Content\img\ismlogo.png" />
+    <Content Include="Content\img\libellus_logo.png" />
+    <Content Include="Content\img\libros.png" />
+    <Content Include="Content\img\logo-login.png" />
+    <Content Include="Content\img\logo.png" />
+    <Content Include="Content\jquery-ui\images\ui-bg_flat_0_aaaaaa_40x100.png" />
+    <Content Include="Content\jquery-ui\images\ui-bg_flat_75_ffffff_40x100.png" />
+    <Content Include="Content\jquery-ui\images\ui-bg_glass_55_fbf9ee_1x400.png" />
+    <Content Include="Content\jquery-ui\images\ui-bg_glass_65_ffffff_1x400.png" />
+    <Content Include="Content\jquery-ui\images\ui-bg_glass_75_dadada_1x400.png" />
+    <Content Include="Content\jquery-ui\images\ui-bg_glass_75_e6e6e6_1x400.png" />
+    <Content Include="Content\jquery-ui\images\ui-bg_glass_95_fef1ec_1x400.png" />
+    <Content Include="Content\jquery-ui\images\ui-bg_highlight-soft_75_cccccc_1x100.png" />
+    <Content Include="Content\jquery-ui\images\ui-icons_222222_256x240.png" />
+    <Content Include="Content\jquery-ui\images\ui-icons_2e83ff_256x240.png" />
+    <Content Include="Content\jquery-ui\images\ui-icons_454545_256x240.png" />
+    <Content Include="Content\jquery-ui\images\ui-icons_888888_256x240.png" />
+    <Content Include="Content\jquery-ui\images\ui-icons_cd0a0a_256x240.png" />
+    <Content Include="Content\jquery-ui\jquery-ui.css" />
+    <Content Include="Content\jquery-ui\jquery-ui.structure.css" />
+    <Content Include="Content\jquery-ui\jquery-ui.structure.min.css" />
+    <Content Include="Content\jquery-ui\jquery-ui.theme.css" />
+    <Content Include="Content\jquery-ui\jquery-ui.theme.min.css" />
+    <Content Include="Content\Select2\select2-bootstrap.css" />
+    <Content Include="Content\Select2\select2-spinner.gif" />
+    <Content Include="Content\Select2\select2.css" />
+    <Content Include="Content\Select2\select2.png" />
+    <Content Include="Content\Select2\select2x2.png" />
+    <Content Include="PlantillasEmail\EmailCambioContrasenia.txt" />
+    <Content Include="PlantillasEmail\EmailCupoGenerado.txt" />
+    <Content Include="PlantillasEmail\EmailRegistroUsuario.txt" />
+    <Content Include="PlantillasEmail\EmailRecordarClaveAcceso.txt" />
+    <Content Include="Scripts\BootstrapFileInput\fileinput.js" />
+    <Content Include="Scripts\BootstrapFileInput\fileinput.min.js" />
+    <Content Include="Scripts\BootstrapFileInput\fileinput_locale_es.js" />
+    <Content Include="Scripts\CascadingDropDown\jquery.cascadingDropDown.js" />
+    <Content Include="Scripts\DateTimePicker\bootstrap-datetimepicker.js" />
+    <Content Include="Scripts\DateTimePicker\es.js" />
+    <Content Include="Scripts\DateTimePicker\moment.min.js" />
+    <Content Include="Scripts\jquery.unobtrusive-ajax.js" />
+    <Content Include="Scripts\jquery.unobtrusive-ajax.min.js" />
+    <Content Include="Scripts\jqueryPlugins\jquery-ui\jquery-ui.js" />
+    <Content Include="Scripts\jqueryPlugins\jquery-ui\jquery-ui.min.js" />
+    <Content Include="Scripts\libellus.custom-validations.js" />
+    <Content Include="Scripts\jquery.cookie.js" />
+    <Content Include="Scripts\jqueryPlugins\jstree\dist\jstree.js" />
+    <Content Include="Scripts\jqueryPlugins\jstree\dist\jstree.min.js" />
+    <Content Include="Scripts\jqueryPlugins\jstree\dist\themes\default-dark\32px.png" />
+    <Content Include="Scripts\jqueryPlugins\jstree\dist\themes\default-dark\40px.png" />
+    <Content Include="Scripts\jqueryPlugins\jstree\dist\themes\default-dark\style.css" />
+    <Content Include="Scripts\jqueryPlugins\jstree\dist\themes\default-dark\style.min.css" />
+    <Content Include="Scripts\jqueryPlugins\jstree\dist\themes\default-dark\throbber.gif" />
+    <Content Include="Scripts\jqueryPlugins\jstree\dist\themes\default\32px.png" />
+    <Content Include="Scripts\jqueryPlugins\jstree\dist\themes\default\40px.png" />
+    <Content Include="Scripts\jqueryPlugins\jstree\dist\themes\default\style.css" />
+    <Content Include="Scripts\jqueryPlugins\jstree\dist\themes\default\style.min.css" />
+    <Content Include="Scripts\jqueryPlugins\jstree\dist\themes\default\throbber.gif" />
+    <Content Include="Scripts\jqueryPlugins\jstree\gruntfile.js" />
+    <Content Include="Scripts\jqueryPlugins\jstree\src\intro.js" />
+    <Content Include="Scripts\jqueryPlugins\jstree\src\jstree.checkbox.js" />
+    <Content Include="Scripts\jqueryPlugins\jstree\src\jstree.contextmenu.js" />
+    <Content Include="Scripts\jqueryPlugins\jstree\src\jstree.dnd.js" />
+    <Content Include="Scripts\jqueryPlugins\jstree\src\jstree.js" />
+    <Content Include="Scripts\jqueryPlugins\jstree\src\jstree.search.js" />
+    <Content Include="Scripts\jqueryPlugins\jstree\src\jstree.sort.js" />
+    <Content Include="Scripts\jqueryPlugins\jstree\src\jstree.state.js" />
+    <Content Include="Scripts\jqueryPlugins\jstree\src\jstree.types.js" />
+    <Content Include="Scripts\jqueryPlugins\jstree\src\jstree.unique.js" />
+    <Content Include="Scripts\jqueryPlugins\jstree\src\jstree.wholerow.js" />
+    <Content Include="Scripts\jqueryPlugins\jstree\src\misc.js" />
+    <Content Include="Scripts\jqueryPlugins\jstree\src\outro.js" />
+    <Content Include="Scripts\jqueryPlugins\jstree\src\themes\default-dark\32px.png" />
+    <Content Include="Scripts\jqueryPlugins\jstree\src\themes\default-dark\40px.png" />
+    <Content Include="Scripts\jqueryPlugins\jstree\src\themes\default-dark\style.css" />
+    <Content Include="Scripts\jqueryPlugins\jstree\src\themes\default-dark\throbber.gif" />
+    <Content Include="Scripts\jqueryPlugins\jstree\src\themes\default\32px.png" />
+    <Content Include="Scripts\jqueryPlugins\jstree\src\themes\default\40px.png" />
+    <Content Include="Scripts\jqueryPlugins\jstree\src\themes\default\style.css" />
+    <Content Include="Scripts\jqueryPlugins\jstree\src\themes\default\throbber.gif" />
+    <Content Include="Scripts\jqueryPlugins\jstree\src\vakata-jstree.js" />
+    <Content Include="Scripts\jqueryPlugins\select2\.gitignore" />
+    <Content Include="Scripts\jqueryPlugins\select2\select2-bootstrap.css" />
+    <Content Include="Scripts\jqueryPlugins\select2\select2-spinner.gif" />
+    <Content Include="Scripts\jqueryPlugins\select2\select2.css" />
+    <Content Include="Scripts\jqueryPlugins\select2\select2.js" />
+    <Content Include="Scripts\jqueryPlugins\select2\select2.min.js" />
+    <Content Include="Scripts\jqueryPlugins\select2\select2.png" />
+    <Content Include="Scripts\jqueryPlugins\select2\select2x2.png" />
+    <Content Include="Scripts\jqueryPlugins\select2\select2_locale_es.js" />
+    <Content Include="Scripts\Select2\select2.js" />
+    <Content Include="Scripts\Select2\select2_locale_es.js" />
+    <Content Include="Scripts\Spin\spin.js" />
+    <Content Include="Scripts\Spin\spin.min.js" />
+    <Content Include="Scripts\target-account.js" />
+    <Content Include="Scripts\target-admin.js" />
+    <Content Include="Content\PagedList.css" />
+    <Content Include="Content\Site.css" />
+    <Content Include="fonts\fontawesome-webfont.svg" />
+    <Content Include="fonts\fontawesome-webfontba72.svg" />
+    <Content Include="fonts\glyphicons-halflings-regular.svg" />
+    <Content Include="Global.asax" />
+    <Content Include="Scripts\bootstrap.min.js" />
+    <Content Include="Areas\Administracion\Views\Maestros\Crear.cshtml" />
+    <Content Include="Areas\Administracion\Views\Maestros\_Administrar.cshtml" />
+    <Content Include="Areas\Administracion\Views\Maestros\_InformacionMaestros.cshtml" />
+    <Content Include="Views\Account\Login.cshtml" />
+    <Content Include="Areas\Administracion\Views\ActividadesComplementarias\Consultar.cshtml" />
+    <Content Include="Areas\Administracion\Views\ActividadesComplementarias\Editar.cshtml" />
+    <Content Include="Areas\Administracion\Views\ActividadesComplementarias\Crear.cshtml" />
+    <Content Include="Areas\Administracion\Views\Asignaturas\Consultar.cshtml" />
+    <Content Include="Areas\Administracion\Views\Asignaturas\Editar.cshtml" />
+    <Content Include="Areas\Administracion\Views\Asignaturas\Crear.cshtml" />
+    <Content Include="Areas\Administracion\Views\Aulas\Consultar.cshtml" />
+    <Content Include="Areas\Administracion\Views\Aulas\Editar.cshtml" />
+    <Content Include="Scripts\underscore-min.js" />
+    <Content Include="Areas\Administracion\Views\ParametrizacionEscolar\_Administrar.cshtml" />
+    <Content Include="Areas\Administracion\Views\ParametrizacionEscolar\_Parametrizacion.cshtml" />
+    <Content Include="Areas\Administracion\Views\ParametrizacionEscolar\_Periodos.cshtml" />
+    <Content Include="Areas\Administracion\Views\ParametrizacionEscolar\Editar.cshtml" />
+    <Content Include="Areas\Administracion\Views\AnioLectivo\Crear.cshtml" />
+    <Content Include="Areas\Administracion\Views\AnioLectivo\_Administrar.cshtml" />
+    <Content Include="Areas\Administracion\Views\AnioLectivo\Consultar.cshtml" />
+    <Content Include="Areas\Administracion\Views\AnioLectivo\Editar.cshtml" />
+    <Content Include="Areas\Administracion\Views\AperturaPeriodos\Administrar.cshtml" />
+    <Content Include="Areas\Administracion\Views\ParametrizacionEscolar\_AreasNivel.cshtml" />
+    <Content Include="Areas\Administracion\Views\IntensidadHoraria\_ResultadoConsulta.cshtml" />
+    <Content Include="Views\Account\RecordarClaveAcceso.cshtml" />
+    <Content Include="Areas\Administracion\Views\Docente\_ResultadoConsulta.cshtml" />
+    <Content Include="Areas\Administracion\Views\Docente\Editar.cshtml" />
+    <Content Include="Areas\Administracion\Views\ParametrizacionEscolar\_ResultadoConsulta.cshtml" />
+    <Content Include="Areas\GestionMatricula\Views\web.config" />
+    <Content Include="Areas\GestionMatricula\Views\_ViewStart.cshtml" />
+    <Content Include="Areas\GestionMatricula\Views\Cupos\Index.cshtml" />
+    <Content Include="Areas\GestionMatricula\Views\DatosGeneralesEstudiante\Actualizar.cshtml" />
+    <Content Include="Areas\GestionMatricula\Views\DatosGeneralesEstudiante\_DatosPersonales.cshtml" />
+    <Content Include="Areas\GestionMatricula\Views\DatosGeneralesEstudiante\_DatosResidenciales.cshtml" />
+    <Content Include="Areas\GestionMatricula\Views\DatosGeneralesEstudiante\_DatosFamiliares.cshtml" />
+    <Content Include="Areas\GestionMatricula\Views\DatosGeneralesEstudiante\_DatosEstado.cshtml" />
+    <Content Include="Areas\GestionMatricula\Views\DatosGeneralesEstudiante\_DatosAntecedentes.cshtml" />
+    <Content Include="Areas\Administracion\Views\Usuarios\Consultar.cshtml" />
+    <Content Include="Areas\GestionMatricula\Views\Matriculas\Consultar.cshtml" />
+    <Content Include="Areas\GestionMatricula\Views\Matriculas\Registrar.cshtml" />
+    <Content Include="Areas\GestionAcademica\Views\Grupo\AdministrarEstudiantesPorGrupo.cshtml" />
+    <Content Include="Areas\GestionMatricula\Views\CancelacionMatricula\Consultar.cshtml" />
+    <Content Include="Areas\GestionMatricula\Views\CancelacionMatricula\_ResultadoConsulta.cshtml" />
+    <Content Include="Areas\GestionMatricula\Views\CancelacionMatricula\CancelarMatricula.cshtml" />
+    <Content Include="Areas\GestionMatricula\Views\CancelacionMatricula\_CancelarSalidaOcupacional.cshtml" />
+    <Content Include="Areas\GestionMatricula\Views\CancelacionMatricula\_CancelarMatricula.cshtml" />
+    <Content Include="Areas\Administracion\Views\GruposPorGrado\Administrar.cshtml" />
+    <Content Include="Areas\GestionMatricula\Views\DatosGeneralesEstudiante\Consultar.cshtml" />
+    <Content Include="Areas\GestionMatricula\Views\DatosGeneralesEstudiante\_ResultadoConsulta.cshtml" />
+    <Content Include="Areas\GestionAcademica\Views\Grupo\ListarEstudiantesPorGrupo.cshtml" />
+    <Content Include="Areas\GestionMatricula\Views\DatosRestringidosEstudiante\Index.cshtml" />
+    <None Include="Scripts\_references.js" />
+    <Content Include="Views\Shared\_LoginPartial.cshtml" />
+    <Content Include="Areas\Administracion\Views\Aulas\Crear.cshtml" />
+    <Content Include="fonts\fontawesome-webfont.eot" />
+    <Content Include="fonts\fontawesome-webfont.eot%40" />
+    <Content Include="fonts\fontawesome-webfont.ttf" />
+    <Content Include="fonts\fontawesome-webfont.woff" />
+    <Content Include="fonts\glyphicons-halflings-regular.eot" />
+    <Content Include="fonts\glyphicons-halflings-regular.eot%40" />
+    <Content Include="fonts\glyphicons-halflings-regular.ttf" />
+    <Content Include="fonts\glyphicons-halflings-regular.woff" />
+    <Content Include="Areas\Administracion\Views\Roles\Consultar.cshtml" />
+    <Content Include="Areas\Administracion\Views\UsuariosAdministrativos\Consultar.cshtml" />
+    <Content Include="Areas\Administracion\Views\Maestros\Editar.cshtml" />
+    <Content Include="Areas\Administracion\Views\Sedes\Consultar.cshtml" />
+    <Content Include="Areas\Administracion\Views\Roles\_Administrar.cshtml" />
+    <Content Include="Areas\Administracion\Views\Funcionalidades\AsociarFuncionalidadesPorRol.cshtml" />
+    <Content Include="Areas\Administracion\Views\Roles\Crear.cshtml" />
+    <Content Include="Areas\Administracion\Views\Roles\Editar.cshtml" />
+    <Content Include="Areas\Administracion\Views\UsuariosAdministrativos\Crear.cshtml" />
+    <Content Include="Areas\Administracion\Views\SalidasOcupacionales\Consultar.cshtml" />
+    <Content Include="Areas\Administracion\Views\SalidasOcupacionales\Crear.cshtml" />
+    <Content Include="Areas\Administracion\Views\SalidasOcupacionales\_Administrar.cshtml" />
+    <Content Include="Areas\Administracion\Views\SalidasOcupacionales\Editar.cshtml" />
+    <Content Include="Areas\Administracion\Views\UsuariosAdministrativos\_Administrar.cshtml" />
+    <Content Include="Areas\Administracion\Views\GradosPorNivel\Administrar.cshtml" />
+    <Content Include="Areas\Administracion\Views\UsuariosAdministrativos\Editar.cshtml" />
+    <Content Include="Areas\Administracion\Views\DocumentacionSoporteRoles\Consultar.cshtml" />
+    <Content Include="Areas\Administracion\Views\DocumentacionSoporteRoles\_AdministrarDocumentos.cshtml" />
+    <Content Include="Areas\Administracion\Views\DocumentacionSoporteRoles\_FiltroEncabezado.cshtml" />
+    <Content Include="Areas\Administracion\Views\ParametrizacionInstitucional\Crear.cshtml" />
+    <Content Include="Areas\Administracion\Views\ParametrizacionInstitucional\_Administrar.cshtml" />
+    <Content Include="Areas\Administracion\Views\InstitucionEducativa\Index.cshtml" />
+    <Content Include="Areas\Administracion\Views\InstitucionEducativa\_DatosGenerales.cshtml" />
+    <Content Include="Areas\Administracion\Views\InstitucionEducativa\_SeccionesSedes.cshtml" />
+    <Content Include="Areas\Administracion\Views\InstitucionEducativa\_RegistrosLegalizacion.cshtml" />
+    <Content Include="Areas\Administracion\Views\DocumentacionSoporteRoles\Crear.cshtml" />
+    <Content Include="Areas\Administracion\Views\DocumentacionSoporteRoles\Editar.cshtml" />
+    <Content Include="Areas\Administracion\Views\ParametrizacionInstitucional\Consultar.cshtml" />
+    <Content Include="Areas\Administracion\Views\IntensidadHoraria\Consultar.cshtml" />
+    <Content Include="Areas\Administracion\Views\IntensidadHoraria\Crear.cshtml" />
+    <Content Include="Areas\Administracion\Views\ParametrizacionInstitucional\Editar.cshtml" />
+    <Content Include="Areas\Administracion\Views\IntensidadHoraria\_Administrar.cshtml" />
+    <Content Include="Areas\Administracion\Views\IntensidadHoraria\Editar.cshtml" />
+    <Content Include="Areas\Administracion\Views\Docente\Index.cshtml" />
+    <Content Include="Areas\Administracion\Views\Docente\Crear.cshtml" />
+    <Content Include="Areas\Administracion\Views\Docente\_DatosPersonales.cshtml" />
+    <Content Include="Areas\Administracion\Views\Docente\_EstudiosRealizados.cshtml" />
+    <Content Include="Areas\Administracion\Views\Docente\_ExperienciaDocente.cshtml" />
+    <Content Include="Areas\Administracion\Views\Docente\_EstadoHorario.cshtml" />
+    <Content Include="Areas\GestionAcademica\Views\_ViewStart.cshtml" />
+    <Content Include="Areas\GestionAcademica\Views\web.config" />
+    <Content Include="Areas\GestionAcademica\Views\AspectoEvaluativo\Consultar.cshtml" />
+    <Content Include="Areas\GestionAcademica\Views\AspectoEvaluativo\Crear.cshtml" />
+    <Content Include="Areas\GestionAcademica\Views\AspectoEvaluativo\Editar.cshtml" />
+    <Content Include="Areas\GestionAcademica\Views\AspectoEvaluativo\_Administrar.cshtml" />
+    <Content Include="Areas\Administracion\Views\CuposPorNivel\Administrar.cshtml" />
+    <Content Include="Areas\Administracion\Views\CuposPorNivel\_InformacionCuposPorNivel.cshtml" />
+    <Content Include="Areas\GestionAcademica\Views\ParametrosPromocion\Administrar.cshtml" />
+    <Content Include="Areas\Administracion\Views\Docente\_DocumentosSoporte.cshtml" />
+    <Content Include="Areas\GestionAcademica\Views\ParametrosPromocion\_Detalle.cshtml" />
+    <Content Include="Areas\GestionAcademica\Views\RangosDesempenio\_InformacionRangoDesempenio.cshtml" />
+    <Content Include="Areas\GestionAcademica\Views\RangosDesempenio\Administrar.cshtml" />
+    <Content Include="Areas\Administracion\Views\ParametrizacionEscolar\Consultar.cshtml" />
+    <Content Include="Areas\Administracion\Views\ParametrizacionEscolar\Crear.cshtml" />
+    <None Include="Scripts\jquery-1.10.2.intellisense.js" />
+    <Content Include="Scripts\jquery-1.10.2.js" />
+    <Content Include="Scripts\jquery-1.10.2.min.js" />
+    <None Include="Scripts\jquery.validate-vsdoc.js" />
+    <Content Include="Scripts\jquery.validate.js" />
+    <Content Include="Scripts\jquery.validate.min.js" />
+    <Content Include="Scripts\jquery.validate.unobtrusive.js" />
+    <Content Include="Scripts\jquery.validate.unobtrusive.min.js" />
+    <Content Include="Scripts\libellus.js" />
+    <Content Include="Scripts\respond.js" />
+    <Content Include="Scripts\respond.min.js" />
+    <Content Include="Web.config">
+      <SubType>Designer</SubType>
+    </Content>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="App_Start\BundleConfig.cs" />
+    <Compile Include="App_Start\RouteConfig.cs" />
+    <Compile Include="Areas\Administracion\AdministracionAreaRegistration.cs" />
+    <Compile Include="Controllers\AccountController.cs" />
+    <Compile Include="Areas\Administracion\Controllers\ActividadesComplementariasController.cs" />
+    <Compile Include="Areas\Administracion\Controllers\AsignaturasController.cs" />
+    <Compile Include="Areas\Administracion\Controllers\AulasController.cs" />
+    <Compile Include="Areas\Administracion\Controllers\MaestrosController.cs" />
+    <Compile Include="Areas\Administracion\Models\ActividadesComplementarias\ActividadesComplementariasViewModel.cs" />
+    <Compile Include="Areas\Administracion\Models\Asignaturas\AsignaturaViewModel.cs" />
+    <Compile Include="Areas\Administracion\Models\Maestros\MaestroViewModel.cs" />
+    <Compile Include="Areas\Administracion\Models\Account\LoginViewModel.cs" />
+    <Compile Include="Controllers\BaseController.cs" />
+    <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="Global.asax.cs">
+      <DependentUpon>Global.asax</DependentUpon>
+    </Compile>
+    <Compile Include="Helpers\EstadoHelper.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\web.config" />
+    <Content Include="packages.config" />
+    <Content Include="Areas\Administracion\Views\web.config">
+      <SubType>Designer</SubType>
+    </Content>
+    <Content Include="Areas\Administracion\Views\_ViewStart.cshtml" />
+    <Content Include="Areas\Administracion\Views\Maestros\Consultar.cshtml" />
+    <Content Include="Views\_ViewStart.cshtml" />
+    <Content Include="Views\Shared\_Layout.cshtml" />
+    <Content Include="Views\Home\Bienvenida.cshtml" />
+    <Content Include="Views\Shared\_MenuPartial.cshtml" />
+    <Content Include="Scripts\jqueryPlugins\jstree\bower.json" />
+    <Content Include="Scripts\jqueryPlugins\jstree\component.json" />
+    <Content Include="Scripts\jqueryPlugins\jstree\composer.json" />
+    <Content Include="Scripts\jqueryPlugins\jstree\jstree.jquery.json" />
+    <Content Include="Scripts\jqueryPlugins\jstree\LICENSE-MIT" />
+    <Content Include="Scripts\jqueryPlugins\jstree\package.json" />
+    <Content Include="Scripts\jqueryPlugins\jstree\README.md" />
+    <Content Include="Scripts\jqueryPlugins\jstree\src\themes\base.less" />
+    <Content Include="Scripts\jqueryPlugins\jstree\src\themes\default-dark\style.less" />
+    <Content Include="Scripts\jqueryPlugins\jstree\src\themes\default\style.less" />
+    <Content Include="Scripts\jqueryPlugins\jstree\src\themes\main.less" />
+    <Content Include="Scripts\jqueryPlugins\jstree\src\themes\mixins.less" />
+    <Content Include="Scripts\jqueryPlugins\jstree\src\themes\responsive.less" />
+    <Content Include="Scripts\jqueryPlugins\select2\bower.json" />
+    <Content Include="Scripts\jqueryPlugins\select2\component.json" />
+    <Content Include="Scripts\jqueryPlugins\select2\composer.json" />
+    <Content Include="Scripts\jqueryPlugins\select2\LICENSE" />
+    <Content Include="Scripts\jqueryPlugins\select2\package.json" />
+    <Content Include="Scripts\jqueryPlugins\select2\README.md" />
+    <Content Include="Scripts\jqueryPlugins\select2\release.sh" />
+    <Content Include="Scripts\jqueryPlugins\select2\select2.jquery.json" />
+    <Content Include="Views\General\AccesoInvalido.cshtml" />
+    <Content Include="Views\Shared\_ExportarExcel.cshtml" />
+    <Content Include="Views\Shared\_AniosLectivos.cshtml" />
+    <Content Include="Views\Account\CambiarContrasenia.cshtml" />
+    <None Include="Web.Debug.config">
+      <DependentUpon>Web.config</DependentUpon>
+    </None>
+    <None Include="Web.Pruebas.config">
+      <DependentUpon>Web.config</DependentUpon>
+    </None>
+    <None Include="Web.Release.config">
+      <DependentUpon>Web.config</DependentUpon>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="App_Data\" />
+    <Folder Include="Areas\Administracion\Views\Shared\" />
+    <Folder Include="Content\plugins\" />
+    <Folder Include="Models\" />
+    <Folder Include="Properties\PublishProfiles\" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Libellus.Entidades\Libellus.Entidades.csproj">
+      <Project>{880e4e2f-f3bf-4055-bd97-15e64af73216}</Project>
+      <Name>Libellus.Entidades</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Libellus.Mensajes\Libellus.Mensajes.csproj">
+      <Project>{675161d6-0659-4c4b-aa2d-bf48f0c7be9d}</Project>
+      <Name>Libellus.Mensajes</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Libellus.Negocio\Libellus.Negocio.csproj">
+      <Project>{c8abd0f8-a487-485d-9d44-b6d6178678e5}</Project>
+      <Name>Libellus.Negocio</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Libellus.Utilidades\Libellus.Utilidades.csproj">
+      <Project>{17e3035e-c972-41d3-ad9d-2dea71185abc}</Project>
+      <Name>Libellus.Utilidades</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <PropertyGroup>
+    <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
+    <VSToolsPath Condition="'$(VSToolsPath)' == ''">$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)</VSToolsPath>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Pruebas|AnyCPU'">
+    <OutputPath>bin\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <Optimize>true</Optimize>
+    <DebugType>pdbonly</DebugType>
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <ErrorReport>prompt</ErrorReport>
+    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+  </PropertyGroup>
+  <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
+  <Import Project="$(VSToolsPath)\WebApplications\Microsoft.WebApplication.targets" Condition="'$(VSToolsPath)' != ''" />
+  <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v10.0\WebApplications\Microsoft.WebApplication.targets" Condition="false" />
+  <ProjectExtensions>
+    <VisualStudio>
+      <FlavorProperties GUID="{349c5851-65df-11da-9384-00065b846f21}">
+        <WebProjectProperties>
+          <UseIIS>False</UseIIS>
+          <AutoAssignPort>True</AutoAssignPort>
+          <DevelopmentServerPort>58411</DevelopmentServerPort>
+          <DevelopmentServerVPath>/</DevelopmentServerVPath>
+          <IISUrl>http://localhost:54678/</IISUrl>
+          <NTLMAuthentication>False</NTLMAuthentication>
+          <UseCustomServer>False</UseCustomServer>
+          <CustomServerUrl>
+          </CustomServerUrl>
+          <SaveServerSettingsInUserFile>False</SaveServerSettingsInUserFile>
+        </WebProjectProperties>
+      </FlavorProperties>
+    </VisualStudio>
+  </ProjectExtensions>
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

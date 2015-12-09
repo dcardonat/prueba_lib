@@ -1,0 +1,157 @@
+﻿<div class="mainbar">
+    <div class="container">
+        <button type="button" class="btn mainbar-toggle" data-toggle="collapse" data-target=".mainbar-collapse">
+            <i class="fa fa-bars"></i>
+        </button>
+        <div class="mainbar-collapse collapse">
+            <ul class="nav navbar-nav mainbar-nav">
+                <li class="dropdown ">
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                        ADMINISTRACIÓN
+                    </a>
+                    <ul class="dropdown-menu">
+                        <li class="dropdown-submenu">
+                            <a tabindex="-1" href="#">
+                                Seguridad
+                            </a>
+                            <ul class="dropdown-menu">
+                                <li>
+                                    @Html.ActionLink("Usuarios Administrativos", "Consultar", "UsuariosAdministrativos", new { area = "Administracion" }, null)
+                                </li>
+                                <li>
+                                    @Html.ActionLink("Roles", "Consultar", "Roles", new { area = "Administracion" }, null)
+                                </li>
+                                <li>
+                                    @Html.ActionLink("Funcionalidades", "AsociarFuncionalidadesPorRol", "Funcionalidades", new { area = "Administracion" }, null)
+                                </li>
+                                <li>
+                                    @Html.ActionLink("Gestión de rol/estado usuarios", "Consultar", "Usuarios", new { area = "Administracion" }, null)
+                                </li>
+                            </ul>
+                        </li>
+                        <li class="dropdown-submenu">
+                            <a tabindex="-1" href="#">
+                                Catálogos
+                            </a>
+                            <ul class="dropdown-menu">
+                                <li>
+                                    @Html.ActionLink("Parametrización institucional", "Consultar", "ParametrizacionInstitucional", new { area = "Administracion" }, null)
+                                </li>
+                                <li>
+                                    @Html.ActionLink("Maestros generales", "Consultar", "Maestros", new { area = "Administracion" }, null)
+                                </li>
+                                <li>
+                                    @Html.ActionLink("Asignaturas", "Consultar", "Asignaturas", new { area = "Administracion" }, null)
+                                </li>
+                                <li>
+                                    @Html.ActionLink("Aulas", "Consultar", "Aulas", new { area = "Administracion" }, null)
+                                </li>
+                                <li>
+                                    @Html.ActionLink("Grados por nivel", "Administrar", "GradosPorNivel", new { area = "Administracion" }, null)
+                                </li>
+                                <li>
+                                    @Html.ActionLink("Grupos por grado", "Administrar", "GruposPorGrado", new { area = "Administracion" }, null)
+                                </li>
+                                <li>
+                                    @Html.ActionLink("Actividades complementarias", "Consultar", "ActividadesComplementarias", new { area = "Administracion" }, null)
+                                </li>
+                                <li>
+                                    @Html.ActionLink("Salidas ocupacionales", "Consultar", "SalidasOcupacionales", new { area = "Administracion" }, null)
+                                </li>
+                                <li>
+                                    @Html.ActionLink("Documentos para soporte por roles", "Consultar", "DocumentacionSoporteRoles", new { area = "Administracion" }, null)
+                                </li>
+                                <li>
+                                    @Html.ActionLink("Datos institución educativa", "Index", "InstitucionEducativa", new { area = "Administracion" }, null)
+                                </li>
+                                <li>
+                                    @Html.ActionLink("Hoja de vida docente", "Index", "Docente", new { area = "Administracion" }, null)
+                                </li>
+                                <li>
+                                    @Html.ActionLink("Proyección cupos por nivel", "Administrar", "CuposPorNivel", new { area = "Administracion" }, null)
+                                </li>
+                                <li>
+                                    @Html.ActionLink("Registros de años lectivos", "Consultar", "AnioLectivo", new { area = "Administracion" }, null)
+                                </li>
+                                <li>
+                                    @Html.ActionLink("Parametrización anual y semestral", "Consultar", "ParametrizacionEscolar", new { area = "Administracion" }, null)
+                                </li>
+                            </ul>
+                        </li>
+                        <li class="dropdown-submenu">
+                            <a tabindex="-1" href="#">
+                                Estudiantes
+                            </a>
+                            <ul class="dropdown-menu">
+                                <li>
+                                    @Html.ActionLink("Consulta estudiantes", "Consultar", "DatosGeneralesEstudiante", new { area = "GestionMatricula" }, null)
+                                </li>
+                            </ul>
+                        </li>
+                    </ul>
+                </li>
+                <li class="dropdown">
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                        GESTIÓN ESCOLAR
+                    </a>
+                    <ul class="dropdown-menu">
+                        <li class=" dropdown-submenu">
+                            <a tabindex="-1" href="#">
+                                Académico
+                            </a>
+                            <ul class="dropdown-menu">
+                                <li>
+                                    @Html.ActionLink("Registro de intensidad horaria", "Consultar", "IntensidadHoraria", new { area = "Administracion" }, null)
+                                </li>
+                                <li>
+                                    @Html.ActionLink("Aspecto evaluativo", "Consultar", "AspectoEvaluativo", new { area = "GestionAcademica" }, null)
+                                </li>
+                                <li>
+                                    @Html.ActionLink("Parámetros de promoción", "Administrar", "ParametrosPromocion", new { area = "GestionAcademica" }, null)
+                                </li>
+                                <li>
+                                    @Html.ActionLink("Rangos de desempeño", "Administrar", "RangosDesempenio", new { area = "GestionAcademica" }, null)
+                                </li>
+                                <li>
+                                    @Html.ActionLink("Distribución estudiantes por grupo", "AdministrarEstudiantesPorGrupo", "Grupo", new { area = "GestionAcademica" }, null)
+                                </li>
+                            </ul>
+                        </li>
+                        <li class="dropdown-submenu">
+                            <a tabindex="-1" href="#">Estudiantes</a>
+                            <ul class="dropdown-menu">
+                                <li>
+                                    @Html.ActionLink("Generación de cupo", "Index", "Cupos", new { area = "GestionMatricula" }, null)
+                                </li>
+                                <li>
+                                    @Html.ActionLink("Registrar matrícula", "Consultar", "Matriculas", new { area = "GestionMatricula" }, null)
+                                </li>
+                                <li>
+                                    @Html.ActionLink("Cancelar matrícula", "Consultar", "CancelacionMatricula", new { area = "GestionMatricula" }, null)
+                                </li>
+                            </ul>
+
+                        </li>
+                    </ul>
+                </li>
+                <li class="dropdown">
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                        GESTIÓN DE MATRÍCULA
+                    </a>
+                    <ul class="dropdown-menu">
+                        <li class=" dropdown-submenu">
+                            <a tabindex="-1" href="#">
+                                Matrículas
+                            </a>
+                            <ul class="dropdown-menu">
+                                <li>
+                                    @Html.ActionLink("Actualización datos restringidos estudiante", "Index", "DatosRestringidosEstudiante", new { area = "GestionMatricula" }, null)
+                                </li>
+                            </ul>
+                        </li>
+                    </ul>
+                </li>
+            </ul>
+        </div> <!-- /.navbar-collapse -->
+    </div> <!-- /.container -->
+</div> <!-- /.mainbar -->

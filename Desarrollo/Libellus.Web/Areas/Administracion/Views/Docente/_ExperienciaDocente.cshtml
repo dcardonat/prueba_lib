@@ -1,0 +1,231 @@
+﻿@model Libellus.Web.Areas.Administracion.Models.Docente.DocenteViewModel
+
+<div class="row">
+    <div class="col-md-4 form-group">
+        @Html.LabelFor(model => model.ExperienciaDocente.First().Institucion)
+        @Html.TextBox("InstitucionExperienciaDocente", null, new { id = "InstitucionExperienciaDocente", @class = "form-control", maxlength = "150", tabindex = "1", data_val = "true", data_val_required = @Mensaje.Mensaje1001 })
+        @Html.ValidationMessage("InstitucionExperienciaDocente", "", new { @class = "text-danger" })
+    </div>
+
+    <div class="col-md-4 form-group">
+        @Html.LabelFor(model => model.ExperienciaDocente.First().FechaIngreso)
+        <div class="input-group date" id="fechaIngreso">
+            @Html.TextBox("FechaIngreso", null, new { id = "FechaIngreso", @class = "form-control", contenteditable = "false", tabindex = "2", data_val = "true", data_val_required = @Mensaje.Mensaje1001 })
+            <span class="input-group-addon">
+                <span class="glyphicon glyphicon-calendar" tabindex="4"></span>
+            </span>
+        </div>
+        @Html.ValidationMessage("FechaIngreso", "", new { @class = "text-danger" })
+    </div>
+
+    <div class="col-md-4 form-group">
+        @Html.LabelFor(model => model.ExperienciaDocente.First().FechaRetiro)
+        <div class="input-group date" id="fechaRetiro">
+            @Html.TextBox("FechaRetiro", null, new { id = "FechaRetiro", @class = "form-control", contenteditable = "false", tabindex = "3" })
+            <span class="input-group-addon">
+                <span class="glyphicon glyphicon-calendar"></span>
+            </span>
+        </div>
+        @Html.ValidationMessage("FechaRetiro", "", new { @class = "text-danger" })
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-md-4 form-group">
+        @Html.LabelFor(model => model.ExperienciaDocente.First().MotivoRetiro)
+        @Html.TextBox("MotivoRetiro", null, new { @class = "form-control", maxlength = "150", tabindex = "4" })
+        @Html.ValidationMessage("MotivoRetiro", "", new { @class = "text-danger" })
+    </div>
+
+    <div class="col-md-4 form-group">
+        @Html.LabelFor(model => model.ExperienciaDocente.First().AreasCompetencia)
+        @Html.TextBox("AreasCompetencia", null, new { @class = "form-control", maxlength = "150", tabindex = "5", data_val = "true", data_val_required = @Mensaje.Mensaje1001 })
+        @Html.ValidationMessage("AreasCompetencia", "", new { @class = "text-danger" })
+    </div>
+</div>
+
+@Html.Hidden("IdExperienciaDocente", "0", new { id = "IdExperienciaDocente" })
+@Html.Hidden("RegistroNuevo", "0", new { id = "RegistroNuevo" })
+
+<div class="form-group centered">
+    <a href="javascript:void(0)" id="btnCancelarAgregarExperiencia" class="btn btn-link">Cancelar</a>
+    <a href="javascript:void(0)" id="btnAgregarExperiencia" class="btn btn-primary">Agregar experiencia</a>
+</div>
+
+<br />
+
+<table class="@EstilosHelper.TablaLibellus" id="tblExperienciaDocente">
+    <tr>
+        <th hidden="hidden"></th>
+        <th>@Html.DisplayNameFor(model => model.ExperienciaDocente.First().Institucion)</th>
+        <th>@Html.DisplayNameFor(model => model.ExperienciaDocente.First().FechaIngreso)</th>
+        <th>@Html.DisplayNameFor(model => model.ExperienciaDocente.First().FechaRetiro)</th>
+        <th>@Html.DisplayNameFor(model => model.ExperienciaDocente.First().MotivoRetiro)</th>
+        <th>@Html.DisplayNameFor(model => model.ExperienciaDocente.First().AreasCompetencia)</th>
+        <th colspan="2">Acción</th>
+    </tr>
+    @if (Model.ExperienciaDocente != null && Model.ExperienciaDocente.Count() > 0)
+    {
+        foreach (var item in Model.ExperienciaDocente)
+        {
+            <tr class="@string.Format("filaExperienciaDocente id{0}", item.IdExperienciaDocente)">
+                <td hidden="hidden" class="centered idExperienciaDocente">@Html.DisplayFor(modelItem => item.IdExperienciaDocente)</td>
+                <td class="centered institucionExperienciaDocente">@Html.DisplayFor(modelItem => item.Institucion)</td>
+                <td class="centered fechaIngreso">@Html.DisplayFor(modelItem => item.FechaIngreso)</td>
+                <td class="centered fechaRetiro">@Html.DisplayFor(modelItem => item.FechaRetiro)</td>
+                <td class="centered motivoRetiro">@Html.DisplayFor(modelItem => item.MotivoRetiro)</td>
+                <td class="centered areasCompetencia">@Html.DisplayFor(modelItem => item.AreasCompetencia)</td>
+                <td hidden="hidden" class="centered registroNuevo">@Html.DisplayFor(modelItem => item.RegistroNuevo)</td>
+                <td class="centered"><a href="javascript:void(0)" onclick="EditarExperienciaDocente(this)" id="editarExperiencia">Editar</a></td>
+                <td class="centered"><a href="javascript:void(0)" onclick="EliminarExperienciaDocente(this)" id="eliminarExperiencia">Eliminar</a></td>
+            </tr>
+        }
+    }
+</table>
+
+@Html.Script(
+    @<script type="text/javascript">
+
+        function ValidarCamposExperienciaDocente() {
+            /// <summary>Valida la información de los campos de ingreso.</summary>
+
+            $("#InstitucionExperienciaDocente").valid();
+            $("#FechaIngreso").valid();
+            $("#FechaRetiro").valid();
+            $("#AreasCompetencia").valid();
+        }
+
+        function AdicionarExperienciaDocente() {
+            /// <summary>Adiciona la experiencia docente al grid de experiencias.</summary>
+
+            var idExperienciaDocente = $("#IdExperienciaDocente");
+            var institucion = $("#InstitucionExperienciaDocente");
+            var fechaIngreso = $("#FechaIngreso");
+            var fechaRetiro = $("#FechaRetiro");
+            var motivoRetiro = $("#MotivoRetiro");
+            var areasCompetencia = $("#AreasCompetencia");
+
+            if (institucion.valid() && fechaIngreso.valid() && fechaRetiro.valid() && areasCompetencia.valid()) {
+
+                if (idExperienciaDocente.val() === "0") {
+
+                    var plantillaFila = _.template($("#agregarRegistroExperienciaDocente").html());
+
+                    $("#tblExperienciaDocente tbody").append(plantillaFila({
+                        val_idExperienciaDocente: $('#tblExperienciaDocente tr').length + 1,
+                        val_institucionExperienciaDocente: institucion.val(),
+                        val_fechaIngreso: fechaIngreso.val(),
+                        val_fechaRetiro: fechaRetiro.val(),
+                        val_motivoRetiro: motivoRetiro.val(),
+                        val_areasCompetencia: areasCompetencia.val(),
+                        val_registroNuevo: "1"
+                    }));
+
+                }
+                else {
+
+                    var fila = $("#tblExperienciaDocente").find(".id" + idExperienciaDocente.val());
+
+                    fila.find(".institucionExperienciaDocente").text(institucion.val());
+                    fila.find(".fechaIngreso").text(fechaIngreso.val());
+                    fila.find(".fechaRetiro").text(fechaRetiro.val());
+                    fila.find(".motivoRetiro").text(motivoRetiro.val());
+                    fila.find(".areasCompetencia").text(areasCompetencia.val());
+                    fila.find(".registroNuevo").text($("#RegistroNuevo").val());
+                }
+
+                LimpiarCamposIngresoExperienciaDocente();
+                $("#btnAgregarExperiencia").text("Agregar experiencia");
+                $("#btnCancelarAgregarExperiencia").hide();
+            }
+        }
+
+        function EliminarExperienciaDocente(estudioRealizado) {
+            /// <summary>Elimina una experiencia registrada.</summary>
+
+            ConfirmarAccion("Eliminar experiencia docente", "¿Está seguro de eliminar el registro seleccionado?", function () {
+                $(estudioRealizado).closest("tr").remove();
+            });
+        }
+
+        function EditarExperienciaDocente(experienciaRegistrada) {
+            /// <summary>Edita una experiencia registrada.</summary>
+
+            var fila = $(experienciaRegistrada).closest("tr");
+
+            var idExperienciaDocente = fila.find(".idExperienciaDocente").text();
+            var institucion = fila.find(".institucionExperienciaDocente").text();
+            var fechaIngreso = fila.find(".fechaIngreso").text();
+            var fechaRetiro = fila.find(".fechaRetiro").text();
+            var motivoRetiro = fila.find(".motivoRetiro").text();
+            var areasCompetencia = fila.find(".areasCompetencia").text();
+            var estudioNuevo = fila.find(".registroNuevo").text();
+
+            $("#IdExperienciaDocente").val($.trim(idExperienciaDocente));
+            $("#InstitucionExperienciaDocente").val($.trim(institucion));
+            $("#FechaIngreso").val($.trim(fechaIngreso));
+            $("#FechaRetiro").val($.trim(fechaRetiro));
+            $("#MotivoRetiro").val($.trim(motivoRetiro));
+            $("#AreasCompetencia").val($.trim(areasCompetencia));
+            $("#RegistroNuevo").val($.trim(estudioNuevo));
+
+            $("#btnAgregarExperiencia").text("Editar experiencia");
+            $("#btnCancelarAgregarExperiencia").show();
+
+            $("#InstitucionExperienciaDocente").focus();
+        }
+
+        function LimpiarCamposIngresoExperienciaDocente() {
+            /// <summary>Limpia el contenido de los campos de ingreso.</summary>
+
+            $("#InstitucionExperienciaDocente").val("");
+            $("#FechaIngreso").val("");
+            $("#FechaRetiro").val("");
+            $("#MotivoRetiro").val("");
+            $("#AreasCompetencia").val("");
+            $("#IdExperienciaDocente").val("0");
+            $("#RegistroNuevo").val("0");
+        }
+
+        $(document).ready(function () {
+
+            $("#btnCancelarAgregarExperiencia").hide();
+
+            $("#btnAgregarExperiencia").click(function () {
+                ValidarCamposExperienciaDocente();
+                AdicionarExperienciaDocente();
+            });
+
+            $("#btnCancelarAgregarExperiencia").click(function () {
+                LimpiarCamposIngresoExperienciaDocente();
+                $("#btnAgregarExperiencia").text("Agregar experiencia");
+                $("#btnCancelarAgregarExperiencia").hide();
+            });
+
+        });
+
+    </script>)
+
+<script type="text/html" id="agregarRegistroExperienciaDocente">
+    <tr class="filaExperienciaDocente id<%= val_idExperienciaDocente %>">
+        <td hidden="hidden" class="centered idExperienciaDocente"><%= val_idExperienciaDocente %></td>
+        <td class="centered institucionExperienciaDocente"><%= val_institucionExperienciaDocente %></td>
+        <td class="centered fechaIngreso"><%= val_fechaIngreso %></td>
+        <td class="centered fechaRetiro"><%= val_fechaRetiro %></td>
+        <td class="centered motivoRetiro"><%= val_motivoRetiro %></td>
+        <td class="centered areasCompetencia"><%= val_areasCompetencia %></td>
+        <td hidden="hidden" class="centered registroNuevo"><%= val_registroNuevo %></td>
+        <td class="centered"><a href="javascript:void(0)" onclick="EditarExperienciaDocente(this)" id="editarExperiencia">Editar</a></td>
+        <td class="centered"><a href="javascript:void(0)" onclick="EliminarExperienciaDocente(this)" id="eliminarExperiencia">Eliminar</a></td>
+    </tr>
+</script>
+
+<script type="text/html" id="registroExperienciaDocente">
+    <td hidden="hidden"><input type="hidden" name="[<%= index %>].IdExperienciaDocente" value="<%= val_idExperienciaDocente %>" /></td>
+    <td hidden="hidden"><input type="hidden" name="[<%= index %>].Institucion" value="<%= val_institucionExperienciaDocente %>" /></td>
+    <td hidden="hidden"><input type="hidden" name="[<%= index %>].FechaIngreso" value="<%= val_fechaIngreso %>" /></td>
+    <td hidden="hidden"><input type="hidden" name="[<%= index %>].FechaRetiro" value="<%= val_fechaRetiro %>" /></td>
+    <td hidden="hidden"><input type="hidden" name="[<%= index %>].MotivoRetiro" value="<%= val_motivoRetiro %>" /></td>
+    <td hidden="hidden"><input type="hidden" name="[<%= index %>].AreasCompetencia" value="<%= val_areasCompetencia %>" /></td>
+    <td hidden="hidden"><input type="hidden" name="[<%= index %>].RegistroNuevo" value="<%= val_registroNuevo %>" /></td>
+</script>

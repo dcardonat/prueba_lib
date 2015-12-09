@@ -1,0 +1,81 @@
+﻿@model Libellus.Web.Areas.Administracion.Models.Maestros.MaestroViewModel
+
+@{
+    ViewBag.Title = "Administrar maestros";
+}
+
+<div id="mensaje"></div>
+
+<div class="content-header">
+    <h2 class="content-header-title">@ViewBag.Title</h2>
+</div>
+
+@using (Html.BeginForm("Crear", "Maestros", FormMethod.Get, new { area = "Administracion" }))
+{
+    <div class="form-group">
+        @Html.LabelFor(model => model.IdTipoMaestro)
+        @Html.DropDownListFor(model => model.IdTipoMaestro, Model.TiposMaestro, new { @class = "form-control" })
+        @Html.ValidationMessageFor(model => model.IdTipoMaestro, "", new { @class = "text-danger" })
+        @Html.Hidden("nombreMaestro")
+    </div>
+
+    <div class="form-group" style="text-align: center !important;">
+        <input type="submit" class="btn btn-primary" value="Crear maestro" />
+    </div>
+
+    <br />
+    <br />
+    @Html.Hidden("tokenExportarExcel")
+    
+    <div id="informacionMaestros">
+        @if (Model.Maestros.Count() > 0)
+        {
+            Html.RenderPartial("_InformacionMaestros");
+        }
+    </div>
+}
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+    @Scripts.Render("~/bundles/jquerycookies")
+
+    <script type="text/javascript">
+
+        function EstablecerNombreMaestroSeleccionado() {
+            /// <summary>Establece el nombre del maestro seleccionado en el hidden NombreMaestroSeleccionado.</summary>
+
+            $('[name="nombreMaestro"]').val($('[name="IdTipoMaestro"] option:selected').text());
+        }
+
+        function ConsultarInformacionMaestro() {
+            /// <summary>Consulta la información de un maestos específico.</summary>
+            
+            var token = new Date().getTime();
+            $('[name="tokenExportarExcel"]').val(token);
+
+            $.get('@Url.Action("ConsultarInformacionMaestros")?pagina=1&idTipoMaestro=' + $('[name="IdTipoMaestro"]').val() + "&nombreTipoMaestro=" + $('[name="nombreMaestro"]').val() + "&token=" + $('[name="tokenExportarExcel"]').val(), function (data) {
+                $("#informacionMaestros").html(data);
+            });
+        }
+
+        $(document).ready(function () {
+
+            EstablecerNombreMaestroSeleccionado();
+
+            $('[name="IdTipoMaestro"]').change(function () {
+
+                if ($(this).val() == '') {
+                    $("#informacionMaestros").html("");
+                }
+                else {
+                    EstablecerNombreMaestroSeleccionado();
+                    ConsultarInformacionMaestro();
+                }
+
+            });
+
+        });
+
+    </script>
+
+}

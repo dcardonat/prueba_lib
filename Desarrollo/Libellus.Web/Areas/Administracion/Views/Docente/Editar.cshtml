@@ -1,0 +1,268 @@
+﻿@model Libellus.Web.Areas.Administracion.Models.Docente.DocenteViewModel
+
+@{
+    ViewBag.Title = "Editar docente";
+}
+
+<link type="text/css" rel="stylesheet" href="@Url.Content("~/Content/DateTimePicker/bootstrap-datetimepicker.css")" />
+<link type="text/css" rel="stylesheet" href="@Url.Content("~/Content/BootstrapFileInput/fileinput.css")" />
+
+<div class="content-header">
+    <h2 class="content-header-title">@ViewBag.Title</h2>
+</div>
+
+@using (Html.BeginForm("Editar", "Docente", FormMethod.Post, new { id = "formDocente", enctype = "multipart/form-data" }))
+{
+    @Html.AntiForgeryToken()
+
+    <ul id="tabs" class="nav nav-tabs">
+        <li class=" active">
+            <a href="#datosPersonales" data-toggle="tab" id="tabDatosPersonales">
+                Datos personales
+            </a>
+        </li>
+        <li>
+            <a href="#estudiosRealizados" data-toggle="tab" id="tabEstudiosRealizados">
+                Estudios realizados
+            </a>
+        </li>
+        <li>
+            <a href="#experienciaDocente" data-toggle="tab" id="tabExperienciaDocente">
+                Experiencia docente
+            </a>
+        </li>
+        <li>
+            <a href="#estadoHorario" data-toggle="tab" id="tabEstadoHorario">
+                Estado y horario
+            </a>
+        </li>
+        <li>
+            <a href="#documentosSoporte" data-toggle="tab" id="tabDocumentosSoporte">
+                Documentos de soporte
+            </a>
+        </li>
+    </ul>
+
+    <div id="contenidos" class="tab-content">
+        <div class="tab-pane fade in active" id="datosPersonales">
+            @Html.Partial("_DatosPersonales")
+        </div>
+        <div class="tab-pane fade" id="estudiosRealizados">
+            @Html.Partial("_EstudiosRealizados")
+        </div>
+        <div class="tab-pane fade" id="experienciaDocente">
+            @Html.Partial("_ExperienciaDocente")
+        </div>
+        <div class="tab-pane fade" id="estadoHorario">
+            @Html.Partial("_EstadoHorario")
+        </div>
+        <div class="tab-pane fade" id="documentosSoporte">
+            @Html.Partial("_DocumentosSoporte")
+        </div>
+    </div>
+
+    <br />
+
+    <div class="form-group centered">
+        @Html.BotonCancelar("Index", "Docente")
+        <input type="submit" id="editarDocente" value="Editar docente" class="btn btn-primary" />
+    </div>
+}
+
+@section Scripts {
+
+    @Scripts.Render("~/bundles/jqueryval")
+    @Scripts.Render("~/js/cascadingDropDown")
+    @Scripts.Render("~/js/underscore")
+
+    <script type="text/javascript" src="@Url.Content("~/Scripts/DateTimePicker/moment.min.js")"></script>
+    <script type="text/javascript" src="@Url.Content("~/Scripts/DateTimePicker/moment-with-locales.min.js")"></script>
+    <script type="text/javascript" src="@Url.Content("~/Scripts/DateTimePicker/bootstrap-datetimepicker.min.js")"></script>
+    <script type="text/javascript" src="@Url.Content("~/Scripts/BootstrapFileInput/fileinput.js")"></script>
+    <script type="text/javascript" src="@Url.Content("~/Scripts/BootstrapFileInput/fileinput_locale_es.js")"></script>
+
+    <script type="text/javascript">
+
+        if ($("#rutaFotoDocente").val() === "") {
+
+            $("#inputFotoDocente").fileinput({
+                showUpload: false,
+                showRemove: false,
+                language: 'es',
+                allowedFileExtensions: ["jpg", "png"]
+            });
+
+        }
+        else {
+
+            $("#inputFotoDocente").fileinput({
+                showUpload: false,
+                showRemove: false,
+                language: 'es',
+                allowedFileExtensions: ["jpg", "png"],
+                initialPreview: [
+                    "<img src='" + $("#rutaFotoDocente").val() + "' class='file-preview-image'",
+                ]
+            });
+
+        }
+
+        if ($("#RutaFirmaDocente").val() === "") {
+
+            $("#inputFirmaDocente").fileinput({
+                showUpload: false,
+                showRemove: false,
+                language: 'es',
+                allowedFileExtensions: ["jpg", "png"]
+            });
+
+        }
+        else {
+
+            $("#inputFirmaDocente").fileinput({
+                showUpload: false,
+                showRemove: false,
+                language: 'es',
+                allowedFileExtensions: ["jpg", "png"],
+                initialPreview: [
+                    "<img src='" + $("#RutaFirmaDocente").val() + "' class='file-preview-image'",
+                ]
+            });
+
+        }
+
+        function InicializarCalendariosSeccionDatosPersonales() {
+            /// <summary>Inicializa los calendarios de la sección datos personales.</summary>
+
+            $('#fechaNacimiento').datetimepicker({
+                format: 'DD/MM/YYYY',
+                locale: 'es'
+            });
+        }
+
+        function InicializarCalendariosSeccionEstudiosRealizados() {
+            /// <summary>Inicializa los calendarios de la sección estudios realizados.</summary>
+
+            $('#fechaTerminacion').datetimepicker({
+                format: 'DD/MM/YYYY',
+                locale: 'es'
+            });
+        }
+
+        function InicializarCalendariosSeccionExperienciaDocente() {
+            /// <summary>Inicializa los calendarios de la sección experiencia docente.</summary>
+
+            $('#fechaIngreso').datetimepicker({
+                format: 'DD/MM/YYYY',
+                locale: 'es'
+            }).on('dp.change', function (e) {
+                if (e.date != null) {
+                    $('#fechaRetiro').data("DateTimePicker").minDate(e.date);
+                }
+            });
+
+            $('#fechaRetiro').datetimepicker({
+                format: 'DD/MM/YYYY',
+                locale: 'es'
+            }).on('dp.change', function (e) {
+                if (e.date != null) {
+                    $('#fechaIngreso').data("DateTimePicker").maxDate(e.date);
+                }
+            });
+
+            $('#fechaUltimoAscenso').datetimepicker({
+                format: 'DD/MM/YYYY',
+                locale: 'es'
+            });
+        }
+
+        function EstablecerEstudiosRealizados() {
+            //// <summary>Establece la información diligenciada en los estudios realizadas en controles hidden para ser enviados mediante POST.</summary>
+
+            $(".filaEstudioRealizado").each(function (index, element) {
+
+                try {
+
+                    var idEstudioRealizado = $(element).find(".idEstudioRealizado").text();
+                    var institucion = $(element).find(".institucion").text();
+                    var idClasificacion = $(element).find(".idClasificacion").text();
+                    var nombreClasificacion = $(element).find(".clasificaciones").text();
+                    var tituloEstudio = $(element).find(".tituloEstudio").text();
+                    var fechaTerminacion = $(element).find(".fechaTerminacion").text();
+                    var idEstadoEstudio = $(element).find(".idEstadoEstudio").text();
+                    var nombreEstadoEstudio = $(element).find(".estadosEstudio").text();
+                    var estudioNuevo = $(element).find(".registroNuevo").text();
+
+                    var plantillaFila = _.template($("#registroEstudioRealizado").html());
+
+                    $(element).append(plantillaFila({
+                        val_idEstudioRealizado: idEstudioRealizado,
+                        val_institucion: institucion,
+                        val_idClasificacion: idClasificacion,
+                        val_clasificaciones: nombreClasificacion,
+                        val_tituloEstudio: tituloEstudio,
+                        val_fechaTerminacion: fechaTerminacion,
+                        val_idEstadoEstudio: idEstadoEstudio,
+                        val_estadosEstudio: nombreEstadoEstudio,
+                        val_registroNuevo: estudioNuevo,
+                        index: index
+                    }));
+
+                } catch (exc) {
+                    alert(exc.message);
+                }
+
+            });
+
+        }
+
+        function EstablecerExperienciaDocente() {
+            //// <summary>Establece la información diligenciada de la experiencia docente en controles hidden para ser enviados mediante POST.</summary>
+
+            $(".filaExperienciaDocente").each(function (index, element) {
+
+                var idExperienciaDocente = $(element).find(".idExperienciaDocente").text();
+                var institucion = $(element).find(".institucionExperienciaDocente").text();
+                var fechaIngreso = $(element).find(".fechaIngreso").text();
+                var fechaRetiro = $(element).find(".fechaRetiro").text();
+                var motivoRetiro = $(element).find(".motivoRetiro").text();
+                var areasCompetencia = $(element).find(".areasCompetencia").text();
+                var experienciaLaboralNueva = $(element).find(".registroNuevo").text();
+
+                var plantillaFila = _.template($("#registroExperienciaDocente").html());
+
+                $(element).append(plantillaFila({
+                    val_idExperienciaDocente: idExperienciaDocente,
+                    val_institucionExperienciaDocente: institucion,
+                    val_fechaIngreso: fechaIngreso,
+                    val_fechaRetiro: fechaRetiro,
+                    val_motivoRetiro: motivoRetiro,
+                    val_areasCompetencia: areasCompetencia,
+                    val_registroNuevo: experienciaLaboralNueva,
+                    index: index
+                }));
+
+            });
+
+        }
+
+        function ValidarFormulario() {
+            //// <summary>Valida la información requerida del formulario.<summary>
+
+            $("#editarDocente").on("click", function (e) {
+                e.preventDefault();
+                EstablecerEstudiosRealizados();
+                EstablecerExperienciaDocente();
+                $("#formDocente").submit();
+            });
+        }
+
+        $(document).ready(function () {
+            InicializarCalendariosSeccionDatosPersonales();
+            InicializarCalendariosSeccionEstudiosRealizados();
+            InicializarCalendariosSeccionExperienciaDocente();
+            ValidarFormulario();
+        });
+
+    </script>
+}

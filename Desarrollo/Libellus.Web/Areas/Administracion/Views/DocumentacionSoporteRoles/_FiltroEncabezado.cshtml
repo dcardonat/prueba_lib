@@ -1,0 +1,47 @@
+﻿@model Libellus.Web.Areas.Administracion.Models.DocumentacionSoporteRoles.SoporteRolViewModel
+
+<div class="row">
+    <div class="form-group col-md-4">
+        @Html.Partial("_AniosLectivos", Model.IdAnioLectivo)
+        @Html.ValidationMessageFor(model => model.IdAnioLectivo, "", new { @class = "text-danger" })
+    </div>
+
+    <div class="form-group col-md-4">
+        @Html.LabelFor(model => model.IdRolInstitucional)
+        @Html.DropDownListFor(model => model.IdRolInstitucional, Model.Roles, new { @class = "form-control", id = "ddlRolInstitucional" })
+        @Html.ValidationMessageFor(model => model.IdRolInstitucional, "", new { @class = "text-danger" })
+    </div>
+
+    <div class="form-group col-md-4">
+        @Html.LabelFor(model => model.IdNivelEducativo)
+        @Html.DropDownListFor(model => model.IdNivelEducativo, Model.Niveles, new { @class = "form-control", id = "ddlNivelEducativo" })
+        @Html.ValidationMessageFor(model => model.IdNivelEducativo, "", new { @class = "text-danger" })
+    </div>
+</div>
+
+@Html.Script(
+@<script type="text/javascript">
+    $(document).ready(function () {
+        
+        var textoRol = $("#ddlRolInstitucional option:selected").text();
+        var valorRol = $("#ddlRolInstitucional option:selected").val();
+
+        if (textoRol === "Docente" || valorRol === "") {
+            $("#ddlNivelEducativo").prop("disabled", true).val("");
+        }
+        else {
+            $("#ddlNivelEducativo").removeProp("disabled");
+        }
+
+        $("#ddlRolInstitucional").change(function () {
+            if ($("#ddlRolInstitucional option:selected").text() === "Docente" || $(this).val() === "") {
+                $("#ddlNivelEducativo").prop("disabled", true).val("");
+            }
+            else {
+                $("#ddlNivelEducativo").removeProp("disabled");
+            }
+        });
+
+    });
+    </script>
+)

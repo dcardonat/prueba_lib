@@ -1,0 +1,238 @@
+﻿@model Libellus.Web.Areas.GestionMatricula.Models.CuposViewModel
+
+@{
+    ViewBag.Title = "Generar cupo";
+
+    Dictionary<string, object> propiedadesFecha = new Dictionary<string, object>();
+    propiedadesFecha.Add("class", "form-control");
+    propiedadesFecha.Add("maxlength", 10);
+    propiedadesFecha.Add("tabindex", 8);
+    propiedadesFecha.Add("contenteditable", false);
+}
+
+@Styles.Render("~/css/datetimepicker")
+
+<div class="content-header">
+    <h2 class="content-header-title">@ViewBag.Title</h2>
+</div>
+
+@using (Html.BeginForm("Index", "Cupos", FormMethod.Post))
+{
+    @Html.AntiForgeryToken()
+    @Html.HiddenFor(model => model.IdEstudiante)
+
+    <div class="row">
+        <div class="form-group col-md-4">
+            @Html.LabelFor(model => model.IdTipoIdentificacion)
+            @Html.DropDownListFor(model => model.IdTipoIdentificacion, Model.ComboTipoIdentificacion, new { @class = "form-control", tabindex = "1" })
+            @Html.ValidationMessageFor(model => model.IdTipoIdentificacion, "", new { @class = "text-danger" })
+        </div>
+
+        <div class="form-group col-md-4">
+            @Html.LabelFor(model => model.Identificacion)
+            @Html.EditorFor(model => model.Identificacion, new { htmlAttributes = new { @class = "form-control", maxlength = "14", tabindex = "2" } })
+            @Html.ValidationMessageFor(model => model.Identificacion, "", new { @class = "text-danger" })
+        </div>
+
+        <div class="form-group col-md-4">
+            @Html.LabelFor(model => model.TrasladoEstudiante)
+            <div>
+                <label class="radio-inline">
+                    <input type="radio" name="TrasladoEstudiante" id="rdoTrasladoT" value="true" tabindex="3"> Si
+                </label>
+                <label class="radio-inline">
+                    <input type="radio" name="TrasladoEstudiante" id="rdoTrasladoF" value="false" checked tabindex="4"> No
+                </label>
+            </div>
+            @Html.ValidationMessageFor(model => model.TrasladoEstudiante, "", new { @class = "text-danger" })
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="form-group col-md-4">
+            @Html.LabelFor(model => model.Nombre)
+            @Html.EditorFor(model => model.Nombre, new { htmlAttributes = new { @class = "form-control", maxlength = "100", tabindex = "5" } })
+            @Html.ValidationMessageFor(model => model.Nombre, "", new { @class = "text-danger" })
+        </div>
+        <div class="form-group col-md-4">
+            @Html.LabelFor(model => model.PrimerApellido)
+            @Html.EditorFor(model => model.PrimerApellido, new { htmlAttributes = new { @class = "form-control", maxlength = "30", tabindex = "6" } })
+            @Html.ValidationMessageFor(model => model.PrimerApellido, "", new { @class = "text-danger" })
+        </div>
+        <div class="form-group col-md-4">
+            @Html.LabelFor(model => model.SegundoApellido)
+            @Html.EditorFor(model => model.SegundoApellido, new { htmlAttributes = new { @class = "form-control", maxlength = "30", tabindex = "7" } })
+            @Html.ValidationMessageFor(model => model.SegundoApellido, "", new { @class = "text-danger" })
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="form-group col-md-4">
+            @Html.LabelFor(model => model.FechaNacimiento)
+            <div class="input-group date disabled" id="dtpFechaNacimiento">
+                @Html.TextBoxFor(model => model.FechaNacimiento, propiedadesFecha)
+                <span class="input-group-addon">
+                    <span class="glyphicon glyphicon-calendar"></span>
+                </span>
+            </div>
+            @Html.ValidationMessageFor(model => model.FechaNacimiento, "", new { @class = "text-danger" })
+        </div>
+        <div class="form-group col-md-4">
+            @Html.LabelFor(model => model.IdSexo)
+            @Html.DropDownListFor(model => model.IdSexo, Model.ComboSexo, new { @class = "form-control", tabindex = "9" })
+            @Html.ValidationMessageFor(model => model.IdSexo, "", new { @class = "text-danger" })
+        </div>
+        <div class="form-group col-md-4">
+            @Html.LabelFor(model => model.Correo)
+            @Html.EditorFor(model => model.Correo, new { htmlAttributes = new { @class = "form-control", maxlength = "50", tabindex = "10" } })
+            @Html.ValidationMessageFor(model => model.Correo, "", new { @class = "text-danger" })
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="form-group col-md-4">
+            @Html.LabelFor(model => model.TelefonoFijo)
+            @Html.EditorFor(model => model.TelefonoFijo, new { htmlAttributes = new { @class = "form-control", maxlength = "15", tabindex = "11" } })
+            @Html.ValidationMessageFor(model => model.TelefonoFijo, "", new { @class = "text-danger" })
+        </div>
+        <div class="form-group col-md-4">
+            @Html.LabelFor(model => model.TelefonoMovil)
+            @Html.EditorFor(model => model.TelefonoMovil, new { htmlAttributes = new { @class = "form-control", maxlength = "15", tabindex = "12" } })
+            @Html.ValidationMessageFor(model => model.TelefonoMovil, "", new { @class = "text-danger" })
+        </div>
+        <div class="form-group col-md-4">
+            @Html.LabelFor(model => model.IdAnioLectivo)
+            @Html.DropDownListFor(model => model.IdAnioLectivo, Model.ComboAnios, new { @class = "form-control", tabindex = "13" })
+            @Html.ValidationMessageFor(model => model.IdAnioLectivo, "", new { @class = "text-danger" })
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="form-group col-md-4">
+            @Html.LabelFor(model => model.IdNivel)
+            @Html.DropDownListFor(model => model.IdNivel, Model.ComboNivelEducativo, new { @class = "form-control", tabindex = "14" })
+            @Html.ValidationMessageFor(model => model.IdNivel, "", new { @class = "text-danger" })
+        </div>
+        <div class="form-group col-md-4">
+            @Html.LabelFor(model => model.IdGradoPorNivel)
+            @Html.DropDownListFor(model => model.IdGradoPorNivel, Model.ComboGrado, new { @class = "form-control", tabindex = "15" })
+            @Html.ValidationMessageFor(model => model.IdGradoPorNivel, "", new { @class = "text-danger" })
+        </div>
+        <div class="form-group col-md-4">
+            @Html.LabelFor(model => model.IdSalidaOcupacional)
+            @Html.DropDownListFor(model => model.IdSalidaOcupacional, Model.ComboSalidaOcupacional, new { @class = "form-control", tabindex = "16" })
+            @Html.ValidationMessageFor(model => model.IdSalidaOcupacional, "", new { @class = "text-danger" })
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="form-group col-md-4">
+            @Html.LabelFor(model => model.IdProfundizacion)
+            @Html.DropDownListFor(model => model.IdProfundizacion, Model.ComboProfundizacion, new { @class = "form-control", tabindex = "17" })
+            @Html.ValidationMessageFor(model => model.IdProfundizacion, "", new { @class = "text-danger" })
+        </div>
+    </div>
+
+    <br />
+    <div class="form-group centered">
+        @Html.BotonCancelar("Bienvenida", "Home", new { area = "" }, new { tabindex = "18" })
+        <input type="submit" value="@ViewBag.Title" class="btn btn-primary" tabindex="17" />
+    </div>
+}
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+    @Scripts.Render("~/js/cascadingDropDown")
+    @Scripts.Render("~/js/datetimepicker")
+
+    <script type="text/javascript">
+
+        var consultarEstudiante = function () {
+            var tipoDocumento = $("#IdTipoIdentificacion").val() == "" ? 0 : $("#IdTipoIdentificacion").val();
+            var documento = $("#Identificacion").val();
+
+            var datos = {
+                tipoDocumento: tipoDocumento,
+                documento: documento
+            };
+
+            var opciones = {
+                url: '@Url.Action("ConsultarEstudiante")',
+                data: datos,
+                type: 'POST'
+            };
+
+            $.ajax(opciones).success(function (data) {
+                llenarCampos(data);
+            }).error(function () {
+                VisualizarMensajeNegocio(3, '@MensajesEstaticos.Mensaje1000');
+            });
+
+        };
+
+        var llenarCampos = function (data) {
+            if (data.Resultado) {
+                $("#IdEstudiante").val(data.IdEstudiante);
+                $("#Nombre").val(data.Nombre);
+                $("#PrimerApellido").val(data.PrimerApellido);
+                $("#SegundoApellido").val(data.SegundoApellido);
+                $("#Correo").val(data.Correo);
+                $("#TelefonoFijo").val(data.TelefonoFijo);
+                $("#TelefonoMovil").val(data.TelefonoMovil);
+                $("#IdSexo").val(data.IdSexo);
+                $("#dtpFechaNacimiento").data("DateTimePicker").date(data.FechaNacimiento);
+                $("input[name='TrasladoEstudiante']").prop("checked", false).attr("disabled", "disabled");
+            }
+            else {
+                $("#IdEstudiante").val("0");
+                $("#Nombre").val("");
+                $("#PrimerApellido").val("");
+                $("#SegundoApellido").val("");
+                $("#Correo").val("");
+                $("#TelefonoFijo").val("");
+                $("#TelefonoMovil").val("");
+                $("#IdSexo").val("");
+                $("#dtpFechaNacimiento").data("DateTimePicker").clear();
+                $("input[name='TrasladoEstudiante']").prop("checked", true).removeAttr("disabled");
+            }
+        };
+
+        var activarDependientes = function () {
+            var nivel = $("#IdNivel option:selected").text();
+            if (nivel == "Media técnica") {
+                $("#IdSalidaOcupacional").removeProp("disabled");
+                $("#IdProfundizacion").prop("disabled", true);
+            }
+            else if (nivel == "Media académica") {
+                $("#IdProfundizacion").removeProp("disabled");
+                $("#IdSalidaOcupacional").prop("disabled", true);
+            }
+            else {
+                $("#IdProfundizacion").prop("disabled", true);
+                $("#IdSalidaOcupacional").prop("disabled", true);
+            }
+        };
+
+        $(document).ready(function () {
+
+            $("#IdEstudiante").val("0");
+            $("#IdSalidaOcupacional").prop("disabled", true);
+            $("#IdProfundizacion").prop("disabled", true);
+            $("#IdAnioLectivo").attr("tabindex", 11);
+            $("#Identificacion").focusout(consultarEstudiante);
+            $("#IdTipoIdentificacion").change(consultarEstudiante);
+            $("#IdNivel").change(activarDependientes);
+
+            $("#IdGradoPorNivel").CascadingDropDown("#IdNivel", '@Url.Action("GradosPorNivel")', {
+                idSelectedValue: '@Model.IdNivel'
+            });
+
+            $('.date').datetimepicker({
+                format: 'DD/MM/YYYY',
+                locale: 'es'
+            });
+            
+        });
+    </script>
+}
+

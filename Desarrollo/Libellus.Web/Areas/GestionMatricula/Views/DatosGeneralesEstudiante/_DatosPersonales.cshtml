@@ -1,0 +1,136 @@
+﻿@model Libellus.Web.Areas.GestionMatricula.Models.DatosGeneralesEstudiante.EstudianteViewModel
+
+@{
+    bool soloLectura = ViewBag.SoloLectura;
+}
+
+@Html.HiddenFor(model => model.UrlFoto, new { id = "urlImagen" })
+
+<div class="row">
+    <div class="form-group col-md-4">
+        @Html.LabelFor(model => model.Usuario.IdTipoIdentificacion)
+        @Html.DropDownListDisabledFor(model => model.Usuario.IdTipoIdentificacion, Model.ComboTiposIdentificacion, true, new { @class = "form-control" })
+        @Html.ValidationMessageFor(model => model.Usuario.IdTipoIdentificacion, "", new { @class = "text-danger" })
+    </div>
+
+    <div class="form-group col-md-4">
+        @Html.LabelFor(model => model.Usuario.Identificacion)
+        @Html.TextBoxDisabledFor(model => model.Usuario.Identificacion, true, new { @class = "form-control", tabindex = "2" })
+        @Html.ValidationMessageFor(model => model.Usuario.Identificacion, "", new { @class = "text-danger" })
+    </div>
+
+    <div class="form-group col-md-4">
+        @Html.LabelFor(model => model.Usuario.Clave)
+        @Html.TextBoxFor(model => model.Usuario.Clave, new { @class = "form-control", tabindex = "2", maxlength = "15", type = "password", id = "usuario_pw" })
+        @Html.ValidationMessageFor(model => model.Usuario.Clave, "", new { @class = "text-danger" })
+    </div>
+</div>
+
+<div class="row">
+    <div class="form-group col-md-4">
+        @Html.LabelFor(model => model.Nombre)
+        @Html.TextBoxDisabledFor(model => model.Nombre, true, new { @class = "form-control", tabindex = "2" })
+        @Html.ValidationMessageFor(model => model.Nombre, "", new { @class = "text-danger" })
+    </div>
+
+    <div class="form-group col-md-4">
+        @Html.LabelFor(model => model.PrimerApellido)
+        @Html.TextBoxDisabledFor(model => model.PrimerApellido, true, new { @class = "form-control", tabindex = "2" })
+        @Html.ValidationMessageFor(model => model.PrimerApellido, "", new { @class = "text-danger" })
+    </div>
+
+    <div class="form-group col-md-4">
+        @Html.LabelFor(model => model.SegundoApellido)
+        @Html.TextBoxDisabledFor(model => model.SegundoApellido, true, new { @class = "form-control", tabindex = "2" })
+        @Html.ValidationMessageFor(model => model.SegundoApellido, "", new { @class = "text-danger" })
+    </div>
+</div>
+
+<div class="row">
+    <div class="form-group col-md-4">
+        @Html.LabelFor(model => model.IdSexo)
+        @Html.DropDownListDisabledFor(model => model.IdSexo, Model.ComboSexos, true, new { @class = "form-control", tabindex = "2" })
+        @Html.ValidationMessageFor(model => model.IdSexo, "", new { @class = "text-danger" })
+    </div>
+    <div class="form-group col-md-4">
+        @Html.LabelFor(model => model.IdGrupoSanguineo)
+        @Html.DropDownListDisabledFor(model => model.IdGrupoSanguineo, Model.ComboGruposSanguineos, soloLectura, new { @class = "form-control", tabindex = "2" })
+        @Html.ValidationMessageFor(model => model.IdGrupoSanguineo, "", new { @class = "text-danger" })
+    </div>
+    <div class="form-group col-md-4">
+        @Html.LabelFor(model => model.FechaNacimiento)
+        @if (!soloLectura)
+        {
+            <div class="input-group date disabled" id="dtpFechaNacimiento">
+                @Html.TextBoxFor(model => model.FechaNacimiento, new { @class = "form-control", maxlength = "10", tabindex = "2", contenteditable = "false" })
+                <span class="input-group-addon">
+                    <span class="glyphicon glyphicon-calendar"></span>
+                </span>
+            </div>
+            @Html.ValidationMessageFor(model => model.FechaNacimiento, "", new { @class = "text-danger" })
+        }
+        else
+        {
+            @Html.TextBoxDisabledFor(model => model.FechaNacimiento, soloLectura, new { @class = "form-control", maxlength = "10", tabindex = "2", contenteditable = "false" })
+        }
+    </div>
+</div>
+
+<div class="row">
+    <div class="form-group col-md-4">
+        @Html.LabelFor(model => model.IdPaisNacimiento)
+        @Html.DropDownListDisabledFor(model => model.IdPaisNacimiento, Model.ComboPaises, soloLectura, new { @class = "form-control", tabindex = "2", id = "cmbPaisNacimiento" })
+        @Html.ValidationMessageFor(model => model.IdPaisNacimiento, "", new { @class = "text-danger" })
+    </div>
+
+    <div class="form-group col-md-4">
+        @Html.LabelFor(model => model.IdDepartamentoNacimiento)
+        @if (soloLectura)
+        {
+            @Html.TextBoxDisabledFor(model => model.DepartamentoNacimiento, true, new { @class = "form-control", tabindex = "2" })
+        }
+        else
+        {
+            @Html.DropDownListDisabledFor(model => model.IdDepartamentoNacimiento, new List<SelectListItem>(), soloLectura, new { @class = "form-control", tabindex = "2", id = "cmbDepartamentoNacimiento" })
+        }
+        @Html.ValidationMessageFor(model => model.IdDepartamentoNacimiento, "", new { @class = "text-danger" })
+    </div>
+
+    <div class="form-group col-md-4">
+        @Html.LabelFor(model => model.IdMunicipioNacimiento)
+        @if (soloLectura)
+        {
+            @Html.TextBoxDisabledFor(model => model.MunicipioNacimiento, true, new { @class = "form-control", tabindex = "2" })
+        }
+        else
+        {
+            @Html.DropDownListDisabledFor(model => model.IdMunicipioNacimiento, new List<SelectListItem>(), soloLectura, new { @class = "form-control", tabindex = "2", id = "cmbMunicipioNacimiento" })
+        }
+        @Html.ValidationMessageFor(model => model.IdMunicipioNacimiento, "", new { @class = "text-danger" })
+    </div>
+</div>
+
+<div class="row">
+    <div class="form-group col-md-4">
+        @Html.LabelFor(model => model.UrlFoto)
+        <input type="file" id="imgFoto" name="postedFoto" class="file" data-val="true" data-val-required="Campo requerido." />
+        @Html.ValidationMessage("postedFoto", new { @class = "text-danger" })
+    </div>
+    <div class="form-group col-md-4">
+        @Html.LabelFor(model => model.IdEntidadPromotoraSalud)
+        @Html.DropDownListDisabledFor(model => model.IdEntidadPromotoraSalud, Model.ComboEPS, soloLectura, new { @class = "form-control", tabindex = "2" })
+        @Html.ValidationMessageFor(model => model.IdEntidadPromotoraSalud, "", new { @class = "text-danger" })
+    </div>
+</div>
+
+@Html.Script(
+    @<script type="text/javascript">
+        $(document).ready(function () {
+            var soloLectura = '@soloLectura';
+            if (soloLectura == "True") {
+                $("#imgFoto").prop("disabled", true);
+                $("#usuario_pw").prop("disabled", true);
+            }
+        });
+    </script>
+)

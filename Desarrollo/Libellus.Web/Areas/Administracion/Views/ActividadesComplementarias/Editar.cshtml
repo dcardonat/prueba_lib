@@ -1,0 +1,47 @@
+﻿@model Libellus.Web.Areas.Administracion.Models.ActividadesComplementarias.ActividadesComplementariasViewModel
+
+@{
+    ViewBag.Title = "Editar actividades complementarias";
+}
+
+<div class="content-header">
+    <h2 class="content-header-title">@ViewBag.Title</h2>
+</div>
+
+@using (Html.BeginForm("Editar", "ActividadesComplementarias", FormMethod.Post))
+{
+    @Html.AntiForgeryToken()
+
+    <div class="row">
+        @Html.HiddenFor(model => model.Id)
+
+        <div class="form-group col-md-4">
+            @Html.LabelFor(model => model.Descripcion)
+            @Html.EditorFor(model => model.Descripcion, new { htmlAttributes = new { @class = "form-control", maxlength = "100", tabindex = "1" } })
+            @Html.ValidationMessageFor(model => model.Descripcion, "", new { @class = "text-danger" })
+        </div>
+
+        <div class="form-group col-md-4">
+            @Html.LabelFor(model => model.IntensidadHoraria)
+            @Html.EditorFor(model => model.IntensidadHoraria, new { htmlAttributes = new { @class = "form-control", maxlength = "2", tabindex = "2" } })
+            @Html.ValidationMessageFor(model => model.IntensidadHoraria, "", new { @class = "text-danger" })
+        </div>
+
+        <div class="form-group col-md-4">
+            @Html.LabelFor(model => model.Estado)
+            <div class="checkbox">
+                @Html.EditorFor(model => model.Estado) Activo
+            </div>
+        </div>
+
+    </div>
+    <br />
+    <div class="form-group centered">
+        @Html.BotonCancelar("Consultar", "ActividadesComplementarias", null, new { tabindex = "4" })
+        <input type="submit" value="Editar actividad complementaria" class="btn btn-primary" tabindex="3" />
+    </div>
+}
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}

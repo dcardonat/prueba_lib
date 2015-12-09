@@ -1,0 +1,551 @@
+﻿@model Libellus.Web.Areas.GestionMatricula.Models.DatosGeneralesEstudiante.EstudianteViewModel
+
+@{
+    bool soloLectura = ViewBag.SoloLectura;
+}
+
+@Html.HiddenFor(model => model.DatosFamiliares.Id)
+@Html.HiddenFor(model => model.DatosFamiliares.IdAcudiente, new { id = "idAcudiente" })
+@Html.HiddenFor(model => model.DatosFamiliares.IdMadre, new { id = "idMadre" })
+@Html.HiddenFor(model => model.DatosFamiliares.IdPadre, new { id = "idPadre" })
+
+<div class="content-header">
+    <div class="checkbox">
+        <label>
+            @Html.CheckBoxFor(model => model.DatosFamiliares.TienePadre, new { id = "chkDatosPadre", data_toggle="collapse", data_target="#divPadre", aria_expanded="false", aria_controls="divPadre" })
+            <strong>Datos familiares del padre</strong>
+        </label>
+    </div>
+</div>
+<div class="collapse" id="divPadre">
+    <div class="row">
+        <div class="form-group col-md-4">
+            @Html.LabelFor(model => model.DatosFamiliares.Padre.IdTipoIdentificacion)
+            @Html.DropDownListDisabledFor(model => model.DatosFamiliares.Padre.IdTipoIdentificacion, Model.ComboTiposIdentificacion, soloLectura, new { @class = "form-control", id = "cmbTipoIdentificacionPadre" })
+            @Html.ValidationMessageFor(model => model.DatosFamiliares.Padre.IdTipoIdentificacion, "", new { @class = "text-danger" })
+        </div>
+
+        <div class="form-group col-md-4">
+            @Html.LabelFor(model => model.DatosFamiliares.Padre.Identificacion)
+            @Html.TextBoxDisabledFor(model => model.DatosFamiliares.Padre.Identificacion, soloLectura, new { @class = "form-control", tabindex = "2", id = "txtIdentificacionPadre" })
+            @Html.ValidationMessageFor(model => model.DatosFamiliares.Padre.Identificacion, "", new { @class = "text-danger" })
+        </div>
+
+        <div class="form-group col-md-4">
+            @Html.LabelFor(model => model.DatosFamiliares.Padre.Nombres)
+            @Html.TextBoxDisabledFor(model => model.DatosFamiliares.Padre.Nombres, soloLectura, new { @class = "form-control", tabindex = "2", id = "txtNombresPadre" })
+            @Html.ValidationMessageFor(model => model.DatosFamiliares.Padre.Nombres, "", new { @class = "text-danger" })
+        </div>
+    </div>
+    <div class="row">
+        <div class="form-group col-md-4">
+            @Html.LabelFor(model => model.DatosFamiliares.Padre.IdPais)
+            @Html.DropDownListDisabledFor(model => model.DatosFamiliares.Padre.IdPais, Model.ComboPaises, soloLectura, new { @class = "form-control", tabindex = "2", id = "cmbPaisPadre" })
+            @Html.ValidationMessageFor(model => model.DatosFamiliares.Padre.IdPais, "", new { @class = "text-danger" })
+        </div>
+
+        <div class="form-group col-md-4">
+            @Html.LabelFor(model => model.DatosFamiliares.Padre.IdDepartamento)
+            @if (soloLectura)
+            {
+                @Html.TextBoxDisabledFor(model => model.DepartamentoPadre, soloLectura, new { @class = "form-control", tabindex = "2" })
+            }
+            else
+            {
+                @Html.DropDownListDisabledFor(model => model.DatosFamiliares.Padre.IdDepartamento, new List<SelectListItem>(), soloLectura, new { @class = "form-control", tabindex = "2", id = "cmbDepartamentoPadre" })
+            }
+            @Html.ValidationMessageFor(model => model.DatosFamiliares.Padre.IdDepartamento, "", new { @class = "text-danger" })
+        </div>
+
+        <div class="form-group col-md-4">
+            @Html.LabelFor(model => model.DatosFamiliares.Padre.IdMunicipio)
+            @if (soloLectura)
+            {
+                @Html.TextBoxDisabledFor(model => model.MunicipioPadre, soloLectura, new { @class = "form-control", tabindex = "2" })
+            }
+            else
+            {
+                @Html.DropDownListDisabledFor(model => model.DatosFamiliares.Padre.IdMunicipio, new List<SelectListItem>(), soloLectura, new { @class = "form-control", tabindex = "2", id = "cmbMunicipioPadre" })
+            }
+            @Html.ValidationMessageFor(model => model.DatosFamiliares.Padre.IdMunicipio, "", new { @class = "text-danger" })
+        </div>
+    </div>
+    <div class="row">
+        <div class="form-group col-md-4">
+            @Html.LabelFor(model => model.DatosFamiliares.Padre.Direccion)
+            @Html.TextBoxDisabledFor(model => model.DatosFamiliares.Padre.Direccion, soloLectura, new { @class = "form-control", tabindex = "2", id = "txtDireccionPadre" })
+            @Html.ValidationMessageFor(model => model.DatosFamiliares.Padre.Direccion, "", new { @class = "text-danger" })
+        </div>
+
+        <div class="form-group col-md-4">
+            @Html.LabelFor(model => model.DatosFamiliares.Padre.Barrio)
+            @Html.TextBoxDisabledFor(model => model.DatosFamiliares.Padre.Barrio, soloLectura, new { @class = "form-control", tabindex = "2", id = "txtBarrioPadre" })
+            @Html.ValidationMessageFor(model => model.DatosFamiliares.Padre.Barrio, "", new { @class = "text-danger" })
+        </div>
+
+        <div class="form-group col-md-4">
+            @Html.LabelFor(model => model.DatosFamiliares.Padre.IdEstrato)
+            @Html.DropDownListDisabledFor(model => model.DatosFamiliares.Padre.IdEstrato, Model.ComboEstratos, soloLectura, new { @class = "form-control", tabindex = "2", id = "cmbEstratoPadre" })
+            @Html.ValidationMessageFor(model => model.DatosFamiliares.Padre.IdEstrato, "", new { @class = "text-danger" })
+        </div>
+    </div>
+    <div class="row">
+        <div class="form-group col-md-4">
+            @Html.LabelFor(model => model.DatosFamiliares.Padre.Telefono)
+            @Html.TextBoxDisabledFor(model => model.DatosFamiliares.Padre.Telefono, soloLectura, new { @class = "form-control", tabindex = "2", id = "txtTelefonoPadre" })
+            @Html.ValidationMessageFor(model => model.DatosFamiliares.Padre.Telefono, "", new { @class = "text-danger" })
+        </div>
+
+        <div class="form-group col-md-4">
+            @Html.LabelFor(model => model.DatosFamiliares.Padre.Celular)
+            @Html.TextBoxDisabledFor(model => model.DatosFamiliares.Padre.Celular, soloLectura, new { @class = "form-control", tabindex = "2", id = "txtCelularPadre" })
+            @Html.ValidationMessageFor(model => model.DatosFamiliares.Padre.Celular, "", new { @class = "text-danger" })
+        </div>
+
+        <div class="form-group col-md-4">
+            @Html.LabelFor(model => model.DatosFamiliares.Padre.Correo)
+            @Html.TextBoxDisabledFor(model => model.DatosFamiliares.Padre.Correo, soloLectura, new { @class = "form-control", tabindex = "2", id = "txtCorreoPadre", type ="email" })
+            @Html.ValidationMessageFor(model => model.DatosFamiliares.Padre.Correo, "", new { @class = "text-danger" })
+        </div>
+    </div>
+    <div class="row">
+        <div class="form-group col-md-4">
+            @Html.LabelFor(model => model.DatosFamiliares.Padre.IdEstadoCivil)
+            @Html.DropDownListDisabledFor(model => model.DatosFamiliares.Padre.IdEstadoCivil, Model.ComboEstadosCivil, soloLectura, new { @class = "form-control", tabindex = "2", id = "cmbEstadoCivilPadre" })
+            @Html.ValidationMessageFor(model => model.DatosFamiliares.Padre.IdEstadoCivil, "", new { @class = "text-danger" })
+        </div>
+
+        <div class="form-group col-md-4">
+            @Html.LabelFor(model => model.DatosFamiliares.Padre.IdNivelEscolaridad)
+            @Html.DropDownListDisabledFor(model => model.DatosFamiliares.Padre.IdNivelEscolaridad, Model.ComboNivelesEscolaridad, soloLectura, new { @class = "form-control", tabindex = "2", id = "cmbNivelEscolaridadPadre" })
+            @Html.ValidationMessageFor(model => model.DatosFamiliares.Padre.IdNivelEscolaridad, "", new { @class = "text-danger" })
+        </div>
+
+        <div class="col-md-4">
+            <label>&nbsp;</label>
+            <div class="form-group">
+                <label class="checkbox-inline">
+                    @Html.CheckBoxFor(model => model.DatosFamiliares.Padre.EsAcudiente, new { id = "chkEsAcudientePadre" })
+                    <strong>@Html.DisplayNameFor(model => model.DatosFamiliares.Padre.EsAcudiente)</strong>
+                </label>
+                <label class="checkbox-inline">
+                    @Html.CheckBoxFor(model => model.DatosFamiliares.Padre.Vive, new { id = "chkVivePadre" })
+                    <strong>@Html.DisplayNameFor(model => model.DatosFamiliares.Padre.Vive)</strong>
+                </label>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="content-header">
+    <div class="checkbox">
+        <label>
+            @Html.CheckBoxFor(model => model.DatosFamiliares.TieneMadre, new { id = "chkDatosMadre", data_toggle = "collapse", data_target = "#divMadre", aria_expanded = "false", aria_controls = "divMadre" })
+            <strong>Datos familiares de la madre</strong>
+        </label>
+    </div>
+</div>
+<div class="collapse" id="divMadre">
+    <div class="row">
+        <div class="form-group col-md-4">
+            @Html.LabelFor(model => model.DatosFamiliares.Madre.IdTipoIdentificacion)
+            @Html.DropDownListDisabledFor(model => model.DatosFamiliares.Madre.IdTipoIdentificacion, Model.ComboTiposIdentificacion, soloLectura, new { @class = "form-control", id = "cmbTipoIdentificacionMadre" })
+            @Html.ValidationMessageFor(model => model.DatosFamiliares.Madre.IdTipoIdentificacion, "", new { @class = "text-danger" })
+        </div>
+
+        <div class="form-group col-md-4">
+            @Html.LabelFor(model => model.DatosFamiliares.Madre.Identificacion)
+            @Html.TextBoxDisabledFor(model => model.DatosFamiliares.Madre.Identificacion, soloLectura, new { @class = "form-control", tabindex = "2", id = "txtIdentificacionMadre" })
+            @Html.ValidationMessageFor(model => model.DatosFamiliares.Madre.Identificacion, "", new { @class = "text-danger" })
+        </div>
+
+        <div class="form-group col-md-4">
+            @Html.LabelFor(model => model.DatosFamiliares.Madre.Nombres)
+            @Html.TextBoxDisabledFor(model => model.DatosFamiliares.Madre.Nombres, soloLectura, new { @class = "form-control", tabindex = "2", id = "txtNombresMadre" })
+            @Html.ValidationMessageFor(model => model.DatosFamiliares.Madre.Nombres, "", new { @class = "text-danger" })
+        </div>
+    </div>
+    <div class="row">
+        <div class="form-group col-md-4">
+            @Html.LabelFor(model => model.DatosFamiliares.Madre.IdPais)
+            @Html.DropDownListDisabledFor(model => model.DatosFamiliares.Madre.IdPais, Model.ComboPaises, soloLectura, new { @class = "form-control", tabindex = "2", id = "cmbPaisMadre" })
+            @Html.ValidationMessageFor(model => model.DatosFamiliares.Madre.IdPais, "", new { @class = "text-danger" })
+        </div>
+
+        <div class="form-group col-md-4">
+            @Html.LabelFor(model => model.DatosFamiliares.Madre.IdDepartamento)
+            @if (soloLectura)
+            {
+                @Html.TextBoxDisabledFor(model => model.DepartamentoMadre, soloLectura, new { @class = "form-control", tabindex = "2" })
+            }
+            else
+            {
+                @Html.DropDownListDisabledFor(model => model.DatosFamiliares.Madre.IdDepartamento, new List<SelectListItem>(), soloLectura, new { @class = "form-control", tabindex = "2", id = "cmbDepartamentoMadre" })
+            }
+            @Html.ValidationMessageFor(model => model.DatosFamiliares.Madre.IdDepartamento, "", new { @class = "text-danger" })
+        </div>
+
+        <div class="form-group col-md-4">
+            @Html.LabelFor(model => model.DatosFamiliares.Madre.IdMunicipio)
+            @if (soloLectura)
+            {
+                @Html.TextBoxDisabledFor(model => model.MunicipioMadre, soloLectura, new { @class = "form-control", tabindex = "2" })
+            }
+            else
+            {
+                @Html.DropDownListDisabledFor(model => model.DatosFamiliares.Madre.IdMunicipio, new List<SelectListItem>(), soloLectura, new { @class = "form-control", tabindex = "2", id = "cmbMunicipioMadre" })
+            }
+            @Html.ValidationMessageFor(model => model.DatosFamiliares.Madre.IdMunicipio, "", new { @class = "text-danger" })
+        </div>
+    </div>
+    <div class="row">
+        <div class="form-group col-md-4">
+            @Html.LabelFor(model => model.DatosFamiliares.Madre.Direccion)
+            @Html.TextBoxDisabledFor(model => model.DatosFamiliares.Madre.Direccion, soloLectura, new { @class = "form-control", tabindex = "2", id = "txtDireccionMadre" })
+            @Html.ValidationMessageFor(model => model.DatosFamiliares.Madre.Direccion, "", new { @class = "text-danger" })
+        </div>
+
+        <div class="form-group col-md-4">
+            @Html.LabelFor(model => model.DatosFamiliares.Madre.Barrio)
+            @Html.TextBoxDisabledFor(model => model.DatosFamiliares.Madre.Barrio, soloLectura, new { @class = "form-control", tabindex = "2", id = "txtBarrioMadre" })
+            @Html.ValidationMessageFor(model => model.DatosFamiliares.Madre.Barrio, "", new { @class = "text-danger" })
+        </div>
+
+        <div class="form-group col-md-4">
+            @Html.LabelFor(model => model.DatosFamiliares.Madre.IdEstrato)
+            @Html.DropDownListDisabledFor(model => model.DatosFamiliares.Madre.IdEstrato, Model.ComboEstratos, soloLectura, new { @class = "form-control", tabindex = "2", id = "cmbEstratoMadre" })
+            @Html.ValidationMessageFor(model => model.DatosFamiliares.Madre.IdEstrato, "", new { @class = "text-danger" })
+        </div>
+    </div>
+    <div class="row">
+        <div class="form-group col-md-4">
+            @Html.LabelFor(model => model.DatosFamiliares.Madre.Telefono)
+            @Html.TextBoxDisabledFor(model => model.DatosFamiliares.Madre.Telefono, soloLectura, new { @class = "form-control", tabindex = "2", id = "txtTelefonoMadre" })
+            @Html.ValidationMessageFor(model => model.DatosFamiliares.Madre.Telefono, "", new { @class = "text-danger" })
+        </div>
+
+        <div class="form-group col-md-4">
+            @Html.LabelFor(model => model.DatosFamiliares.Madre.Celular)
+            @Html.TextBoxDisabledFor(model => model.DatosFamiliares.Madre.Celular, soloLectura, new { @class = "form-control", tabindex = "2", id = "txtCelularMadre" })
+            @Html.ValidationMessageFor(model => model.DatosFamiliares.Madre.Celular, "", new { @class = "text-danger" })
+        </div>
+
+        <div class="form-group col-md-4">
+            @Html.LabelFor(model => model.DatosFamiliares.Madre.Correo)
+            @Html.TextBoxDisabledFor(model => model.DatosFamiliares.Madre.Correo, soloLectura, new { @class = "form-control", tabindex = "2", id = "txtCorreoMadre" })
+            @Html.ValidationMessageFor(model => model.DatosFamiliares.Madre.Correo, "", new { @class = "text-danger" })
+        </div>
+    </div>
+    <div class="row">
+        <div class="form-group col-md-4">
+            @Html.LabelFor(model => model.DatosFamiliares.Madre.IdEstadoCivil)
+            @Html.DropDownListDisabledFor(model => model.DatosFamiliares.Madre.IdEstadoCivil, Model.ComboEstadosCivil, soloLectura, new { @class = "form-control", tabindex = "2", id = "cmbEstadoCivilMadre" })
+            @Html.ValidationMessageFor(model => model.DatosFamiliares.Madre.IdEstadoCivil, "", new { @class = "text-danger" })
+        </div>
+
+        <div class="form-group col-md-4">
+            @Html.LabelFor(model => model.DatosFamiliares.Madre.IdNivelEscolaridad)
+            @Html.DropDownListDisabledFor(model => model.DatosFamiliares.Madre.IdNivelEscolaridad, Model.ComboNivelesEscolaridad, soloLectura, new { @class = "form-control", tabindex = "2", id = "cmbNivelEscolaridadMadre" })
+            @Html.ValidationMessageFor(model => model.DatosFamiliares.Madre.IdNivelEscolaridad, "", new { @class = "text-danger" })
+        </div>
+
+        <div class="col-md-4">
+            <label>&nbsp;</label>
+            <div class="form-group">
+                <label class="checkbox-inline">
+                    @Html.CheckBoxFor(model => model.DatosFamiliares.Madre.EsAcudiente, new { id = "chkEsAcudiente" })
+                    <strong>@Html.DisplayNameFor(model => model.DatosFamiliares.Madre.EsAcudiente)</strong>
+                </label>
+                <label class="checkbox-inline">
+                    @Html.CheckBoxFor(model => model.DatosFamiliares.Madre.Vive, new { id = "chkVive" })
+                    <strong>@Html.DisplayNameFor(model => model.DatosFamiliares.Madre.Vive)</strong>
+                </label>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="content-header">
+    <label>
+        <strong>Datos familiares del acudiente</strong>
+    </label>
+</div>
+<div id="divAcudiente">
+    <div class="row">
+        <div class="form-group col-md-4">
+            @Html.LabelFor(model => model.DatosFamiliares.Acudiente.IdTipoIdentificacion)
+            @Html.DropDownListDisabledFor(model => model.DatosFamiliares.Acudiente.IdTipoIdentificacion, Model.ComboTiposIdentificacion, soloLectura, new { id = "cmbTipoIdentificacionAcudiente", @class = "form-control" })
+            @Html.ValidationMessageFor(model => model.DatosFamiliares.Acudiente.IdTipoIdentificacion, "", new { @class = "text-danger" })
+        </div>
+
+        <div class="form-group col-md-4">
+            @Html.LabelFor(model => model.DatosFamiliares.Acudiente.Identificacion)
+            @Html.TextBoxDisabledFor(model => model.DatosFamiliares.Acudiente.Identificacion, soloLectura, new { id = "cmbIdentificacionAcudiente", @class = "form-control", tabindex = "2" })
+            @Html.ValidationMessageFor(model => model.DatosFamiliares.Acudiente.Identificacion, "", new { @class = "text-danger" })
+        </div>
+
+        <div class="form-group col-md-4">
+            @Html.LabelFor(model => model.DatosFamiliares.Acudiente.Nombres)
+            @Html.TextBoxDisabledFor(model => model.DatosFamiliares.Acudiente.Nombres, soloLectura, new { id = "txtNombresAcudiente", @class = "form-control", tabindex = "2" })
+            @Html.ValidationMessageFor(model => model.DatosFamiliares.Acudiente.Nombres, "", new { @class = "text-danger" })
+        </div>
+    </div>
+    <div class="row">
+        <div class="form-group col-md-4">
+            @Html.LabelFor(model => model.DatosFamiliares.Acudiente.Telefono)
+            @Html.TextBoxDisabledFor(model => model.DatosFamiliares.Acudiente.Telefono, soloLectura, new { id = "txtTelefonoAcudiente", @class = "form-control", tabindex = "2" })
+            @Html.ValidationMessageFor(model => model.DatosFamiliares.Acudiente.Telefono, "", new { @class = "text-danger" })
+        </div>
+
+        <div class="form-group col-md-4">
+            @Html.LabelFor(model => model.DatosFamiliares.Acudiente.Celular)
+            @Html.TextBoxDisabledFor(model => model.DatosFamiliares.Acudiente.Celular, soloLectura, new { id = "txtCelularAcudiente", @class = "form-control", tabindex = "2" })
+            @Html.ValidationMessageFor(model => model.DatosFamiliares.Acudiente.Celular, "", new { @class = "text-danger" })
+        </div>
+
+        <div class="form-group col-md-4">
+            @Html.LabelFor(model => model.DatosFamiliares.Acudiente.Correo)
+            @Html.TextBoxDisabledFor(model => model.DatosFamiliares.Acudiente.Correo, soloLectura, new { id = "txtCorreoAcudiente", @class = "form-control", tabindex = "2" })
+            @Html.ValidationMessageFor(model => model.DatosFamiliares.Acudiente.Correo, "", new { @class = "text-danger" })
+        </div>
+    </div>
+    <div class="row">
+        <div class="form-group col-md-4">
+            @Html.LabelFor(model => model.DatosFamiliares.Acudiente.IdParentesco)
+            @Html.DropDownListDisabledFor(model => model.DatosFamiliares.Acudiente.IdParentesco, Model.ComboParentesco, soloLectura, new { id = "cmbIdParentescoAcudiente", @class = "form-control", tabindex = "2" })
+            @Html.ValidationMessageFor(model => model.DatosFamiliares.Acudiente.IdParentesco, "", new { @class = "text-danger" })
+        </div>
+
+        <div class="form-group col-md-4">
+            @Html.LabelFor(model => model.DatosFamiliares.Acudiente.IdNivelEscolaridad)
+            @Html.DropDownListDisabledFor(model => model.DatosFamiliares.Acudiente.IdNivelEscolaridad, Model.ComboNivelesEscolaridad, soloLectura, new { id = "cmbIdNivelEscolaridadAcudiente", @class = "form-control", tabindex = "2" })
+            @Html.ValidationMessageFor(model => model.DatosFamiliares.Acudiente.IdNivelEscolaridad, "", new { @class = "text-danger" })
+        </div>
+    </div>
+</div>
+
+@Html.Script(
+    @<script type="text/javascript">
+
+        var habilitarControlesPadre = function () {
+            $("#cmbTipoIdentificacionPadre").removeProp("disabled");
+            $("#txtIdentificacionPadre").removeProp("disabled");
+            $("#txtNombresPadre").removeProp("disabled");
+            $("#cmbPaisPadre").removeProp("disabled");
+            $("#txtDireccionPadre").removeProp("disabled");
+            $("#txtBarrioPadre").removeProp("disabled");
+            $("#cmbEstratoPadre").removeProp("disabled");
+            $("#txtTelefonoPadre").removeProp("disabled");
+            $("#txtCelularPadre").removeProp("disabled");
+            $("#txtCorreoPadre").removeProp("disabled");
+            $("#cmbEstadoCivilPadre").removeProp("disabled");
+            $("#cmbNivelEscolaridadPadre").removeProp("disabled");
+        };
+
+        var deshabilitarControlesPadre = function () {
+            $("#cmbTipoIdentificacionPadre").prop("disabled", true);
+            $("#txtIdentificacionPadre").prop("disabled", true);
+            $("#txtNombresPadre").prop("disabled", true);
+            $("#cmbPaisPadre").prop("disabled", true);
+            $("#txtDireccionPadre").prop("disabled", true);
+            $("#txtBarrioPadre").prop("disabled", true);
+            $("#cmbEstratoPadre").prop("disabled", true);
+            $("#txtTelefonoPadre").prop("disabled", true);
+            $("#txtCelularPadre").prop("disabled", true);
+            $("#txtCorreoPadre").prop("disabled", true);
+            $("#cmbEstadoCivilPadre").prop("disabled", true);
+            $("#cmbNivelEscolaridadPadre").prop("disabled", true);
+        };
+
+        var habilitarControlesMadre = function () {
+            $("#cmbTipoIdentificacionMadre").removeProp("disabled");
+            $("#txtIdentificacionMadre").removeProp("disabled");
+            $("#txtNombresMadre").removeProp("disabled");
+            $("#cmbPaisMadre").removeProp("disabled");
+            $("#txtDireccionMadre").removeProp("disabled");
+            $("#txtBarrioMadre").removeProp("disabled");
+            $("#cmbEstratoMadre").removeProp("disabled");
+            $("#txtTelefonoMadre").removeProp("disabled");
+            $("#txtCelularMadre").removeProp("disabled");
+            $("#txtCorreoMadre").removeProp("disabled");
+            $("#cmbEstadoCivilMadre").removeProp("disabled");
+            $("#cmbNivelEscolaridadMadre").removeProp("disabled");
+        };
+
+        var deshabilitarControlesMadre = function () {
+            $("#cmbTipoIdentificacionMadre").prop("disabled", true);
+            $("#txtIdentificacionMadre").prop("disabled", true);
+            $("#txtNombresMadre").prop("disabled", true);
+            $("#cmbPaisMadre").prop("disabled", true);
+            $("#txtDireccionMadre").prop("disabled", true);
+            $("#txtBarrioMadre").prop("disabled", true);
+            $("#cmbEstratoMadre").prop("disabled", true);
+            $("#txtTelefonoMadre").prop("disabled", true);
+            $("#txtCelularMadre").prop("disabled", true);
+            $("#txtCorreoMadre").prop("disabled", true);
+            $("#cmbEstadoCivilMadre").prop("disabled", true);
+            $("#cmbNivelEscolaridadMadre").prop("disabled", true);
+        };
+
+        var chkP = function () {
+            if ($("#chkDatosPadre").prop('checked')) {
+                habilitarControlesPadre();
+            }
+            else {
+                deshabilitarControlesPadre();
+            }
+        };
+
+        var chkM = function () {
+            if ($("#chkDatosMadre").prop('checked')) {
+                habilitarControlesMadre();
+            }
+            else {
+                deshabilitarControlesMadre();
+            }
+        };
+
+        var consultarFamiliar = function (identificacion, tipoFamiliar) {
+            if (identificacion && tipoFamiliar) {
+                var datos = {
+                    identificacion: identificacion
+                };
+
+                var opciones = {
+                    url: '@Url.Action("ConsultarFamiliarEstudiante")',
+                    data: datos,
+                    type: 'POST'
+                };
+
+                $.ajax(opciones).success(function (data) {
+                    switch (tipoFamiliar) {
+                        case 'padre':
+                            llenarCamposPadre(data);
+                            break;
+                        case 'madre':
+                            llenarCamposMadre(data);
+                            break;
+                        case 'acudiente':
+                            llenarCamposAcudiente(data);
+                            break;
+
+                    }
+                }).error(function () {
+                    VisualizarMensajeNegocio(3, '@MensajesEstaticos.Mensaje1000');
+                });
+            }
+        };
+
+        var llenarCamposPadre = function (data) {
+            $("#idPadre").val(data.Id);
+            if (data.Id > 0) {
+                $("#cmbTipoIdentificacionPadre").val(data.IdTipoIdentificacion);
+                $("#txtIdentificacionPadre").val(data.Identificacion);
+                $("#txtNombresPadre").val(data.Nombres);
+                $("#cmbPaisPadre").val(data.IdPais);
+                $("#cmbPaisPadre").change();
+                $("#cmbDepartamentoPadre").val(data.IdDepartamento);
+                $("#cmbDepartamentoPadre").change();
+                $("#cmbMunicipioPadre").val(data.IdMunicipio);
+                $("#txtDireccionPadre").val(data.Direccion);
+                $("#txtBarrioPadre").val(data.Barrio);
+                $("#cmbEstratoPadre").val(data.IdEstrato);
+                $("#txtTelefonoPadre").val(data.Telefono);
+                $("#txtCelularPadre").val(data.Celular);
+                $("#txtCorreoPadre").val(data.Correo);
+                $("#cmbEstadoCivilPadre").val(data.IdEstadoCivil);
+                $("#cmbNivelEscolaridadPadre").val(data.IdNivelEscolaridad);
+                $("#chkEsAcudientePadre").prop("checked", data.EsAcudiente);
+                $("#chkVivePadre").prop("checked", data.Vive);
+            }
+        };
+
+        var llenarCamposMadre = function (data) {
+            $("#idMadre").val(data.Id);
+            if (data.Id > 0) {
+                $("#cmbTipoIdentificacionMadre").val(data.IdTipoIdentificacion);
+                $("#txtIdentificacionMadre").val(data.Identificacion);
+                $("#txtNombresMadre").val(data.Nombres);
+                $("#cmbPaisMadre").val(data.IdPais);
+                $("#cmbPaisMadre").change();
+                $("#cmbDepartamentoMadre").val(data.IdDepartamento);
+                $("#cmbDepartamentoMadre").change();
+                $("#cmbMunicipioMadre").val(data.IdMunicipio);
+                $("#txtDireccionMadre").val(data.Direccion);
+                $("#txtBarrioMadre").val(data.Barrio);
+                $("#cmbEstratoMadre").val(data.IdEstrato);
+                $("#txtTelefonoMadre").val(data.Telefono);
+                $("#txtCelularMadre").val(data.Celular);
+                $("#txtCorreoMadre").val(data.Correo);
+                $("#cmbEstadoCivilMadre").val(data.IdEstadoCivil);
+                $("#cmbNivelEscolaridadMadre").val(data.IdNivelEscolaridad);
+                $("#chkVive").prop("checked", data.Vive);
+                $("#chkEsAcudiente").prop("checked", data.EsAcudiente);
+            }
+        };
+
+        var llenarCamposAcudiente = function (data) {
+            $("#idAcudiente").val(data.Id);
+            if (data.Id > 0) {
+                $("#cmbTipoIdentificacionAcudiente").val(data.IdTipoIdentificacion);
+                $("#cmbIdentificacionAcudiente").val(data.Identificacion);
+                $("#txtNombresAcudiente").val(data.Nombres);
+                $("#txtTelefonoAcudiente").val(data.Telefono);
+                $("#txtCelularAcudiente").val(data.Celular);
+                $("#txtCorreoAcudiente").val(data.Correo);
+                $("#cmbIdParentescoAcudiente").val(data.IdParentesco);
+                $("#cmbIdNivelEscolaridadAcudiente").val(data.IdNivelEscolaridad);
+            }
+        };
+
+        var collapsePadre = function () {
+            var id = $("#idPadre").val();
+            if (id) {
+                $("#divPadre").collapse('show');
+            }
+        };
+
+        var collapseMadre = function () {
+            var id = $("#idMadre").val();
+            if (id) {
+                $("#divMadre").collapse('show');
+            }
+        };
+
+        $(document).ready(function () {
+            
+            if ('@soloLectura' == "True") {
+                $("#chkDatosPadre").prop("disabled", true);
+                $("#chkDatosMadre").prop("disabled", true);
+                $("#chkEsAcudientePadre").prop("disabled", true);
+                $("#chkEsAcudiente").prop("disabled", true);
+                $("#chkVivePadre").prop("disabled", true);
+                $("#chkVive").prop("disabled", true);
+            }
+
+            collapsePadre();
+            collapseMadre();
+            chkP();
+            chkM();
+
+            $("#txtIdentificacionMadre").focusout(function () {
+                var identificacion = $("#txtIdentificacionMadre").val();
+                consultarFamiliar(identificacion, 'madre');
+            });
+
+            $("#txtIdentificacionPadre").focusout(function () {
+                var identificacion = $("#txtIdentificacionPadre").val();
+                consultarFamiliar(identificacion, 'padre');
+            });
+
+            $("#cmbIdentificacionAcudiente").focusout(function () {
+                var identificacion = $("#cmbIdentificacionAcudiente").val();
+                consultarFamiliar(identificacion, 'acudiente');
+            });
+
+            $("#chkDatosPadre").click(chkP);
+            $("#chkDatosMadre").click(chkM);
+
+        });
+    </script>
+)

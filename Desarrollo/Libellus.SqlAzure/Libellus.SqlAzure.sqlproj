@@ -1,0 +1,259 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003" ToolsVersion="4.0">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <Name>Libellus.SqlAzure</Name>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectVersion>4.1</ProjectVersion>
+    <ProjectGuid>{9828e6bf-79ae-410b-a4c5-6842acf4f81a}</ProjectGuid>
+    <DSP>Microsoft.Data.Tools.Schema.Sql.Sql120DatabaseSchemaProvider</DSP>
+    <OutputType>Database</OutputType>
+    <RootPath>
+    </RootPath>
+    <RootNamespace>Libellus.SqlAzure</RootNamespace>
+    <AssemblyName>Libellus.SqlAzure</AssemblyName>
+    <ModelCollation>1033, CI</ModelCollation>
+    <DefaultFileStructure>BySchemaAndSchemaType</DefaultFileStructure>
+    <DeployToDatabase>True</DeployToDatabase>
+    <TargetFrameworkVersion>v4.5.1</TargetFrameworkVersion>
+    <TargetLanguage>CS</TargetLanguage>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <SqlServerVerification>False</SqlServerVerification>
+    <IncludeCompositeObjects>True</IncludeCompositeObjects>
+    <TargetDatabaseSet>True</TargetDatabaseSet>
+    <SccProjectName>SAK</SccProjectName>
+    <SccProvider>SAK</SccProvider>
+    <SccAuxPath>SAK</SccAuxPath>
+    <SccLocalPath>SAK</SccLocalPath>
+    <ValidateCasingOnIdentifiers>True</ValidateCasingOnIdentifiers>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <BuildScriptName>$(MSBuildProjectName).sql</BuildScriptName>
+    <TreatWarningsAsErrors>False</TreatWarningsAsErrors>
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <DefineDebug>false</DefineDebug>
+    <DefineTrace>true</DefineTrace>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <OutputPath>bin\Debug\</OutputPath>
+    <BuildScriptName>$(MSBuildProjectName).sql</BuildScriptName>
+    <TreatWarningsAsErrors>false</TreatWarningsAsErrors>
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <DefineDebug>true</DefineDebug>
+    <DefineTrace>true</DefineTrace>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup>
+    <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">11.0</VisualStudioVersion>
+    <!-- Default to the v11.0 targets path if the targets file for the current VS version is not found -->
+    <SSDTExists Condition="Exists('$(MSBuildExtensionsPath)\Microsoft\VisualStudio\v$(VisualStudioVersion)\SSDT\Microsoft.Data.Tools.Schema.SqlTasks.targets')">True</SSDTExists>
+    <VisualStudioVersion Condition="'$(SSDTExists)' == ''">11.0</VisualStudioVersion>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Pruebas|AnyCPU' ">
+    <OutputPath>bin\Release\</OutputPath>
+    <BuildScriptName>$(MSBuildProjectName).sql</BuildScriptName>
+    <TreatWarningsAsErrors>False</TreatWarningsAsErrors>
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <DefineDebug>false</DefineDebug>
+    <DefineTrace>true</DefineTrace>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <Import Condition="'$(SQLDBExtensionsRefPath)' != ''" Project="$(SQLDBExtensionsRefPath)\Microsoft.Data.Tools.Schema.SqlTasks.targets" />
+  <Import Condition="'$(SQLDBExtensionsRefPath)' == ''" Project="$(MSBuildExtensionsPath)\Microsoft\VisualStudio\v$(VisualStudioVersion)\SSDT\Microsoft.Data.Tools.Schema.SqlTasks.targets" />
+  <ItemGroup>
+    <Folder Include="Properties" />
+    <Folder Include="Entrega 1" />
+    <Folder Include="Entrega 1\Tablas" />
+    <Folder Include="Entrega 1\DatosSemilla" />
+    <Folder Include="Entrega 2" />
+    <Folder Include="Entrega 2\Tablas" />
+    <Folder Include="Entrega 3" />
+    <Folder Include="Entrega 3\Tablas" />
+    <Folder Include="Entrega 3\DatosSemilla" />
+    <Folder Include="Entrega 3\AjustesTablas" />
+    <Folder Include="Entrega 2\DatosSemilla" />
+    <Folder Include="Entrega 3\ProcedimientoAlmacenado" />
+    <Folder Include="Entrega 2\AjustesTablas" />
+    <Folder Include="InformacionIngresoPrimeraVez" />
+    <Folder Include="Entrega 4" />
+    <Folder Include="Entrega 4\AjustesTablas" />
+    <Folder Include="Entrega 4\Tablas" />
+    <Folder Include="Entrega 4\DatosSemillas" />
+    <Folder Include="Entrega 4\ProcedimientoAlmacenado" />
+    <Folder Include="Entrega 5" />
+    <Folder Include="Entrega 5\Tablas" />
+    <Folder Include="Entrega 5\DatosSemillas" />
+    <Folder Include="Entrega 5\AjustesTablas" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Entrega 1\Tablas\Funcionalidades.sql" />
+    <None Include="Entrega 1\DatosSemilla\Funcionalidades.sql" />
+    <None Include="Entrega 1\Tablas\SalidasOcupacionales.sql" />
+    <None Include="Entrega 1\Tablas\GradosPorNivel.sql" />
+    <None Include="Entrega 1\Tablas\ActividadesComplementarias.sql" />
+    <None Include="Entrega 1\Tablas\Asignaturas.sql" />
+    <None Include="Entrega 1\Tablas\Aulas.sql" />
+    <None Include="Entrega 1\DatosSemilla\TiposAula.sql" />
+    <None Include="Entrega 2\Tablas\Elmah.sql" />
+    <None Include="Entrega 1\DatosSemilla\Maestros.sql" />
+    <None Include="Entrega 2\Tablas\ParametrizacionInstitucional.sql" />
+    <None Include="Entrega 2\Tablas\IntensidadHoraria.sql" />
+    <None Include="Entrega 3\Tablas\ParametrosPromocion.sql" />
+    <None Include="Entrega 3\Tablas\AspectosEvaluativos.sql" />
+    <None Include="Entrega 3\Tablas\RangosDesempenio.sql" />
+    <None Include="Entrega 3\AjustesTablas\Maestros.sql" />
+    <None Include="Entrega 2\DatosSemilla\TipoMaestros.sql" />
+    <None Include="Entrega 2\DatosSemilla\Maestros.sql" />
+    <None Include="Entrega 3\Instalador.txt" />
+    <None Include="Entrega 2\Instalador.txt" />
+    <None Include="Entrega 1\Instalador.txt" />
+    <None Include="Entrega 3\ProcedimientoAlmacenado\ConsultarDocumentosSoportePorRolSeleccionados.sql" />
+    <None Include="Entrega 1\DatosSemilla\Geografia.sql" />
+    <None Include="InformacionIngresoPrimeraVez\Usuarios.sql" />
+    <None Include="InformacionIngresoPrimeraVez\Roles.sql" />
+    <None Include="InformacionIngresoPrimeraVez\InstitucionEducativa.sql" />
+    <None Include="InformacionIngresoPrimeraVez\Sedes.sql" />
+    <None Include="InformacionIngresoPrimeraVez\ParametrosConexionColegio.sql" />
+    <None Include="Entrega 3\AjustesTablas\DocentesExperienciaLaboral.sql" />
+    <None Include="Entrega 3\AjustesTablas\DocentesDatosPersonales.sql" />
+    <None Include="Entrega 3\AjustesTablas\DocentesEstados.sql" />
+    <None Include="Entrega 3\AjustesTablas\DocentesArchivos.sql" />
+    <None Include="Entrega 3\AjustesTablas\ParametrizacionInstitucional.sql" />
+    <None Include="Entrega 3\AjustesTablas\ProyeccionCuposPorNiveles.sql" />
+    <None Include="Entrega 3\AjustesTablas\DocentesDatosResidenciales.sql" />
+    <None Include="Entrega 4\AjustesTablas\RangosDesempenio.sql" />
+    <None Include="Entrega 4\AjustesTablas\ParametrosPromocion.sql" />
+    <None Include="Entrega 4\AjustesTablas\AspectosEvaluativos.sql" />
+    <None Include="Entrega 4\AjustesTablas\Usuarios.sql" />
+    <None Include="Entrega 4\AjustesTablas\SoportePorRoles.sql" />
+    <None Include="Entrega 4\Instalador.txt" />
+    <None Include="Entrega 4\AjustesTablas\IntensidadHoraria.sql" />
+    <None Include="Entrega 4\AjustesTablas\DocentesEstudios.sql" />
+    <None Include="Entrega 4\Tablas\ParametrosNegocio.sql" />
+    <None Include="Entrega 4\DatosSemillas\ParametrosNegocio.sql" />
+    <None Include="Entrega 4\ProcedimientoAlmacenado\InsertarPrecargaSede.sql" />
+    <None Include="Entrega 4\AjustesTablas\DocentesEstados.sql" />
+    <None Include="Entrega 4\Tablas\UsuariosEstado.sql" />
+    <None Include="Entrega 4\DatosSemillas\UsuariosEstado.sql" />
+    <None Include="Entrega 5\Tablas\EstudianteDatosPersonales.sql" />
+    <None Include="Entrega 5\Tablas\EstudiantesDatosResidenciales.sql" />
+    <None Include="Entrega 5\Tablas\Cupos.sql" />
+    <None Include="Entrega 5\Instalador.txt" />
+    <None Include="Entrega 5\Tablas\EstudiantesArchivos.sql" />
+    <None Include="Entrega 5\Tablas\EstudiantesAntecedentesAcademicos.sql" />
+    <None Include="Entrega 5\Tablas\MatriculasDocumentos.sql" />
+    <None Include="Entrega 5\AjustesTablas\Maestros.sql" />
+    <None Include="Entrega 5\Tablas\CancelacionMatriculas.sql" />
+    <None Include="Entrega 5\Tablas\EstudiantesPorGrupo.sql" />
+    <None Include="Entrega 5\Tablas\Matriculas.sql" />
+    <None Include="Entrega 5\Tablas\Grupos.sql" />
+    <None Include="Entrega 5\AjustesTablas\ProyeccionCuposPorNiveles.sql" />
+    <None Include="Entrega 5\Tablas\GruposPorGrado.sql" />
+    <None Include="Entrega 5\DatosSemillas\ParametrosNegocio.sql" />
+    <None Include="Entrega 5\Tablas\FamiliaresEstudiente.sql" />
+    <None Include="Entrega 5\Tablas\EstudiantesDatosFamiliares.sql" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Entrega 1\Tablas\Maestros.sql" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Entrega 1\Tablas\ParametrosConexionColegio.sql" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Entrega 1\Tablas\Roles.sql" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Entrega 1\Tablas\RolesFuncionalidades.sql" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Entrega 1\Tablas\Sedes.sql" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Entrega 1\Tablas\TipoMaestros.sql" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Entrega 1\Tablas\Usuarios.sql" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Entrega 1\Tablas\UsuariosRoles.sql" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Entrega 1\Tablas\UsuariosAdministrativos.sql" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Entrega 2\Tablas\InstitucionEducativa.sql" />
+    <None Include="Entrega 2\Tablas\RegistrosLegalizacion.sql" />
+    <None Include="Entrega 2\Tablas\SoportePorRoles.sql" />
+    <None Include="Entrega 2\Tablas\SoportePorRolesDocumentos.sql" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Entrega 2\Tablas\DocentesArchivos.sql" />
+    <None Include="Entrega 2\Tablas\DocentesDatosPersonales.sql" />
+    <None Include="Entrega 2\Tablas\DocentesDatosResidenciales.sql" />
+    <None Include="Entrega 2\Tablas\DocentesDocumentosSoporte.sql" />
+    <None Include="Entrega 2\Tablas\DocentesEstados.sql" />
+    <None Include="Entrega 2\Tablas\DocentesEstudios.sql" />
+    <None Include="Entrega 2\Tablas\DocentesExperienciaLaboral.sql" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Entrega 3\Tablas\ProyeccionCuposPorNiveles.sql" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Entrega 3\DatosSemilla\Maestros.sql" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Entrega 3\DatosSemilla\TipoMaestros.sql" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Entrega 3\Tablas\GradosParametrizacion.sql" />
+    <None Include="Entrega 3\Tablas\AnioLectivo.sql" />
+    <None Include="Entrega 3\Tablas\ParametrizacionEscolar.sql" />
+    <None Include="Entrega 3\Tablas\NivelesParametrizacion.sql" />
+    <None Include="Entrega 3\Tablas\AreasNivel.sql" />
+    <None Include="Entrega 3\Tablas\PeriodosParametrizacion.sql" />
+    <None Include="Entrega 3\Tablas\AperturaExtemporaneaPeriodos.sql" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Entrega 2\AjustesTablas\Sedes.sql" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Entrega 1\Tablas\Paises.sql" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Entrega 1\Tablas\Departamentos.sql" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Entrega 1\Tablas\Municipios.sql" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Entrega 4\AjustesTablas\ProyeccionCuposPorNiveles.sql" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Entrega 1\DatosSemilla\TipoMaestros.sql" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Entrega 4\DatosSemillas\TipoMaestros.sql" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Entrega 4\DatosSemillas\Maestros.sql" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Entrega 4\AjustesTablas\ParametrizacionInstitucional.sql" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Entrega 5\DatosSemillas\Maestros.sql" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Entrega 5\DatosSemillas\TipoMaestros.sql" />
+  </ItemGroup>
+</Project>

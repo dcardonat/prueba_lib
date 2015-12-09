@@ -1,0 +1,140 @@
+﻿@model Libellus.Web.Areas.Administracion.Models.ParametrizacionEscolar.ParametrizacionEscolarViewModel
+
+@Html.HiddenFor(model => model.ValoresGrados)
+
+
+
+<div class="row">
+    <div class="form-group col-md-4">
+        @Html.LabelFor(model => model.IdAnioLectivo)
+        @Html.DropDownListFor(model => model.IdAnioLectivo, Model.ComboAnios, new { @class = "form-control", tabindex = "1" })
+        @Html.ValidationMessageFor(model => model.IdAnioLectivo, "", new { @class = "text-danger" })
+    </div>
+
+    <div class="form-group col-md-4">
+        @Html.LabelFor(model => model.IdTipoParametrizacion)
+        @Html.DropDownListFor(model => model.IdTipoParametrizacion, Model.ComboTiposParametrizacion, new { @class = "form-control", tabindex = "2" })
+        @Html.ValidationMessageFor(model => model.IdTipoParametrizacion, "", new { @class = "text-danger" })
+    </div>
+
+    <div class="form-group col-md-4">
+        @Html.LabelFor(model => model.IdSemestre)
+        @Html.DropDownListFor(model => model.IdSemestre, Model.ComboSemestres, new { @class = "form-control", tabindex = "3", data_val ="true", data_val_required="Campo requerido." })
+        @Html.ValidationMessageFor(model => model.IdSemestre, "", new { @class = "text-danger" })
+    </div>
+</div>
+
+<div class="row">
+    <div class="form-group col-md-4">
+        @Html.LabelFor(model => model.IdJornadaAcademica)
+        @Html.DropDownListFor(model => model.IdJornadaAcademica, Model.ComboJornadasAcademicas, new { @class = "form-control", tabindex = "4" })
+        @Html.ValidationMessageFor(model => model.IdJornadaAcademica, "", new { @class = "text-danger" })
+    </div>
+
+    <div class="form-group col-md-4">
+        @Html.LabelFor(model => model.SemanasLectivas)
+        @Html.DropDownListFor(model => model.SemanasLectivas, new List<SelectListItem>(), new { @class = "form-control", tabindex = "5" })
+        @Html.ValidationMessageFor(model => model.SemanasLectivas, "", new { @class = "text-danger" })
+    </div>
+
+    <div class="form-group col-md-4">
+        @Html.LabelFor(model => model.PorcentajeInasistencia)
+        @Html.EditorFor(model => model.PorcentajeInasistencia, new { htmlAttributes = new { @class = "form-control", tabindex = "6" } })
+        @Html.ValidationMessageFor(model => model.PorcentajeInasistencia, "", new { @class = "text-danger" })
+    </div>
+</div>
+
+<div class="row">
+    <div class="form-group col-md-12">
+        @Html.LabelFor(model => model.GradosParametrizacionSeleccionados)
+        @Html.DropDownListFor(model => model.GradosParametrizacionSeleccionados, Model.ComboGrados, new { @class = "form-control", tabindex = "9", multiple = "multiple" })
+        @Html.ValidationMessageFor(model => model.GradosParametrizacionSeleccionados, "", new { @class = "text-danger" })
+    </div>
+</div>
+
+@Html.Script(
+
+    @<script type="text/javascript">
+
+        var v = $("#ValoresGrados").val();
+        var valores = v.split(",");
+
+        $("#GradosParametrizacionSeleccionados").select2({
+            placeholder: "Seleccione los grados de la parametrización..."
+        }).select2('val', valores);
+
+        var habilitarSemestre = function () {
+            var tipoParametrizacion = $("#IdTipoParametrizacion option:selected").text();
+            if (tipoParametrizacion == "Semestral") {
+                $("#IdSemestre").removeProp("disabled");
+            }
+            else {
+                $("#IdSemestre").prop("disabled", true).val("");
+                @*if ('@ViewBag.Crear' == "True" && $("#IdAnioLectivo").val() != "") {
+                    var datos = {
+                        IdAnioLectivo: $("#IdAnioLectivo").val()
+                    };
+
+                    var opciones = {
+                        url: '@Url.Action("ConsultarParametrizacionesAnualesAnteriores")',
+                        data: datos,
+                        type: 'POST'
+                    };
+
+                    $.ajax(opciones).success(function (data) {
+                        areasNivel = [];
+                        $.each(data, function (indice, area) {
+                            areaNivel = {
+                                IdArea: area.IdArea,
+                                Area: area.Area,
+                                IdNivelParametrizacion: area.IdNivelParametrizacion,
+                                Id: area.Id,
+                                IdAreaNivel: area.IdAreaNivel
+                            };
+                            areasNivel.push(areaNivel);
+                        });
+                    }).error(function () {
+                        InformarAccion("Mensaje de error", "@Mensaje.Mensaje1000");
+                    });
+                }*@
+            }
+        };
+
+        var consultarParametrizacionesAnteriores = function () {
+            var tipoParametrizacion = $("#IdTipoParametrizacion option:selected").text();
+            if (tipoParametrizacion == "Semestral") {
+
+            }
+            else {
+
+            }
+        };
+
+        var actualizarMomentosGradoArea = function () {
+            var datos = {
+                IdAnioLectivo: $("#IdAnioLectivo").val(),
+                IdGrado: $("#IdGrado").val(),
+                IdArea: $("#area").val()
+            };
+
+            var opciones = {
+                url: '@Url.Action("ObtenerMomentosGradoArea")',
+                data: datos,
+                type: 'POST'
+            };
+
+            $.ajax(opciones).success(function (data) {
+                $("#MomentosGradoArea").val(data);
+            }).error(function () {
+                InformarAccion("Mensaje de error", "@Mensaje.Mensaje1000");
+            });
+        };
+
+        $(document).ready(function () {
+
+            habilitarSemestre();
+            $("#IdTipoParametrizacion").change(habilitarSemestre);
+        });
+
+</script>
+)

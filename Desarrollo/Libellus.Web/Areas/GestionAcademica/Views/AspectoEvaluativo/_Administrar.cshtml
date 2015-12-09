@@ -1,0 +1,61 @@
+﻿@model Libellus.Web.Areas.GestionAcademica.Models.AspectoEvaluativo.AspectoEvaluativoViewModel
+
+<div class="row">
+    <div class="form-group col-md-4">
+        @Html.Partial("_AniosLectivos", Model.IdAnioLectivo)
+        @Html.ValidationMessageFor(model => model.IdAnioLectivo, "", new { @class = "text-danger" })
+        @Html.Hidden("AnioSeleccionado")
+    </div>
+    <div class="col-md-4 form-group">
+        @Html.LabelFor(model => model.IdAspectoEvaluativo)
+        @Html.DropDownListFor(model => model.IdAspectoEvaluativo, Model.AspectosEvaluativos, new { @class = "form-control", tabindex = "2" })
+        @Html.ValidationMessageFor(model => model.IdAspectoEvaluativo, "", new { @class = "text-danger" })
+    </div>
+    <div class="col-md-4 form-group">
+        @Html.LabelFor(model => model.IdIntensidadHoraria)
+        @Html.DropDownListFor(model => model.IdIntensidadHoraria, Model.IntensidadHorariaList, new { @class = "form-control", tabindex = "3" })
+        @Html.ValidationMessageFor(model => model.IdIntensidadHoraria, "", new { @class = "text-danger" })
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-md-4 form-group">
+        @Html.LabelFor(model => model.Porcentaje)
+        @Html.TextBoxFor(model => model.Porcentaje, new { @class = "form-control", tabindex = "4", @placeholder = "000,00" })
+        @Html.ValidationMessageFor(model => model.Porcentaje, "", new { @class = "text-danger" })
+    </div>
+    <div class="col-md-4 form-group">
+        @Html.LabelFor(model => model.PruebasMinimas)
+        @Html.DropDownListFor(model => model.PruebasMinimas, Model.PruebasMinimasList, "Seleccione", new { @class = "form-control", tabindex = "5" })
+        @Html.ValidationMessageFor(model => model.PruebasMinimas, "", new { @class = "text-danger" })
+    </div>
+</div>
+
+
+@Scripts.Render("~/bundles/general/js")
+<script type="text/javascript">
+
+    $(document).ready(function () {
+
+        $("#IdAnioLectivo").change(function (e) {
+            if ($("#IdAnioLectivo").val() != '') {
+                var cerrado = $("#IdAnioLectivo").trigger("EstadoAnio").data("resultado");
+                $('[name="AnioSeleccionado"]').val($("#IdAnioLectivo").val());
+
+                if (cerrado == 'true') {
+                    $(".form-control").prop('disabled', false);
+                    $("#submitAdministrar").removeProp('disabled');
+                    $("#IdAnioLectivo").removeProp('disabled');
+                }
+                else {
+                    $(".form-control").val('');
+                    $(".form-control").prop('disabled', true);
+                    $("#submitAdministrar").prop('disabled', true);
+                    $("#IdAnioLectivo").removeProp('disabled');
+                    $("#IdAnioLectivo").val($('[name="AnioSeleccionado"]').val());
+                }
+            }
+        });
+    });
+
+</script>

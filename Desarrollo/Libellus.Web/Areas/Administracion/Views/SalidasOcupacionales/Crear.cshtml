@@ -1,0 +1,27 @@
+﻿@model Libellus.Web.Areas.Administracion.Models.SalidasOcupacionales.SalidaOcupacionalViewModel
+
+@{
+    ViewBag.Title = "Crear salida ocupacional";
+}
+
+<div class="content-header">
+    <h2 class="content-header-title">@ViewBag.Title</h2>
+</div>
+
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+
+    Html.RenderPartial("_Administrar");
+
+    <br />
+
+    <div class="form-group centered">
+        @Html.BotonCancelar("Consultar", "SalidasOcupacionales", null, new { tabindex = "4" })
+        <input type="submit" value="Crear salida ocupacional" class="btn btn-primary" tabindex="3" />
+    </div>
+}
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}

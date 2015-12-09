@@ -1,0 +1,63 @@
+﻿@model IPagedList<Libellus.Web.Areas.Administracion.Models.Docente.ResultadoConsultaDocentesViewModel>
+
+<div id="resultadoInformacionDocente">
+
+    @if (Model != null && Model.Count() > 0)
+    {
+        <table class="@EstilosHelper.TablaLibellus">
+            <tr>
+                <th class="col-md-2">
+                    @Html.DisplayNameFor(model => model.First().TipoDocumento)
+                </th>
+                <th class="col-md-3">
+                    @Html.DisplayNameFor(model => model.First().DocumentoIdentidad)
+                </th>
+                <th class="col-md-3">
+                    @Html.DisplayNameFor(model => model.First().Nombres)
+                </th>
+                <th class="col-md-2">
+                    @Html.DisplayNameFor(model => model.First().Estado)
+                </th>
+                <th class="col-md-1">Acción</th>
+            </tr>
+
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td class="centered">
+                        @item.TipoDocumento
+                    </td>
+                    <td>
+                        @item.DocumentoIdentidad
+                    </td>
+                    <td>
+                        @item.Nombres
+                    </td>
+                    <td class="centered">
+                        @item.Estado
+                    </td>
+                    <td class="centered">
+                        @Html.ActionLink("Editar", "Editar", new { id = item.Id })
+                    </td>
+                </tr>
+            }
+
+        </table>
+
+        <div class="centered paginacion">
+            @Html.PagedListPager(Model, pagina => Url.Action("Index", new { pagina }))
+        </div>
+
+        <div class="form-group" style="text-align: center !important;">
+            <button type="button" id="exportarExcel" class="btn btn-success centered" tabindex="8">Exportar a Excel</button>
+        </div>
+
+        @Html.Hidden("tokenExportarExcel")
+    }
+    else
+    {
+        <script>
+            VisualizarMensajeNegocio(2, "@Mensaje.Mensaje1005", 7000);
+        </script>
+    }
+</div>

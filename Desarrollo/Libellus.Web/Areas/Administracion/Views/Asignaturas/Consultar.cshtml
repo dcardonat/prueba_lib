@@ -1,0 +1,78 @@
+﻿@model IPagedList<Libellus.Web.Areas.Administracion.Models.Asignaturas.AsignaturaViewModel>
+
+@{
+    ViewBag.Title = "Consultar";
+}
+
+<div class="content-header">
+    <h2 class="content-header-title">Asignaturas</h2>
+</div>
+
+<p>
+    @Html.ActionLink("Crear asignatura", "Crear")
+</p>
+
+@if (Model.Count() > 0)
+{
+    <table class="@EstilosHelper.TablaLibellus">
+        <tr>
+            <th class="col-md-6">
+                @Html.DisplayNameFor(model => model.First().Maestro)
+            </th>
+            <th class="col-md-4">
+                @Html.DisplayNameFor(model => model.First().Descripcion)
+            </th>
+            <th class="col-md-2">
+                @Html.DisplayNameFor(model => model.First().Estado)
+            </th>
+            <th>Acción</th>
+        </tr>
+
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td class="centered">
+                    @Html.DisplayFor(modelItem => item.Maestro.Descripcion)
+                </td>
+                <td class="centered">
+                    @Html.DisplayFor(modelItem => item.Descripcion)
+                </td>
+                <td class="centered">
+                    @Html.VisualizarEstado(item.Estado)
+                </td>
+                <td class="centered">
+                    @Html.ActionLink("Editar", "Editar", new { id = item.Id })
+                </td>
+            </tr>
+        }
+
+    </table>
+
+    <div class="centered">
+        @Html.PagedListPager(Model, pagina => Url.Action("Consultar", new { pagina }))
+    </div>
+    <div class="form-group" style="text-align: center !important;">
+        <button type="button" id="exportarExcel" class="btn btn-success centered">Exportar a Excel</button>
+    </div>
+
+    @Html.Hidden("tokenExportarExcel")
+}
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jquerycookies")
+
+    <script type="text/javascript">
+
+        $("#exportarExcel").bind("click", function () {
+
+            $('[name="tokenExportarExcel"]').val(new Date().getTime());
+
+            IniciarDescargaArchivo("exportarExcel");
+            window.location.href = "@Url.Action("ExportarInformacionExcel")" + "?token=" + $('[name="tokenExportarExcel"]').val();
+
+        });
+
+    </script>
+
+}
+

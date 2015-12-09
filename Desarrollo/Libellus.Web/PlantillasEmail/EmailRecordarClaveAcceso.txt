@@ -1,0 +1,35 @@
+﻿<html>
+	<head></head>
+	<body>
+	
+		<h2>Hola {0}!</h2>
+		<br />
+		<br />
+		<br />
+
+		Hemos recibido una solicitud para recordarte tus datos de acceso</b>
+		<br />
+		<br />
+
+		A continuación tus datos de acceso:
+		
+		<br />
+		<br />
+
+		<b>Usuario: </b>{1}
+		<br />
+		<b>Contraseña: </b>{2}
+		<br />
+		<b>Código del colegio: </b>{3}
+		<br />
+		<b>Dirección para el ingreso: http://libellustest.azurewebsites.net </b>
+		<br />
+
+		<br />
+		<br />
+		<br />
+		<br />
+		Feliz día!
+
+	</body>
+</html>

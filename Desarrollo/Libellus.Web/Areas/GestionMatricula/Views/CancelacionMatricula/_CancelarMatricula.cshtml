@@ -1,0 +1,14 @@
+﻿@model Libellus.Web.Areas.GestionMatricula.Models.CancelacionMatricula.CancelacionMatriculaViewModel
+
+<div class="row">
+    <div class="col-md-4 form-group">
+        @Html.LabelFor(model => model.IdMotivo)
+        @Html.DropDownListFor(model => model.IdMotivo, Model.MotivosRetiro, new { @class = "form-control", tabindex = "1" })
+    </div>
+    <div class="col-md-4 form-group">
+        @Html.LabelFor(model => model.Observacion)
+        @Html.TextAreaFor(model => model.Observacion, new { @class = "form-control", tabindex = "2" })
+    </div>
+</div>
+<br />
+

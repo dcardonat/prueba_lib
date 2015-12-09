@@ -1,0 +1,116 @@
+﻿@model Libellus.Web.Areas.Administracion.Models.AperturaPeriodos.AperturaPeriodosViewModel
+
+@{
+    string accion = ViewBag.Accion;
+    ViewBag.Title = string.Format("{0} apertura extemporánea de periodos", accion);
+}
+
+@Styles.Render("~/css/datetimepicker")
+
+<div class="content-header">
+    <h2 class="content-header-title">@ViewBag.Title</h2>
+</div>
+
+@using (Html.BeginForm("Administrar", "AperturaPeriodos", FormMethod.Post))
+{
+    @Html.AntiForgeryToken()
+    @Html.HiddenFor(model => model.Id);
+    @Html.HiddenFor(model => model.IdPeriodo);
+
+    <div class="row">
+        <div class="form-group col-md-4">
+            @Html.LabelFor(model => model.IdPeriodo)
+            @Html.TextBoxFor(model => model.Periodo, new { @class = "form-control", @readonly = "readonly" })
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="form-group col-md-4">
+            @Html.LabelFor(model => model.FechaInicial)
+            <div class="input-group date" id="fechaInicial">
+                @Html.TextBoxFor(model => model.FechaInicial, new { @class = "form-control", contenteditable = "false", maxlength = "10" })
+                <span class="input-group-addon">
+                    <span class="glyphicon glyphicon-calendar"></span>
+                </span>
+            </div>
+            @Html.ValidationMessageFor(model => model.FechaInicial, "", new { @class = "text-danger" })
+        </div>
+
+        <div class="form-group col-md-4">
+            @Html.LabelFor(model => model.FechaFinal)
+            <div class="input-group date" id="fechaFinal">
+                @Html.TextBoxFor(model => model.FechaFinal, new { @class = "form-control", contenteditable = "false", maxlength = "10" })
+                <span class="input-group-addon">
+                    <span class="glyphicon glyphicon-calendar"></span>
+                </span>
+            </div>
+            @Html.ValidationMessageFor(model => model.FechaFinal, "", new { @class = "text-danger" })
+        </div>
+
+        <div class="col-md-2 form-group">
+            @Html.LabelFor(model => model.HoraInicial)
+            @Html.TextBoxFor(model => model.HoraInicial, new { @class = "form-control hour", tabindex = "4", placeholder = "hh:mm" })
+            @Html.ValidationMessageFor(model => model.HoraInicial, "", new { @class = "text-danger" })
+        </div>
+
+        <div class="col-md-2 form-group">
+            @Html.LabelFor(model => model.HoraFinal)
+            @Html.TextBoxFor(model => model.HoraFinal, new { @class = "form-control hour", tabindex = "6", placeholder = "hh:mm", data_val_validarHoraFinMayor = "" })
+            @Html.ValidationMessageFor(model => model.HoraFinal, "", new { @class = "text-danger" })
+        </div>
+    </div>
+    
+    <div class="row">
+
+        <div class="form-group col-md-12">
+            @Html.LabelFor(model => model.MotivoApertura)
+            @Html.TextAreaFor(model => model.MotivoApertura, new { @class = "form-control", maxlength = "50" })
+            @Html.ValidationMessageFor(model => model.MotivoApertura, "", new { @class = "text-danger" })
+        </div>
+
+    </div>
+
+    <br />
+
+    <div class="form-group centered">
+        @Html.BotonCancelar("Consultar", "ParametrizacionEscolar", null, new { tabindex = "4" })
+        <input type="submit" value="@ViewBag.Title" class="btn btn-primary" tabindex="3" />
+    </div>
+}
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+    @Scripts.Render("~/js/datetimepicker")
+
+    <script type="text/javascript">
+        $(document).ready(function () {
+
+            $('.date').datetimepicker({
+                format: 'DD/MM/YYYY',
+                locale: 'es'
+            });
+
+            $('.hour').datetimepicker({
+                format: 'hh:mm A',
+                locale: 'es'
+            });
+
+            $("#fechaInicial").on("dp.change", function (e) {
+                $('#fechaFinal').data("DateTimePicker").minDate(e.date);
+            });
+
+            $("#fechaFinal").on("dp.change", function (e) {
+                $('#fechaInicial').data("DateTimePicker").maxDate(e.date);
+            });
+
+            $("#HoraInicial").on("dp.change", function (e) {
+                $('#HoraFinal').data("DateTimePicker").minDate(e.date);
+            });
+
+            $("#HoraFinal").on("dp.change", function (e) {
+                $('#HoraInicial').data("DateTimePicker").maxDate(e.date);
+            });
+
+        });
+    </script>
+}

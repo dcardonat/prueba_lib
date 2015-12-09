@@ -1,0 +1,183 @@
+﻿@model Libellus.Web.Areas.Administracion.Models.ParametrosInstitucionales.ParametrizacionInstitucionalViewModel
+
+@Html.HiddenFor(model => model.Id)
+@Html.HiddenFor(model => model.IdSede)
+@Html.HiddenFor(model => model.NombreNivelEducativo)
+@Html.HiddenFor(model => model.NombreHorario)
+
+<div class="row">
+    <div class="col-md-4 form-group">
+        @Html.LabelFor(model => model.IdAnioLectivo)
+        @Html.DropDownListFor(model => model.IdAnioLectivo, Model.AniosLectivos, new { @class = "form-control", tabindex = "2" })
+        @Html.ValidationMessageFor(model => model.IdAnioLectivo, "", new { @class = "text-danger" })
+    </div>
+
+    <div class="col-md-4 form-group">
+        @Html.LabelFor(model => model.IdNivelEducativo)
+        @Html.DropDownListFor(model => model.IdNivelEducativo, Model.NivelesEducativos, new { @class = "form-control", tabindex = "2" })
+        @Html.ValidationMessageFor(model => model.IdNivelEducativo, "", new { @class = "text-danger" })
+    </div>
+
+    <div class="col-md-4 form-group">
+        @Html.LabelFor(model => model.IdHorario)
+        @Html.DropDownListFor(model => model.IdHorario, Model.Horarios, new { @class = "form-control", tabindex = "3" })
+        @Html.ValidationMessageFor(model => model.IdHorario, "", new { @class = "text-danger" })
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-md-2 form-group">
+        @Html.LabelFor(model => model.HoraInicial)
+        @Html.TextBoxFor(model => model.HoraInicial, new { @class = "form-control", tabindex = "4", placeholder = "hh:mm" })
+        @Html.ValidationMessageFor(model => model.HoraInicial, "", new { @class = "text-danger" })
+    </div>
+
+    <div class="col-md-2 form-group">
+        @Html.LabelFor(model => model.HoraFinal)
+        @Html.TextBoxFor(model => model.HoraFinal, new { @class = "form-control", tabindex = "6", placeholder = "hh:mm", data_val_validarHoraFinMayor = "" })
+        @Html.ValidationMessageFor(model => model.HoraFinal, "", new { @class = "text-danger" })
+    </div>
+
+    <div class="col-md-4 form-group">
+        @Html.LabelFor(model => model.MomentosSemana)
+        @Html.TextBoxFor(model => model.MomentosSemana, new { @class = "form-control", tabindex = "8" })
+        @Html.ValidationMessageFor(model => model.MomentosSemana, "", new { @class = "text-danger" })
+    </div>
+
+    <div class="col-md-4 form-group">
+        @Html.LabelFor(model => model.TiempoDescansos)
+        @Html.TextBoxFor(model => model.TiempoDescansos, new { @class = "form-control", tabindex = "9" })
+        @Html.ValidationMessageFor(model => model.TiempoDescansos, "", new { @class = "text-danger" })
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-md-4 form-group">
+        @Html.LabelFor(model => model.DuracionMomentos)
+        @Html.TextBoxFor(model => model.DuracionMomentos, new { @class = "form-control", tabindex = "10" })
+        @Html.ValidationMessageFor(model => model.DuracionMomentos, "", new { @class = "text-danger" })
+    </div>
+
+    <div class="col-md-4 form-group">
+        @Html.LabelFor(model => model.MomentosDocente)
+        @Html.TextBoxFor(model => model.MomentosDocente, new { @class = "form-control", tabindex = "11", @readonly = "readonly" })
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-md-4 form-group">
+        @if (ViewBag.NuevoRegistro != null && !ViewBag.NuevoRegistro)
+        {
+            @Html.LabelFor(model => model.Estado)
+            <div class="checkbox">
+                @Html.EditorFor(model => model.Estado) Activo
+            </div>
+        }
+    </div>
+</div>
+
+@Html.Script(
+    @<script type="text/javascript">
+
+        function CrearFecha(horaConvertir) {
+            //// <summary>Genera una fecha a partir de una hora.</summary>
+            //// <param name="horaConvertir">Determina la hora y minuto a convertir en fecha.</param>
+
+            var horaSegmentada = horaConvertir.split(':');
+
+            var tipoHora = horaSegmentada[1].substring(horaSegmentada[1].indexOf(' ')).trim();
+            var hora = parseInt(horaSegmentada[0]) + (tipoHora == "AM" ? 0 : 12);
+            var minutos = parseInt(horaSegmentada[1].substring(0, horaSegmentada[1].indexOf(' ')));
+
+            return new Date(new Date().getFullYear(), new Date().getMonth(), new Date().getDate(), hora, minutos, 0, 0);
+        }
+
+        function ValidarHoraFinMayor(horaProgramacionInicio, horaProgramacionFin) {
+            //// <summary>Valida que el horario final sea mayor al horario inicial.</summary>
+            //// <param name="horaProgramacionInicio">Determina el horario inicial.</param>
+            //// <param name="horaProgramacionFin">Determina el horario final.</param>
+
+            var fechaInicial = CrearFecha(horaProgramacionInicio);
+            var fechaFinal = CrearFecha(horaProgramacionFin);
+
+            return fechaFinal >= fechaInicial;
+        }
+
+        $.validator.addMethod("validarHoraFinMayor", function (value, element, params) {
+            return ValidarHoraFinMayor($('[name="HoraInicial"]').val(), $('[name="HoraFinal"]').val());
+        });
+
+        $.validator.unobtrusive.adapters.add("validarHoraFinMayor", function (options) {
+            options.rules["validarHoraFinMayor"] = "Horario inicial";
+            options.messages["validarHoraFinMayor"] = "@Mensaje.Mensaje1011";
+        });
+
+        function ConsultarHorarios(idNivelEducativo) {
+            //// <summary>Consulta los horarios dependiendo del nivel educativo seleccionado.</summary>
+            //// <param name="idNivelEducativo">Id del nivel educativo seleccionado.</param>
+
+            $('[name="IdHorario"] option').remove();
+            $('[name="IdHorario"]').addClass("cargaSincronica").append('<option>Consultando horarios...</option>');
+
+            $.ajax({
+                url: '@Url.Action("ConsultarHorarios")',
+                data: "{ 'idNivelEducativo' : '" + idNivelEducativo + "' }",
+                type: 'POST',
+                dataType: 'json',
+                contentType: 'application/json',
+                success: function (horarios) {
+
+                    $('[name="IdHorario"] option').remove();
+                    $('[name="IdHorario"]').removeClass('cargaSincronica');
+
+                    $.each(horarios, function (indice, horario) {
+                        $('[name="IdHorario"]').append('<option value="' + horario.Value + '">' + horario.Text + '</option>');
+                    });
+
+                },
+                error: function (error) {
+                    InformarAccion("Mensaje de error", "@Mensaje.Mensaje1000");
+                }
+            });
+
+        }
+
+        $(document).ready(function () {
+
+            $('[name="HoraInicial"]').blur(function () {
+                if ($('[name="HoraFinal"]').val() != "") {
+                    $('[name="HoraFinal"]').valid();
+                }
+            });
+
+            $('[name="IdNivelEducativo"]').change(function () {
+
+                $('[name="NombreNivelEducativo"]').val($('[name="IdNivelEducativo"] option:selected').text());
+                ConsultarHorarios($('[name="IdNivelEducativo"]').val());
+
+            });
+
+            $('[name="IdHorario"]').change(function () {
+
+                var nombreHorario = $('[name="IdHorario"] option:selected').text();
+                $('[name="NombreHorario"]').val(nombreHorario);
+
+            });
+
+            $('[name="HoraInicial"]').datetimepicker({
+                format: 'hh:mm A',
+                locale: 'es'
+            });
+
+            $('[name="HoraFinal"]').datetimepicker({
+                format: 'hh:mm A',
+                locale: 'es'
+            });
+
+            $("#IdAnioLectivo").change(function (e) {
+                var x = $("#IdAnioLectivo").trigger("EstadoAnio").data("resultado");
+            });
+
+        });
+
+    </script>)

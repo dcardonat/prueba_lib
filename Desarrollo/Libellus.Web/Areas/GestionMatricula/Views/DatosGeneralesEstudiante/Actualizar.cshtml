@@ -1,0 +1,192 @@
+﻿@model Libellus.Web.Areas.GestionMatricula.Models.DatosGeneralesEstudiante.EstudianteViewModel
+
+@{
+    ViewBag.Title = "Datos generales del estudiante";
+    bool soloLectura = ViewBag.SoloLectura;
+}
+
+@Styles.Render("~/css/select2")
+@Styles.Render("~/css/datetimepicker")
+@Styles.Render("~/css/fileInput")
+
+<div class="content-header">
+    <h2 class="content-header-title">@ViewBag.Title</h2>
+</div>
+
+@using (Html.BeginForm("Actualizar", "DatosGeneralesEstudiante", FormMethod.Post, new { enctype = "multipart/form-data" }))
+{
+    @Html.AntiForgeryToken()
+
+    <ul id="tabs" class="nav nav-tabs">
+        <li class=" active">
+            <a href="#datosPersonales" data-toggle="tab">
+                Datos personales
+            </a>
+        </li>
+        <li>
+            <a href="#datosResidenciales" data-toggle="tab">
+                Datos residenciales
+            </a>
+        </li>
+        <li>
+            <a href="#datosFamiliares" data-toggle="tab">
+                Datos familiares
+            </a>
+        </li>
+        @if (!soloLectura)
+        {
+            <li>
+                <a href="#datosEstado" data-toggle="tab">
+                    Datos de estado y horario
+                </a>
+            </li>
+        }
+        <li>
+            <a href="#datosAntecedentes" data-toggle="tab">
+                Datos de antecedentes académicos
+            </a>
+        </li>
+    </ul>
+
+    <div id="contenidos" class="tab-content">
+        <div class="tab-pane fade in active" id="datosPersonales">
+            @Html.Partial("_DatosPersonales")
+        </div>
+        <div class="tab-pane fade" id="datosResidenciales">
+            @Html.Partial("_DatosResidenciales")
+        </div>
+        <div class="tab-pane fade" id="datosFamiliares">
+            @Html.Partial("_DatosFamiliares")
+        </div>
+        <div class="tab-pane fade" id="datosEstado">
+            @Html.Partial("_DatosEstado")
+        </div>
+        <div class="tab-pane fade" id="datosAntecedentes">
+            @Html.Partial("_DatosAntecedentes")
+        </div>
+    </div>
+
+    <br />
+    <div class="form-group centered">
+        @if (ViewBag.SoloLectura)
+        {
+            @Html.ActionLink("Realizar otra consulta", "Consultar", null, new { @class = "btn btn-primary" })
+        }
+        else
+        {
+            @Html.BotonCancelar("Index", "DatosRestringidosEstudiante", null, new { tabindex = "8" })
+            <input type="submit" value="Actualizar datos generales del estudiante" class="btn btn-primary" tabindex="7" />
+        }
+    </div>
+}
+
+@section Scripts {
+
+    @Scripts.Render("~/bundles/jqueryval")
+    @Scripts.Render("~/js/datetimepicker")
+    @Scripts.Render("~/js/cascadingDropDown")
+    @Scripts.Render("~/js/fileInput")
+    @Scripts.Render("~/js/unobstrusiveAjax")
+    @Scripts.Render("~/js/underscore")
+
+    <script type="text/javascript">
+
+    $.validator.setDefaults({
+        ignore: '.ignorar'
+    });
+
+    $("#imgFoto").on('fileclear', function (event) {
+        $("#imgFoto").removeClass("ignorar");
+    });
+
+    if ($("#urlImagen").val() === "") {
+        $("#imgFoto").fileinput({
+            showUpload: false,
+            showRemove: false,
+            language: 'es',
+            allowedFileExtensions: ["jpg", "png"]
+        });
+    }
+    else {
+        $("#imgFoto").addClass("ignorar");
+        $("#imgFoto").fileinput({
+            showUpload: false,
+            showRemove: false,
+            language: 'es',
+            allowedFileExtensions: ["jpg", "png"],
+            initialPreview: [
+                "<img src='" + $("#urlImagen").val() + "' class='file-preview-image'>",
+            ]
+        });
+    }
+
+    var submitAntecedentes = function (value, index, ar) {
+        var plantilla = _.template($("#plantillaDatosAntecedentes").html());
+        $("#valoresAntecedentes").append(plantilla({
+            id: value.Id,
+            institucionEducativa: value.Institucion,
+            idTipoInstitucion: value.IdTipoInstitucion,
+            anio: value.Anio,
+            idGrado: value.IdGrado,
+            idMotivoRetiro: value.IdMotivoRetiro,
+            observacion: value.Observacion,
+            index: index
+        }));
+    };
+
+    $(document).ready(function () {
+
+        $("#cmbDepartamento").CascadingDropDown("#cmbPais", '@Url.Action("ConsultarDepartamentosResidenciales", "Geografia", new { area = "" })', {
+            idSelectedValue: '@Model.IdDepartamento'
+        });
+
+        $("#cmbMunicipio").CascadingDropDown("#cmbDepartamento", '@Url.Action("ConsultarMunicipiosResidenciales", "Geografia", new { area = "" })', {
+            idSelectedValue: '@Model.IdMunicipio'
+        });
+
+        $("#cmbDepartamentoNacimiento").CascadingDropDown("#cmbPaisNacimiento", '@Url.Action("ConsultarDepartamentosNacimiento", "Geografia", new { area = "" })', {
+            idSelectedValue: '@Model.IdDepartamentoNacimiento'
+        });
+
+        $("#cmbMunicipioNacimiento").CascadingDropDown("#cmbDepartamentoNacimiento", '@Url.Action("ConsultarMunicipiosNacimiento", "Geografia", new { area = "" })', {
+            idSelectedValue: '@Model.IdMunicipioNacimiento'
+        });
+
+        $("#cmbDepartamentoPadre").CascadingDropDown("#cmbPaisPadre", '@Url.Action("ConsultarDepartamentosPadre", "Geografia", new { area = "" })', {
+            idSelectedValue: '@Model.IdDepartamentoPadre'
+        });
+
+        $("#cmbMunicipioPadre").CascadingDropDown("#cmbDepartamentoPadre", '@Url.Action("ConsultarMunicipiosPadre", "Geografia", new { area = "" })', {
+            idSelectedValue: '@Model.IdMunicipioPadre'
+        });
+
+        $("#cmbDepartamentoMadre").CascadingDropDown("#cmbPaisMadre", '@Url.Action("ConsultarDepartamentosMadre", "Geografia", new { area = "" })', {
+            idSelectedValue: '@Model.IdDepartamentoMadre'
+        });
+
+        $("#cmbMunicipioMadre").CascadingDropDown("#cmbDepartamentoMadre", '@Url.Action("ConsultarMunicipiosMadre", "Geografia", new { area = "" })', {
+            idSelectedValue: '@Model.IdMunicipioMadre'
+        });
+
+        $('#dtpFechaNacimiento').datetimepicker({
+            format: 'DD/MM/YYYY',
+            locale: 'es'
+        });
+
+        $("form").submit(function () {
+            listaAntecedentes.forEach(submitAntecedentes);
+        });
+
+    });
+</script>
+
+    <script type="text/html" id="plantillaDatosAntecedentes">
+        <input type="hidden" name="AntecedentesAcademicos[<%= index %>].Id" value="<%= id %>" />
+        <input type="hidden" name="AntecedentesAcademicos[<%= index %>].InstitucionEducativa" value="<%= institucionEducativa %>" />
+        <input type="hidden" name="AntecedentesAcademicos[<%= index %>].IdTipoInstitucion" value="<%= idTipoInstitucion %>" />
+        <input type="hidden" name="AntecedentesAcademicos[<%= index %>].Anio" value="<%= anio %>" />
+        <input type="hidden" name="AntecedentesAcademicos[<%= index %>].IdGrado" value="<%= idGrado %>" />
+        <input type="hidden" name="AntecedentesAcademicos[<%= index %>].IdMotivoRetiro" value="<%= idMotivoRetiro %>" />
+        <input type="hidden" name="AntecedentesAcademicos[<%= index %>].Observacion" value="<%= observacion %>" />
+    </script>
+}

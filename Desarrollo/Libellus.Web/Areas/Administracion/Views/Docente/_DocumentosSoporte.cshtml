@@ -1,0 +1,20 @@
+﻿@model Libellus.Web.Areas.Administracion.Models.Docente.DocenteViewModel
+
+<table class="@EstilosHelper.TablaLibellus" id="tblDocumentosSoporte">
+    <tr>
+        <th>@Html.DisplayNameFor(model => model.DocumentosSoporte.First().Documento)</th>
+        <th>@Html.DisplayNameFor(model => model.DocumentosSoporte.First().Recibido)</th>
+    </tr>
+    @if (Model.DocumentosSoporte.Count() > 0)
+    {
+        foreach (var item in Model.DocumentosSoporte)
+        {
+            <tr>
+                <td hidden="hidden" class="centered">@item.Id</td>
+                <td hidden="hidden" class="centered">@item.Documento.Id</td>
+                <td class="centered">@item.Documento.Descripcion</td>
+                <td class="centered">@Html.CheckBoxFor(modelItem => item.Recibido)</td>
+            </tr>
+        }
+    }
+</table>

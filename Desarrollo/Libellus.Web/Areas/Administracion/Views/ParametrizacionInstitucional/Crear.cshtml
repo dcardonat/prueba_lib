@@ -1,0 +1,32 @@
+﻿@model Libellus.Web.Areas.Administracion.Models.ParametrosInstitucionales.ParametrizacionInstitucionalViewModel
+
+@{
+    ViewBag.Title = "Crear parametrización institucional";
+}
+
+<link type="text/css" rel="stylesheet" href="@Url.Content("~/Content/DateTimePicker/bootstrap-datetimepicker.css")" />
+
+<div class="content-header">
+    <h2 class="content-header-title">@ViewBag.Title</h2>
+</div>
+
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+
+    Html.RenderPartial("_Administrar");
+
+    <br />
+
+    <div class="form-group centered">
+        @Html.BotonCancelar("Consultar", "ParametrizacionInstitucional", null, new { tabindex = "11" })
+        <input type="submit" value="Crear parametrización institucional" class="btn btn-primary" tabindex="10" />
+    </div>
+}
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+    <script type="text/javascript" src="@Url.Content("~/Scripts/DateTimePicker/moment.min.js")"></script>
+    <script type="text/javascript" src="@Url.Content("~/Scripts/DateTimePicker/es.js")"></script>
+    <script type="text/javascript" src="@Url.Content("~/Scripts/DateTimePicker/bootstrap-datetimepicker.js")"></script>
+}

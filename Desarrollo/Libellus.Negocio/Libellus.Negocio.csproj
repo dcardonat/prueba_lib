@@ -1,0 +1,180 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="12.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{C8ABD0F8-A487-485D-9D44-B6D6178678E5}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>Libellus.Negocio</RootNamespace>
+    <AssemblyName>Libellus.Negocio</AssemblyName>
+    <TargetFrameworkVersion>v4.5.1</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <SccProjectName>SAK</SccProjectName>
+    <SccLocalPath>SAK</SccLocalPath>
+    <SccAuxPath>SAK</SccAuxPath>
+    <SccProvider>SAK</SccProvider>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Pruebas|AnyCPU'">
+    <OutputPath>bin\Pruebas\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <Optimize>true</Optimize>
+    <DebugType>pdbonly</DebugType>
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <ErrorReport>prompt</ErrorReport>
+    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="EntityFramework, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\EntityFramework.6.1.2\lib\net45\EntityFramework.dll</HintPath>
+    </Reference>
+    <Reference Include="EntityFramework.SqlServer">
+      <HintPath>..\packages\EntityFramework.6.1.2\lib\net45\EntityFramework.SqlServer.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.AspNet.Identity.Core">
+      <HintPath>..\packages\Microsoft.AspNet.Identity.Core.2.2.0\lib\net45\Microsoft.AspNet.Identity.Core.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.AspNet.Identity.EntityFramework, Version=2.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\Microsoft.AspNet.Identity.EntityFramework.2.2.0\lib\net45\Microsoft.AspNet.Identity.EntityFramework.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.AspNet.Identity.Owin">
+      <HintPath>..\Libellus.Web\bin\Microsoft.AspNet.Identity.Owin.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.ComponentModel.DataAnnotations" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Transactions" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Administracion\Clases\NegocioAnioLectivo.cs" />
+    <Compile Include="Administracion\Clases\NegocioAperturaPeriodos.cs" />
+    <Compile Include="Administracion\Clases\NegocioAsignaturas.cs" />
+    <Compile Include="Administracion\Clases\NegocioAulas.cs" />
+    <Compile Include="Administracion\Clases\NegocioDocente.cs" />
+    <Compile Include="Administracion\Clases\NegocioDocumentacionSoporteRoles.cs" />
+    <Compile Include="Administracion\Clases\NegocioGradosPorNivel.cs" />
+    <Compile Include="Administracion\Clases\NegocioCuposPorNivel.cs" />
+    <Compile Include="Administracion\Clases\NegocioGruposPorGrado.cs" />
+    <Compile Include="Administracion\Clases\NegocioInstitucionEducativa.cs" />
+    <Compile Include="Administracion\Clases\NegocioIntensidadHoraria.cs" />
+    <Compile Include="Administracion\Clases\NegocioParametrizacionEscolar.cs" />
+    <Compile Include="Administracion\Clases\NegocioParametrizacionInstitucional.cs" />
+    <Compile Include="Administracion\Clases\NegocioSalidasOcupacionales.cs" />
+    <Compile Include="Administracion\Clases\NegocioSedes.cs" />
+    <Compile Include="Administracion\Clases\NegocioUsuariosAdministrativos.cs" />
+    <Compile Include="Administracion\Interfaces\INegocioAnioLectivo.cs" />
+    <Compile Include="Administracion\Interfaces\INegocioAperturaPeriodos.cs" />
+    <Compile Include="Administracion\Interfaces\INegocioDocente.cs" />
+    <Compile Include="Administracion\Interfaces\INegocioDocumentacionSoporteRoles.cs" />
+    <Compile Include="Administracion\Interfaces\INegocioGradosPorNivel.cs" />
+    <Compile Include="Administracion\Interfaces\INegocioCuposPorNivel.cs" />
+    <Compile Include="Administracion\Interfaces\INegocioGruposPorGrado.cs" />
+    <Compile Include="Administracion\Interfaces\INegocioInstitucionEducativa.cs" />
+    <Compile Include="Administracion\Interfaces\INegocioIntensidadHoraria.cs" />
+    <Compile Include="Administracion\Interfaces\INegocioParametrizacionEscolar.cs" />
+    <Compile Include="Administracion\Interfaces\INegocioParametrizacionInstitucional.cs" />
+    <Compile Include="Administracion\Interfaces\INegocioSalidasOcupacionales.cs" />
+    <Compile Include="Administracion\Interfaces\INegocioSedes.cs" />
+    <Compile Include="Administracion\Interfaces\INegocioUsuariosAdministrativos.cs" />
+    <Compile Include="GestionAcademica\Clases\NegocioAspectosEvaluativos.cs" />
+    <Compile Include="GestionAcademica\Clases\NegocioGrupos.cs" />
+    <Compile Include="GestionAcademica\Clases\NegocioParametrosPromocion.cs" />
+    <Compile Include="GestionAcademica\Clases\NegocioRangosDesempenio.cs" />
+    <Compile Include="GestionAcademica\Interfaces\INegocioAspectosEvaluativos.cs" />
+    <Compile Include="GestionAcademica\Interfaces\INegocioGrupos.cs" />
+    <Compile Include="GestionAcademica\Interfaces\INegocioParametrosPromocion.cs" />
+    <Compile Include="GestionAcademica\Interfaces\INegocioRangosDesempenio.cs" />
+    <Compile Include="Matriculas\Clases\NegocioAntecedentesAcademicos.cs" />
+    <Compile Include="Matriculas\Clases\NegocioCupos.cs" />
+    <Compile Include="Matriculas\Clases\NegocioEstudiantes.cs" />
+    <Compile Include="Matriculas\Clases\NegocioMatriculas.cs" />
+    <Compile Include="Matriculas\Interfaces\INegocioAntecedentesAcademicos.cs" />
+    <Compile Include="Matriculas\Interfaces\INegocioCupos.cs" />
+    <Compile Include="Matriculas\Interfaces\INegocioEstudiantes.cs" />
+    <Compile Include="Matriculas\Interfaces\INegocioMatriculas.cs" />
+    <Compile Include="Seguridad\Clases\NegocioRolesFuncionalidades.cs" />
+    <Compile Include="Seguridad\Clases\NegocioFuncionalidades.cs" />
+    <Compile Include="Seguridad\Clases\NegocioRoles.cs" />
+    <Compile Include="Seguridad\Clases\NegocioSeguridad.cs" />
+    <Compile Include="Seguridad\Clases\NegocioUsuarios.cs" />
+    <Compile Include="Administracion\Interfaces\INegocioActividadesComplementarias.cs" />
+    <Compile Include="Administracion\Interfaces\INegocioAsignaturas.cs" />
+    <Compile Include="Administracion\Interfaces\INegocioAulas.cs" />
+    <Compile Include="Seguridad\Interfaces\INegocioRolesFuncionalidades.cs" />
+    <Compile Include="Seguridad\Interfaces\INegocioFuncionalidades.cs" />
+    <Compile Include="Administracion\Interfaces\INegocioMaestros.cs" />
+    <Compile Include="Administracion\Clases\NegocioActividadesComplementarias.cs">
+      <ExcludeFromStyleCop>False</ExcludeFromStyleCop>
+    </Compile>
+    <Compile Include="Administracion\Clases\NegocioMaestros.cs" />
+    <Compile Include="Seguridad\Interfaces\INegocioRoles.cs" />
+    <Compile Include="Seguridad\Interfaces\INegocioSeguridad.cs" />
+    <Compile Include="Seguridad\Interfaces\INegocioUsuarios.cs" />
+    <Compile Include="NegocioBase.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="UnidadesDeTrabajo\Clases\UnidadDeTrabajoLibellus.cs" />
+    <Compile Include="UnidadesDeTrabajo\Interfaces\IUnidadDeTrabajoLibellus.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Libellus.Entidades\Libellus.Entidades.csproj">
+      <Project>{880e4e2f-f3bf-4055-bd97-15e64af73216}</Project>
+      <Name>Libellus.Entidades</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Libellus.Mensajes\Libellus.Mensajes.csproj">
+      <Project>{675161d6-0659-4c4b-aa2d-bf48f0c7be9d}</Project>
+      <Name>Libellus.Mensajes</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Libellus.Repositorio\Libellus.Repositorio.csproj">
+      <Project>{8f7591cf-3d18-453c-84ee-94b187190274}</Project>
+      <Name>Libellus.Repositorio</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Libellus.Utilidades\Libellus.Utilidades.csproj">
+      <Project>{17e3035e-c972-41d3-ad9d-2dea71185abc}</Project>
+      <Name>Libellus.Utilidades</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Catalogos\" />
+    <Folder Include="GobiernoEscolar\" />
+    <Folder Include="PromocionEscolar\" />
+    <Folder Include="Reportes\" />
+    <Folder Include="SeguimientoEscolar\" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="App.config" />
+    <None Include="packages.config" />
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

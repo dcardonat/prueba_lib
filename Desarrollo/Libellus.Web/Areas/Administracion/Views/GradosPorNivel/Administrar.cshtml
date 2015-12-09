@@ -1,0 +1,171 @@
+﻿@model Libellus.Web.Areas.Administracion.Models.GradosPorNivel.GradosPorNivelViewModel
+
+@{
+    ViewBag.Title = "Grados por nivel";
+}
+
+<div class="content-header">
+    <h2 class="content-header-title">@ViewBag.Title</h2>
+</div>
+
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+
+    <div class="row">
+        <div class="col-md-5 form-group">
+            @Html.LabelFor(model => model.Niveles)
+            @Html.DropDownListFor(model => model.IdNivel, Model.Niveles, new { @class = "form-control", tabindex = "1" })
+            @Html.ValidationMessageFor(model => model.IdNivel)
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-md-5 form-group">
+            @Html.LabelFor(model => model.IdGrados)
+            @Html.DropDownListFor(model => model.IdGrados, Model.Grados, new { id = "IdGrados", @class = "form-control", tabindex = "2", size = 18 })
+            @Html.ValidationMessageFor(model => model.IdGrados)
+        </div>
+
+        <div class="col-md-1" style="margin-right: 25px !important; margin-top: 12% !important">
+            <a href="javascript:Adicionar()" class="btn btn-danger" style="width:45px !important; margin-left: 23px !important" title="Adicionar">></a>
+            <a href="javascript:Remover()" class="btn btn-danger" style="width:45px !important; margin-top: 5px !important; margin-left: 23px !important" title="Remover"><</a>
+        </div>
+
+        <div class="col-md-5 form-group">
+            @Html.LabelFor(model => model.IdGradosPorNivel)
+            @Html.DropDownListFor(model => model.IdGradosPorNivel, Model.GradosPorNivel, new { id = "IdGradosPorNivel", @class = "form-control", tabindex = "3", size = 18 })
+            @Html.ValidationMessageFor(model => model.IdGradosPorNivel)
+        </div>
+    </div>
+}
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+
+    <script type="text/javascript">
+
+    function IntercambiarItems(listaIzquierda, listaDerecha) {
+        /// <summary>Asigna un grado por nivel.</summary>
+
+        $('#' + listaIzquierda + ' option:selected').remove().appendTo('#' + listaDerecha).removeAttr('selected');
+    }
+
+    function Adicionar() {
+        /// <summary>Realiza la validación asíncrona de agregar un grado por nivel.</summary>
+
+        $.ajax({
+            url: '@Url.Action("AdicionGradoPorNivel")',
+            data: "{ 'idGrado' : " + $('#IdGrados option:selected').val() + ", 'idNivel' : " + $('[name="IdNivel"]').val() + " }",
+            type: 'POST',
+            dataType: 'json',
+            contentType: 'application/json',
+            async: false,
+            success: function (mensajeValidacion) {
+
+                if (mensajeValidacion == "") {
+
+                    IntercambiarItems("IdGrados", "IdGradosPorNivel", false);
+                    VisualizarMensajeNegocio(@TipoMensaje.Informativo.GetHashCode(), "@Mensaje.Mensaje006", 3000);
+
+                }
+                else {
+                    InformarAccion("Mensaje de validación", mensajeValidacion);
+                }
+
+            },
+            error: function (error) {
+                InformarAccion("Mensaje de error", "@Mensaje.Mensaje1000");
+                }
+            });
+        }
+
+        function Remover() {
+            /// <summary>Remueve un grado de un nivel.</summary>
+
+            $.ajax({
+                url: '@Url.Action("EliminarGradoPorNivel")',
+                data: "{ 'idGrado' : " + $('#IdGradosPorNivel option:selected').val() + " }",
+                type: 'POST',
+                dataType: 'json',
+                contentType: 'application/json',
+                async: false,
+                success: function (mensajeValidacion) {
+
+                    if (mensajeValidacion == "") {
+                        IntercambiarItems("IdGradosPorNivel", "IdGrados", false);
+                        OrdenarLista("IdGrados");
+                    }
+                    else {
+                        InformarAccion("Mensaje de validación", mensajeValidacion);
+                    }
+
+                },
+                error: function (error) {
+                    InformarAccion("Mensaje de error", "@Mensaje.Mensaje1000");
+                }
+            });
+        }
+
+        function OrdenarLista(idLista) {
+            /// <summary>Ordena todas los grados.</summary>
+
+            var my_options = $("#" + idLista + " option");
+
+            my_options.sort(function (a, b) {
+                if (a.text > b.text) return 1;
+                else if (a.text < b.text) return -1;
+                else return 0
+            })
+
+            $("#" + idLista).empty().append(my_options);
+        }
+
+        function ConsultarGradosPorNivel(idNivel) {
+            /// <summary>Ordena todas las dependencias.</summary>
+            /// <param name="idNivel">Identificador interno del nivel seleccionado.</param>
+
+            if (idNivel == "") {                
+                $('[name="IdGrados"] option').remove();
+                $('[name="IdGradosPorNivel"] option').remove();
+            }
+            else {
+
+                $.ajax({
+                    url: '@Url.Action("ConsultarGradosPorNivel")',
+                    data: "{ 'idNivel' : " + $('#IdNivel').val() + " }",
+                    type: 'POST',
+                    dataType: 'json',
+                    contentType: 'application/json',
+                    async: false,
+                    success: function (informacionRespuesta) {
+
+                        $('[name="IdGrados"] option').remove();
+                        $.each(informacionRespuesta.Grados, function (indice, grado) {
+                            $('[name="IdGrados"]').append('<option value="' + grado.Value + '">' + grado.Text + '</option>');
+                        });
+
+                        $('[name="IdGradosPorNivel"] option').remove();
+                        $.each(informacionRespuesta.GradosPorNivel, function (indice, gradoPorNivel) {
+                            $('[name="IdGradosPorNivel"]').append('<option value="' + gradoPorNivel.Value + '">' + gradoPorNivel.Text + '</option>');
+                        });
+
+                    },
+                    error: function (error) {
+                        InformarAccion("Mensaje de error", "@Mensaje.Mensaje1000");
+                    }
+                });
+
+            }
+        }
+
+        $(document).ready(function () {
+
+            $('[name="IdNivel"]').change(function () {
+                ConsultarGradosPorNivel($(this).val());
+            });
+
+        });
+
+    </script>
+}

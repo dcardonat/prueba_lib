@@ -1,0 +1,88 @@
+﻿@model Libellus.Web.Areas.Administracion.Models.InstitucionEducativa.InstitucionEducativaViewModel
+
+<div class="row">
+    <div class="form-group col-md-4">
+        @Html.LabelFor(model => model.RegistrosLegalizacion.First().TipoRegistro)
+        @Html.TextBox("TipoRegistro", null, new { @class = "form-control ignorar", id = "txtTipoRegistro", data_val = "true", data_val_required = "Campo requerido.", maxlength = "50" })
+        @Html.ValidationMessage("TipoRegistro", new { @class = "text-danger" })
+    </div>
+
+    <div class="form-group col-md-4">
+        @Html.LabelFor(model => model.RegistrosLegalizacion.First().FechaExpedicion)
+        <div class="input-group date" id="fechaExpedicion">
+            @Html.TextBox("FechaExpedicion", null, new { @class = "form-control ignorar", id = "txtFechaExpedicion", contenteditable = "false", data_val = "true", data_val_required = "Campo requerido.", maxlength = "10" })
+            <span class="input-group-addon">
+                <span class="glyphicon glyphicon-calendar"></span>
+            </span>
+        </div>
+        @Html.ValidationMessage("FechaExpedicion", new { @class = "text-danger" })
+    </div>
+
+    <div class="form-group col-md-4">
+        @Html.LabelFor(model => model.RegistrosLegalizacion.First().TextoLegalizacion)
+        @Html.TextArea("TextoLegalizacion", null, new { @class = "form-control ignorar", id = "txtTextoLegalizacion", data_val = "true", data_val_required = "Campo requerido.", maxlength = "600" })
+        @Html.ValidationMessage("TextoLegalizacion", new { @class = "text-danger" })
+    </div>
+</div>
+
+<div class="row">
+    <div class="form-group col-md-4">
+        @Html.LabelFor(model => model.RegistrosLegalizacion.First().VigenciaDesde)
+        <div class="input-group date" id="dtpVigenciaDesde">
+            @Html.TextBox("VigenciaDesde", null, new { @class = "form-control ignorar", id = "txtVigenciaDesde", contenteditable = "false", data_val = "true", data_val_required = "Campo requerido.", maxlength = "10" })
+            <span class="input-group-addon">
+                <span class="glyphicon glyphicon-calendar"></span>
+            </span>
+        </div>
+        @Html.ValidationMessage("VigenciaDesde", new { @class = "text-danger" })
+    </div>
+
+    <div class="form-group col-md-4">
+        @Html.LabelFor(model => model.RegistrosLegalizacion.First().VigenciaHasta)
+        <div class="input-group date" id="dtpVigenciaHasta">
+            @Html.TextBox("VigenciaHasta", null, new { @class = "form-control ignorar", id = "txtVigenciaHasta", contenteditable = "false", data_val = "true", data_val_required = "Campo requerido.", maxlength = "10" })
+            <span class="input-group-addon">
+                <span class="glyphicon glyphicon-calendar"></span>
+            </span>
+        </div>
+        @Html.ValidationMessage("VigenciaHasta", new { @class = "text-danger" })
+    </div>
+
+    <div class="form-group col-md-4">
+        @Html.Hidden("IdRegistroLegalizacion", "0", new { id = "hdnIdRegistroLegalizacion" })
+    </div>
+
+</div>
+
+<div class="form-group centered">
+    <a href="javascript:void(0)" id="btnCancelarAgregarRegistro" class="btn btn-link">Cancelar</a>
+    <a href="javascript:void(0)" id="btnAgregarRegistro" class="btn btn-primary">Agregar registro</a>
+</div>
+
+<table class="@EstilosHelper.TablaLibellus" id="tblRegistros">
+    <tr>
+        <th hidden="hidden"></th>
+        <th>@Html.DisplayNameFor(model => model.RegistrosLegalizacion.First().TipoRegistro)</th>
+        <th>@Html.DisplayNameFor(model => model.RegistrosLegalizacion.First().FechaExpedicion)</th>
+        <th>@Html.DisplayNameFor(model => model.RegistrosLegalizacion.First().TextoLegalizacion)</th>
+        <th>@Html.DisplayNameFor(model => model.RegistrosLegalizacion.First().VigenciaDesde)</th>
+        <th>@Html.DisplayNameFor(model => model.RegistrosLegalizacion.First().VigenciaHasta)</th>
+        <th colspan="2">Acción</th>
+    </tr>
+    @if (Model.RegistrosLegalizacion.Count() > 0)
+    {
+        foreach (var registro in Model.RegistrosLegalizacion)
+        {
+            <tr class="@string.Format("filaRegistroLegalizacion id{0}", registro.Id)">
+                <td hidden="hidden" class="centered idRegistroLegalizacion">@Html.DisplayFor(modelItem => registro.Id)</td>
+                <td class="centered tipoRegistro">@Html.DisplayFor(modelItem => registro.TipoRegistro)</td>
+                <td class="centered fechaExpedicion">@registro.FechaExpedicion.ToShortDateString()</td>
+                <td class="centered textoLegalizacion">@Html.DisplayFor(modelItem => registro.TextoLegalizacion)</td>
+                <td class="centered vigenciaDesde">@registro.VigenciaDesde.ToShortDateString()</td>
+                <td class="centered vigenciaHasta">@registro.VigenciaHasta.ToShortDateString()</td>
+                <td class="centered"><a href="javascript:void(0)" id="editarRegistroLegalizacion">Editar</a></td>
+                <td class="centered"><a href="javascript:void(0)" onclick="EliminarRegistroLegalizacion(this)" id="eliminarRegistroLegalizacion">Eliminar</a></td>
+            </tr>
+        }
+    }
+</table>

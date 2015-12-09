@@ -1,0 +1,59 @@
+﻿@model IPagedList<Libellus.Web.Areas.GestionMatricula.Models.DatosGeneralesEstudiante.EstudianteViewModel>
+
+<div id="resultado">
+    @if (Model.Count > 0)
+    {
+        <div class="row">
+            <div class="col-md-12">
+                <div class="table-responsive">
+                    <table class="@EstilosHelper.TablaLibellus">
+                        <tr>
+                            <th class="col-md-2">
+                                @Html.DisplayNameFor(model => model.First().Usuario.Identificacion)
+                            </th>
+                            <th class="col-md-2">
+                                @Html.DisplayNameFor(model => model.First().NombreCompleto)
+                            </th>
+                            <th class="col-md-2">
+                                @Html.DisplayNameFor(model => model.First().IdEstado)
+                            </th>
+                            <th class="col-md-2">
+                                Acciones
+                            </th>
+                        </tr>
+
+                        @foreach (var item in Model)
+                        {
+                            <tr>
+                                <td class="centered">
+                                    @Html.DisplayFor(modelItem => item.Usuario.Identificacion)
+                                </td>
+                                <td class="centered">
+                                    @Html.DisplayFor(modelItem => item.NombreCompleto)
+                                </td>
+                                <td class="centered">
+                                    @Html.DisplayFor(modelItem => item.Estado.Descripcion)
+                                </td>
+                                <td class="centered col-md-1">
+                                    @Html.ActionLink("Visualizar", "Actualizar", new { id = item.Id, soloLectura = true })
+                                </td>
+                            </tr>
+                        }
+                    </table>
+                </div>
+            </div>
+        </div>
+
+        <div class="centered paginacion" data-otf-target="#resultado">
+            @Html.PagedListPager(Model, pagina => Url.Action("Consultar", new { pagina }))
+        </div>
+        @Html.Partial("_ExportarExcel")
+    }
+    else
+    {
+        <script>
+            VisualizarMensajeNegocio(2, "@Mensaje.Mensaje1005");
+        </script>
+    }
+</div>
+

@@ -1,0 +1,27 @@
+﻿@model Libellus.Web.Areas.Administracion.Models.Maestros.MaestroViewModel
+
+<div class="row">
+    <div class="col-md-4 form-group">
+        @Html.LabelFor(model => model.NombreTipoMaestro)
+        @Html.TextBoxFor(model => model.NombreTipoMaestro, new { @class = "form-control", @readonly = "readonly" })
+        @Html.HiddenFor(model => model.Id)
+        @Html.HiddenFor(model => model.IdSede)
+    </div>
+
+    <div class="col-md-4 form-group">
+        @Html.LabelFor(model => model.Descripcion)
+        @Html.TextBoxFor(model => model.Descripcion, new { @class = "form-control", maxlength = "100", tabindex = "1" })
+        @Html.ValidationMessageFor(model => model.Descripcion, "", new { @class = "text-danger" })
+    </div>
+
+    @if (!ViewBag.NuevoRegistro)
+    {
+        <div class="col-md-4 form-group">
+            @Html.LabelFor(model => model.Estado)
+            <div class="checkbox">
+                @Html.CheckBoxFor(model => model.Estado, new { tabindex = "2" }) Activo
+            </div>
+        </div>
+    }
+
+</div>

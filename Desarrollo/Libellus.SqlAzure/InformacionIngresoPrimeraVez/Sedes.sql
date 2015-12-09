@@ -1,0 +1,1 @@
+﻿INSERT INTO dbo.Sedes ( Nombre, IdInstitucionEducativa, Seccion ) VALUES ( 'Principal', 1, 'Sección 1' )

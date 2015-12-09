@@ -1,0 +1,126 @@
+﻿@model PagedList.IPagedList<Libellus.Web.Areas.Administracion.Models.UsuarioViewModel>
+
+<div class="content-header">
+    <h2 class="content-header-title">Gestión de rol y estados usuarios</h2>
+</div>
+
+@using (Html.BeginForm("Consultar", "Usuarios", FormMethod.Get))
+{
+    <div class="row">
+        <div class="col-md-4 form-group">
+            <strong>Tipo documento</strong>
+            @Html.DropDownList("idTipoIdentificacion", new SelectList(ViewBag.TiposIdentificaciones, "Id", "Descripcion"), "Seleccione", new { @class = "form-control" })
+        </div>
+        <div class="col-md-4 form-group">
+            <strong>Documento de identidad</strong>
+            @Html.TextBox("identificacion", ViewBag.FiltroActual as string, new { @class = "form-control", maxlength = "15" })
+        </div>
+        <div class="col-md-4 form-group">
+            <strong>Estado</strong>
+            @Html.DropDownList("idEstado", new SelectList(ViewBag.Estados, "Value", "Text"), "Seleccione", new { @class = "form-control" })
+        </div>
+        <div class="col-md-4 form-group">
+            <strong>Rol</strong>
+            @Html.DropDownList("idRol", new SelectList(ViewBag.Roles, "Value", "Text"), "Seleccione", new { @class = "form-control" })
+        </div>
+    </div>
+    <br />
+    <div class="form-group centered">
+        <input type="submit" value="Consultar" class="btn btn-primary" />
+    </div>
+    <br />
+    @Html.Hidden("consultar", true);
+}
+
+@if (Model != null && Model.Count() > 0)
+{
+    <div class="row">
+        <div class="col-md-12">
+            <div class="table-responsive">
+                <table class="@EstilosHelper.TablaLibellus">
+                    <tr>
+                        <th>
+                            Tipo documento
+                        </th>
+                        <th>
+                            Documento de identidad
+                        </th>
+                        <th>
+                            Correo
+                        </th>
+                        <th>
+                            Estado
+                        </th>
+                        <th>
+                            Rol
+                        </th>
+                        <th>
+                            Acción
+                        </th>
+                    </tr>
+
+                    @foreach (var item in Model)
+                    {
+                        <tr>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.TipoIdentificacion)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.Identificacion)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.Correo)
+                            </td>
+                            <td>
+                                @Html.DropDownList("estado" + "-" + item.Id, item.Estados, new { @class = "form-control" })
+                            </td>
+                            <td>
+                                @Html.DropDownList("rol" + "-" + item.Id, item.Roles, new { @class = "form-control" })
+                            </td>
+                            <td>
+                                <a href="#" onclick="Editar(@item.Id)">Guardar</a>
+                            </td>
+                        </tr>
+                    }
+                </table>
+            </div>
+        </div>
+    </div>
+    <div class="centered">
+        @Html.PagedListPager(Model, pagina => Url.Action("Consultar", new { pagina, consultar = true }))
+    </div>
+}
+
+@section Scripts {
+
+    <script type="text/javascript">
+
+        function Editar(id) {
+
+            $.ajax({
+                url: '@Url.Action("Editar")',
+                data: "{ 'id' : '" + id + "', 'idEstado' : '" + $('#estado-' + id).val() + "', 'idRol' : '" + $('#rol-' + id).val() + "' }",
+                type: 'POST',
+                dataType: 'json',
+                contentType: 'application/json',
+                async: false,
+                success: function (mensaje) {
+                    VisualizarMensajeNegocio(mensaje.Tipo, mensaje.Texto, 2000);
+                }
+            });
+        }
+
+        function MostrarMensajeSinInformacion() {
+
+            if ($('table').length < 1 && '@ViewBag.Consultar') {
+                var mensaje = @Html.Raw(Json.Encode(new Mensaje(CodigoMensaje.Mensaje1005)));
+                VisualizarMensajeNegocio(mensaje.Tipo, mensaje.Texto, 7000);
+            }
+        }
+
+        $(document).ready(function () {
+            MostrarMensajeSinInformacion();
+        });
+
+    </script>
+}

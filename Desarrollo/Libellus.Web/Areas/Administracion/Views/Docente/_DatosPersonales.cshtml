@@ -1,0 +1,232 @@
+﻿@model Libellus.Web.Areas.Administracion.Models.Docente.DocenteViewModel
+
+@Html.HiddenFor(model => model.IdDocente)
+
+<div class="row">
+    <div class="col-md-4 form-group">
+        @Html.LabelFor(model => model.DatosPersonales.Nombres)
+        @Html.TextBoxFor(model => model.DatosPersonales.Nombres, new { @class = "form-control", maxlength = "50", tabindex = "1" })
+        @Html.ValidationMessageFor(model => model.DatosPersonales.Nombres, "", new { @class = "text-danger" })
+    </div>
+
+    <div class="col-md-4 form-group">
+        @Html.LabelFor(model => model.DatosPersonales.Apellidos)
+        @Html.TextBoxFor(model => model.DatosPersonales.Apellidos, new { @class = "form-control", maxlength = "50", tabindex = "2" })
+        @Html.ValidationMessageFor(model => model.DatosPersonales.Apellidos, "", new { @class = "text-danger" })
+    </div>
+
+    <div class="col-md-4 form-group">
+        @Html.LabelFor(model => model.DatosPersonales.IdTipoDocumento)
+        @Html.DropDownListFor(model => model.DatosPersonales.IdTipoDocumento, Model.DatosPersonales.TiposDocumento, new { @class = "form-control", tabindex = "3" })
+        @Html.ValidationMessageFor(model => model.DatosPersonales.IdTipoDocumento, "", new { @class = "text-danger" })
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-md-4 form-group">
+        @Html.LabelFor(model => model.DatosPersonales.DocumentoIdentidad)
+        @Html.TextBoxFor(model => model.DatosPersonales.DocumentoIdentidad, new { @class = "form-control", tabindex = "4", maxlength = "12" })
+        @Html.ValidationMessageFor(model => model.DatosPersonales.DocumentoIdentidad, "", new { @class = "text-danger" })
+    </div>
+
+    <div class="col-md-4 form-group">
+        @Html.LabelFor(model => model.DatosPersonales.CorreoElectronico)
+        @Html.TextBoxFor(model => model.DatosPersonales.CorreoElectronico, new { @class = "form-control", tabindex = "5", maxlength = "150" })
+    </div>
+
+    <div class="col-md-4 form-group">
+        @Html.LabelFor(model => model.DatosPersonales.IdSexo)
+        @Html.DropDownListFor(model => model.DatosPersonales.IdSexo, Model.DatosPersonales.Sexos, new { @class = "form-control", tabindex = "6" })
+        @Html.ValidationMessageFor(model => model.DatosPersonales.IdSexo, "", new { @class = "text-danger" })
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-md-4 form-group">
+        @Html.LabelFor(model => model.DatosPersonales.FechaNacimiento)
+        <div class="input-group date" id="fechaNacimiento">
+            @Html.TextBoxFor(model => model.DatosPersonales.FechaNacimiento, new { @class = "form-control", contenteditable = "false", tabindex = "7" })
+            <span class="input-group-addon">
+                <span class="glyphicon glyphicon-calendar"></span>
+            </span>
+        </div>
+        @Html.ValidationMessageFor(model => model.DatosPersonales.FechaNacimiento, "", new { @class = "text-danger" })
+    </div>
+
+    <div class="col-md-4 form-group">
+        @Html.LabelFor(model => model.DatosPersonales.IdGrupoSanguineo)
+        @Html.DropDownListFor(model => model.DatosPersonales.IdGrupoSanguineo, Model.DatosPersonales.GrupoSanguineo, new { @class = "form-control", tabindex = "8" })
+        @Html.ValidationMessageFor(model => model.DatosPersonales.IdGrupoSanguineo, "", new { @class = "text-danger" })
+    </div>
+
+    <div class="col-md-4 form-group">
+        @Html.LabelFor(model => model.DatosPersonales.IdEstadoCivil)
+        @Html.DropDownListFor(model => model.DatosPersonales.IdEstadoCivil, Model.DatosPersonales.EstadosCiviles, new { @class = "form-control", tabindex = "9" })
+        @Html.ValidationMessageFor(model => model.DatosPersonales.IdEstadoCivil, "", new { @class = "text-danger" })
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-md-4 form-group">
+        @Html.LabelFor(model => model.DatosPersonales.RolInstitucional)
+        @Html.TextBoxFor(model => model.DatosPersonales.RolInstitucional, new { @class = "form-control", tabindex = "10", @readonly = "readonly" })
+        @Html.HiddenFor(model => model.DatosPersonales.IdRolInstitucional)
+    </div>
+
+    <div class="col-md-4 form-group">
+        @Html.LabelFor(model => model.DatosPersonales.IdPaisNacimiento)
+        @Html.DropDownListFor(model => model.DatosPersonales.IdPaisNacimiento, Model.DatosPersonales.Paises, new { id = "paisNacimiento", @class = "form-control", tabindex = "11" })
+        @Html.ValidationMessageFor(model => model.DatosPersonales.IdPaisNacimiento, "", new { @class = "text-danger" })
+    </div>
+
+    <div class="col-md-4 form-group">
+        @Html.LabelFor(model => model.DatosPersonales.IdDepartamentoNacimiento)
+        @Html.DropDownListFor(model => model.DatosPersonales.IdDepartamentoNacimiento, Model.DatosPersonales.Departamentos, new { id = "departamentoNacimiento", @class = "form-control", tabindex = "12" })
+        @Html.ValidationMessageFor(model => model.DatosPersonales.IdDepartamentoNacimiento, "", new { @class = "text-danger" })
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-md-4 form-group">
+        @Html.LabelFor(model => model.DatosPersonales.IdMunicipioNacimiento)
+        @Html.DropDownListFor(model => model.DatosPersonales.IdMunicipioNacimiento, Model.DatosPersonales.Municipios, new { id = "municipioNacimiento", @class = "form-control", tabindex = "13" })
+        @Html.ValidationMessageFor(model => model.DatosPersonales.IdMunicipioNacimiento, "", new { @class = "text-danger" })
+    </div>
+
+    <div class="col-md-4 form-group">
+        @Html.LabelFor(model => model.DatosPersonales.IdEscalafon)
+        @Html.DropDownListFor(model => model.DatosPersonales.IdEscalafon, Model.DatosPersonales.Escalafones, new { @class = "form-control", tabindex = "14" })
+        @Html.ValidationMessage("IdEscalafon", "", new { @class = "text-danger" })
+    </div>
+
+    <div class="col-md-4 form-group">
+        @Html.LabelFor(model => model.DatosPersonales.FechaUltimoAscenso)
+        <div class="input-group date" id="fechaUltimoAscenso">
+            @Html.TextBoxFor(model => model.DatosPersonales.FechaUltimoAscenso, new { id = "FechaUltimoAscenso", @class = "form-control", contenteditable = "false", tabindex = "15" })
+            <span class="input-group-addon">
+                <span class="glyphicon glyphicon-calendar"></span>
+            </span>
+        </div>
+        @Html.ValidationMessage("FechaUltimoAscenso", "", new { @class = "text-danger" })
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-md-4 form-group">
+        @Html.LabelFor(model => model.DatosPersonales.RutaFotoDocente)
+        <input type="file" id="inputFotoDocente" name="fotoDocente" class="file" tabindex="16" />
+        <p class="help-block">Recuerde que el formato de la foto debe ser jpg ó png.</p>
+        @Html.HiddenFor(model => model.DatosPersonales.RutaFotoDocente, new { id = "rutaFotoDocente" })
+    </div>
+    <div class="col-md-4 form-group">
+        @Html.LabelFor(model => model.DatosPersonales.RutaFirmaDocente)
+        <input type="file" id="inputFirmaDocente" name="firmaDocente" class="file" tabindex="17" />
+        <p class="help-block">Recuerde que el formato de la foto debe ser jpg ó png.</p>
+        @Html.HiddenFor(model => model.DatosPersonales.RutaFirmaDocente, new { id = "rutaFirmaDocente" })
+    </div>
+</div>
+
+<br />
+
+<div class="content-header">
+    <h4 class="content-header-title">Datos residenciales</h4>
+</div>
+
+<div class="row">
+    <div class="col-md-4 form-group">
+        @Html.LabelFor(model => model.DatosResidenciales.Direccion)
+        @Html.TextBoxFor(model => model.DatosResidenciales.Direccion, new { @class = "form-control", maxlength = "100", tabindex = "18" })
+        @Html.ValidationMessageFor(model => model.DatosResidenciales.Direccion, "", new { @class = "text-danger" })
+    </div>
+
+    <div class="col-md-4 form-group">
+        @Html.LabelFor(model => model.DatosResidenciales.Barrio)
+        @Html.TextBoxFor(model => model.DatosResidenciales.Barrio, new { @class = "form-control", maxlength = "50", tabindex = "19" })
+        @Html.ValidationMessageFor(model => model.DatosResidenciales.Barrio, "", new { @class = "text-danger" })
+    </div>
+
+    <div class="col-md-4 form-group">
+        @Html.LabelFor(model => model.DatosResidenciales.IdEstrato)
+        @Html.DropDownListFor(model => model.DatosResidenciales.IdEstrato, Model.DatosResidenciales.Estratos, new { @class = "form-control", tabindex = "20" })
+        @Html.ValidationMessageFor(model => model.DatosResidenciales.IdEstrato, "", new { @class = "text-danger" })
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-md-4 form-group">
+        @Html.LabelFor(model => model.DatosResidenciales.IdPais)
+        @Html.DropDownListFor(model => model.DatosResidenciales.IdPais, Model.DatosResidenciales.Paises, new { id = "paisResidencia", @class = "form-control", tabindex = "21" })
+        @Html.ValidationMessageFor(model => model.DatosResidenciales.IdPais, "", new { @class = "text-danger" })
+    </div>
+
+    <div class="col-md-4 form-group">
+        @Html.LabelFor(model => model.DatosResidenciales.IdDepartamento)
+        @Html.DropDownListFor(model => model.DatosResidenciales.IdDepartamento, Model.DatosResidenciales.Departamentos, new { id = "departamentoResidencia", @class = "form-control", tabindex = "22" })
+        @Html.ValidationMessageFor(model => model.DatosResidenciales.IdDepartamento, "", new { @class = "text-danger" })
+    </div>
+
+    <div class="col-md-4 form-group">
+        @Html.LabelFor(model => model.DatosResidenciales.IdMunicipio)
+        @Html.DropDownListFor(model => model.DatosResidenciales.IdMunicipio, Model.DatosPersonales.Municipios, new { id = "municipioResidencia", @class = "form-control", tabindex = "23" })
+        @Html.ValidationMessageFor(model => model.DatosResidenciales.IdMunicipio, "", new { @class = "text-danger" })
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-md-4 form-group">
+        @Html.LabelFor(model => model.DatosResidenciales.Telefono)
+        @Html.TextBoxFor(model => model.DatosResidenciales.Telefono, new { @class = "form-control", tabindex = "24", maxlength = "10" })
+        @Html.ValidationMessageFor(model => model.DatosResidenciales.Telefono, "", new { @class = "text-danger" })
+    </div>
+
+    <div class="col-md-4 form-group">
+        @Html.LabelFor(model => model.DatosResidenciales.TelefonoMovil)
+        @Html.TextBoxFor(model => model.DatosResidenciales.TelefonoMovil, new { @class = "form-control", tabindex = "25", maxlength = "12" })
+        @Html.ValidationMessageFor(model => model.DatosResidenciales.TelefonoMovil, "", new { @class = "text-danger" })
+    </div>
+</div>
+
+@Html.Script(
+    @<script type="text/javascript">
+
+        function InicializarControlesGeografia() {
+            /// <summary>Inicializa los de gegografía de la vista parcial.</summary>
+
+            $("#departamentoNacimiento").CascadingDropDown("#paisNacimiento", '@Url.Action("ConsultarDepartamentos")', {
+                idSelectedValue: '@Model.DatosPersonales.IdDepartamentoNacimiento'
+            });
+
+            $("#municipioNacimiento").CascadingDropDown("#departamentoNacimiento", '@Url.Action("ConsultarMunicipios")', {
+                idSelectedValue: '@Model.DatosPersonales.IdMunicipioNacimiento'
+            });
+
+            $("#departamentoResidencia").CascadingDropDown("#paisResidencia", '@Url.Action("ConsultarDepartamentos")', {
+                idSelectedValue: '@Model.DatosResidenciales.IdDepartamento'
+            });
+
+            $("#municipioResidencia").CascadingDropDown("#departamentoResidencia", '@Url.Action("ConsultarMunicipios")', {
+                idSelectedValue: '@Model.DatosResidenciales.IdMunicipio'
+            });
+        }
+
+        function AdicionarItemsDropDown(idControl, items) {
+            /// <summary>Adiciona los items como opciones a un dropdownlist.</summary>
+            /// <param name="idControl">Identificador interno del control al que se adicionarán los items.</param>
+            /// <param name="items">Items que se adicionaran al control drop down list.</param>
+
+            var idControl = '#' + idControl;
+
+            $(idControl + ' option').remove();
+            $(idControl).removeClass('cargaSincronica');
+            $(idControl).append('<option value="">Seleccionar</option>');
+
+            $.each(areas, function (indice, area) {
+                $(idControl).append('<option value="' + area.Value + '">' + area.Text + '</option>');
+            });
+        }
+
+        $(document).ready(function () {
+            InicializarControlesGeografia();
+        });
+
+    </script>)

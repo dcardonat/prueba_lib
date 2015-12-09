@@ -1,0 +1,68 @@
+﻿@model IPagedList<Libellus.Web.Areas.Administracion.Models.AnioLectivo.AnioLectivoViewModel>
+
+@{
+    ViewBag.Title = "Consultar";
+}
+
+<div class="content-header">
+    <h2 class="content-header-title">Años lectivos</h2>
+</div>
+
+<p>
+    @Html.ActionLink("Crear registro de año lectivo", "Crear")
+</p>
+
+@if (Model.Count() > 0)
+{
+    <div class="table-responsive">
+        <table class="@EstilosHelper.TablaLibellus">
+            <tr>
+                <th class="col-md-2">
+                    @Html.DisplayNameFor(model => model.First().Anio)
+                </th>
+                <th class="col-md-4">
+                    @Html.DisplayNameFor(model => model.First().FechaInicio)
+                </th>
+                <th class="col-md-4">
+                    @Html.DisplayNameFor(model => model.First().FechaCierre)
+                </th>
+                <th class="col-md-2" colspan="2">Acciones</th>
+            </tr>
+
+            @foreach (var item in Model)
+        {
+            <tr>
+                <td class="centered">
+                    @Html.DisplayFor(modelItem => item.Anio)
+                </td>
+                <td class="centered">
+                    @Html.DisplayFor(modelItem => item.FechaInicio)
+                </td>
+                <td class="centered">
+                    @Html.DisplayFor(modelItem => item.FechaCierre)
+                </td>
+                <td class="centered">
+                    @if (!item.Cerrado)
+                    {
+                        @Html.ActionLink("Editar", "Editar", new { id = item.Id })
+                    }
+
+                </td>
+                <td class="centered">
+                    @if (!item.Cerrado)
+                    {
+                        @Html.BotonEliminar("Eliminar", "AnioLectivo", new { id = item.Id })
+                    }
+                </td>
+            </tr>
+        }
+
+        </table>
+    </div>
+
+    <div class="centered">
+        @Html.PagedListPager(Model, pagina => Url.Action("Consultar", new { pagina }))
+    </div>
+}
+
+

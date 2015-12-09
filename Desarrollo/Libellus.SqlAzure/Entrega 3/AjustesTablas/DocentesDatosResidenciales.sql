@@ -1,0 +1,1 @@
+﻿ALTER TABLE dbo.DocentesDatosResidenciales ALTER COLUMN TelefonoMovil VARCHAR(12) NULL;

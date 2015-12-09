@@ -1,0 +1,1 @@
+﻿INSERT INTO dbo.ParametrosNegocio ( Nombre, Valor) VALUES ( 'PlantillaEmailCupoGenerado', 'EmailCupoGenerado.txt' )

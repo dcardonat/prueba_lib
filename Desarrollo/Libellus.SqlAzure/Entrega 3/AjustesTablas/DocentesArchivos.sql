@@ -1,0 +1,2 @@
+﻿ALTER TABLE dbo.DocentesArchivos ALTER COLUMN Foto IMAGE NULL;
+ALTER TABLE dbo.DocentesArchivos ALTER COLUMN Firma IMAGE NULL;

@@ -1,0 +1,67 @@
+﻿@model Libellus.Web.Areas.Administracion.Models.LoginViewModel
+@{
+    ViewBag.Title = "Log in";
+    Layout = "";
+}
+<!DOCTYPE html>
+<html class="no-js">
+<head>
+    <title>LIBELLUS - Sistema de Gestión Académico Integrado</title>
+    <meta charset="utf-8">
+    <meta name="description" content="">
+    <meta name="viewport" content="width=device-width">
+    <link rel="icon" href="~/Content/img/favicon.ico">
+
+    @Styles.Render("~/content/css")
+
+</head>
+<body class="account-bg">
+    <div class="account-wrapper">
+        <div>
+            @Html.MensajeExtender()
+        </div>
+        <br />
+        <div class="account-logo">
+            <img src="~/Content/img/logo-login.png" alt="Target Admin">
+        </div>
+        <div class="account-body">
+            <h3 class="account-body-title">Bienvenido a Libellus</h3>
+            <h5 class="account-body-subtitle">Para ingresar, digite los siguientes datos:</h5>
+            @using (Html.BeginForm("Login", "Account", FormMethod.Post, new { @class = "form account-form", role = "form" }))
+            {
+                @Html.AntiForgeryToken()
+                <div class="form-group">
+                    @Html.LabelFor(m => m.NombreUsuario, new { @class = "hidden-label" })
+                    @Html.TextBoxFor(m => m.NombreUsuario, new { @class = "form-control", @tabindex = "1", @placeholder = "Usuario", maxlength = "15" })
+                    @Html.ValidationMessageFor(model => model.NombreUsuario, "", new { @class = "text-danger" })
+                </div>
+                <div class="form-group">
+                    @Html.LabelFor(m => m.Clave, new { @class = "hidden-label" })
+                    @Html.PasswordFor(m => m.Clave, new { @class = "form-control", @tabindex = "2", @placeholder = "Contraseña", maxlength = "15" })
+                    @Html.ValidationMessageFor(model => model.Clave, "", new { @class = "text-danger" })
+                </div>
+                <div class="form-group">
+                    @Html.LabelFor(m => m.CodigoColegio, new { @class = "hidden-label" })
+                    @Html.TextBoxFor(m => m.CodigoColegio, new { @class = "form-control", @tabindex = "3", @placeholder = "Código del colegio", maxlength = "4" })
+                    @Html.ValidationMessageFor(model => model.CodigoColegio, "", new { @class = "text-danger" })
+                </div>
+                <div class="form-group">
+                    <input type="submit" value="Ingresar" class="btn btn-primary btn-block btn-lg" tabindex="4" />
+                </div>
+            }
+            <div>
+                @Html.ActionLink("¿Olvidó sus datos de acceso?", "RecordarClaveAcceso")
+            </div>
+        </div>
+        <div class="account-footer">
+            <p>
+                <img src="~/Content/img/ismlogo.png" width="200" height="32">
+            <p>
+                Todos los derechos reservados 2015
+            </p></p>
+        </div>
+    </div>
+    @Scripts.Render("~/bundles/general/js")
+    @Scripts.Render("~/bundles/bootstrap")
+</body>
+</html>

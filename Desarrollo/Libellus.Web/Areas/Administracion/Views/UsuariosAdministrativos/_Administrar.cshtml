@@ -1,0 +1,102 @@
+﻿@model Libellus.Web.Areas.Administracion.Models.UsuariosAdministrativos.UsuarioAdministrativoViewModel
+
+<div class="row">
+    <div class="col-md-4 form-group">
+        @Html.LabelFor(model => model.ModeloRegistrarUsuario.IdTipoIdentificacion)
+        @Html.DropDownListFor(model => model.ModeloRegistrarUsuario.IdTipoIdentificacion, Model.ModeloRegistrarUsuario.TiposIdentificaciones, "Seleccione", new { @class = "form-control", @tabindex = "1" })
+        @Html.ValidationMessageFor(model => model.ModeloRegistrarUsuario.IdTipoIdentificacion, "", new { @class = "text-danger" })
+    </div>
+    <div class="col-md-4 form-group">
+        @Html.LabelFor(model => model.ModeloRegistrarUsuario.Identificacion)
+        @Html.EditorFor(model => model.ModeloRegistrarUsuario.Identificacion, new { htmlAttributes = new { @class = "form-control", @tabindex = "2", maxlength = "14" } })
+        @Html.ValidationMessageFor(model => model.ModeloRegistrarUsuario.Identificacion, "", new { @class = "text-danger" })
+    </div>
+    <div class="col-md-4 form-group">
+        @Html.LabelFor(model => model.Nombres)
+        @Html.TextBoxFor(model => model.Nombres, new { @class = "form-control", @tabindex = "3", maxlength = "50" })
+        @Html.ValidationMessageFor(model => model.Nombres, "", new { @class = "text-danger" })
+    </div>
+</div>
+<div class="row">
+    <div class="col-md-4 form-group">
+        @Html.LabelFor(model => model.Apellidos)
+        @Html.TextBoxFor(model => model.Apellidos, new { @class = "form-control", @tabindex = "4", maxlength = "50" })
+        @Html.ValidationMessageFor(model => model.Apellidos, "", new { @class = "text-danger" })
+    </div>
+    <div class="col-md-4 form-group">
+        @Html.LabelFor(model => model.ModeloRegistrarUsuario.IdRol)
+        @if (ViewBag.NuevoRegistro)
+        {
+            @Html.DropDownListFor(model => model.ModeloRegistrarUsuario.IdRol, Model.ModeloRegistrarUsuario.Roles, "Seleccione", new { @class = "form-control", @tabindex = "5" })
+            @Html.ValidationMessageFor(model => model.ModeloRegistrarUsuario.IdRol, "", new { @class = "text-danger" })
+        }
+        else
+        {
+            @Html.DropDownListFor(model => model.ModeloRegistrarUsuario.IdRol, Model.ModeloRegistrarUsuario.Roles, "Seleccione", new { @class = "form-control",  @disabled = "disabled", @tabindex = "5" })
+        }
+       
+    </div>
+    <div class="col-md-4 form-group">
+        @Html.LabelFor(model => model.IdCargo)
+        @Html.DropDownListFor(model => model.IdCargo, Model.Cargos, "Seleccione", new { @class = "form-control", @tabindex = "6" })
+        @Html.ValidationMessageFor(model => model.IdCargo, "", new { @class = "text-danger" })
+    </div>
+</div>
+<div class="row">
+    <div class="col-md-4 form-group">
+        @Html.LabelFor(model => model.ModeloRegistrarUsuario.Correo)
+        @Html.EditorFor(model => model.ModeloRegistrarUsuario.Correo, new { htmlAttributes = new { @class = "form-control", @tabindex = "7", maxlength = "50" } })
+        @Html.ValidationMessageFor(model => model.ModeloRegistrarUsuario.Correo, "", new { @class = "text-danger" })
+    </div>
+    <div class="col-md-4 form-group">
+        @Html.LabelFor(model => model.Telefono)
+        @Html.TextBoxFor(model => model.Telefono, new { @class = "form-control", @tabindex = "10", maxlength = "10" })
+        @Html.ValidationMessageFor(model => model.Telefono, "", new { @class = "text-danger" })
+    </div>
+    <div class="col-md-4 form-group">
+        @Html.LabelFor(model => model.Celular)
+        @Html.TextBoxFor(model => model.Celular, new { @class = "form-control", @tabindex = "11", maxlength = "15" })
+        @Html.ValidationMessageFor(model => model.Celular, "", new { @class = "text-danger" })
+    </div>
+</div>
+<div class="row">
+    <div class="col-md-4 form-group">
+        @Html.LabelFor(model => model.IdGrupoSanguineo)
+        @Html.DropDownListFor(model => model.IdGrupoSanguineo, Model.GruposSanguineos, "Seleccione", new { @class = "form-control", @tabindex = "12" })
+        @Html.ValidationMessageFor(model => model.IdGrupoSanguineo, "", new { @class = "text-danger" })
+    </div>
+    <div class="col-md-4 form-group">
+        @Html.LabelFor(model => model.FechaNacimiento)
+        <div class="input-group date" id="fechaNacimiento">
+            @Html.TextBoxFor(model => model.FechaNacimiento, new { @class = "form-control", contenteditable = "false", tabindex = "13" })
+            <span class="input-group-addon">
+                <span class="glyphicon glyphicon-calendar"></span>
+            </span>
+        </div>
+        @Html.ValidationMessageFor(model => model.FechaNacimiento, "", new { @class = "text-danger" })
+    </div>
+    <div class="col-md-4 form-group">
+        @Html.LabelFor(model => model.Direccion)
+        @Html.TextBoxFor(model => model.Direccion, new { @class = "form-control", @tabindex = "14", maxlength = "50" })
+        @Html.ValidationMessageFor(model => model.Direccion, "", new { @class = "text-danger" })
+    </div>
+</div>
+
+@Html.HiddenFor(model => model.Id)
+@Html.HiddenFor(model => model.ModeloRegistrarUsuario.Id)
+@Html.HiddenFor(model => model.ModeloRegistrarUsuario.Identificacion)
+@Html.HiddenFor(model => model.ModeloRegistrarUsuario.IdTipoIdentificacion)
+
+@Html.Script(
+    @<script type="text/javascript">
+
+        $(document).ready(function () {
+
+            $('#fechaNacimiento').datetimepicker({
+                format: 'DD/MM/YYYY',
+                locale: 'es'
+            });
+        });
+
+    </script>)
+

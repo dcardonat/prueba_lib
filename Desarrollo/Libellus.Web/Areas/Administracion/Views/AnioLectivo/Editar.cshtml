@@ -1,0 +1,38 @@
+﻿@model Libellus.Web.Areas.Administracion.Models.AnioLectivo.AnioLectivoViewModel
+
+@{
+    ViewBag.Title = "Editar registro de año lectivo";
+}
+
+@Styles.Render("~/css/datetimepicker")
+
+<div class="content-header">
+    <h2 class="content-header-title">@ViewBag.Title</h2>
+</div>
+
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+    Html.RenderPartial("_Administrar");
+
+    <br />
+
+    <div class="form-group centered">
+        @Html.BotonCancelar("Consultar", "AnioLectivo", null, new { tabindex = "4" })
+        <input type="submit" value="Editar registro de año lectivo" class="btn btn-primary" tabindex="3" />
+    </div>
+}
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+    @Scripts.Render("~/js/datetimepicker")
+
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $('.date').datetimepicker({
+                format: 'DD/MM/YYYY',
+                locale: 'es'
+            });
+        });
+    </script>
+}

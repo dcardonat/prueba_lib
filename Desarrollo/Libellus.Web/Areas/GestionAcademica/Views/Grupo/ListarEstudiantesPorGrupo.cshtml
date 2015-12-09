@@ -1,0 +1,85 @@
+﻿@model Libellus.Web.Areas.GestionAcademica.Models.Grupo.DistribucionEstudianteGrupoViewModel
+
+@{
+    ViewBag.Title = "Lista de Estudiantes del Grupo";
+}
+
+<div class="content-header">
+    <h2 class="content-header-title">@ViewBag.Title</h2>
+</div>
+
+<div class="row">
+    <div class="form-group col-md-4">
+        @Html.LabelFor(model => model.Nivel)
+        @Html.TextBoxFor(model => model.Nivel, new { @class = "form-control", disabled = "disabled" })
+    </div>
+    <div class="form-group col-md-4">
+        @Html.LabelFor(model => model.Grupo)
+        @Html.TextBoxFor(model => model.Grupo, new { @class = "form-control", disabled = "disabled" })
+    </div>
+    <div class="form-group col-md-4">
+        @Html.LabelFor(model => model.Grado)
+        @Html.TextBoxFor(model => model.Grado, new { @class = "form-control", disabled = "disabled" })
+    </div>
+</div>
+<div class="row">
+    <div class="form-group col-md-4">
+        @Html.LabelFor(model => model.Horario)
+        @Html.TextBoxFor(model => model.Horario, new { @class = "form-control", disabled = "disabled" })
+    </div>
+    <div class="form-group col-md-4">
+        <label>Cantidad Estudiantes</label>
+        <input class="form-control" disabled="disabled" id="cantidad-estudaintes" name="cantidad-estudaintes" type="text" value="@Model.Estudiantes.Count">
+    </div>
+</div>
+<br /> <br />
+
+@if (Model != null && Model.Estudiantes.Count > 0)
+{
+    <div class="content-header">
+        <h1 class="content-header-subtitle">Estado documentos soporte</h1>
+    </div>
+    <div class="row">
+        <div class="col-md-12">
+            <div class="table-responsive">
+                <table class="@EstilosHelper.TablaLibellus">
+                    <thead>
+                        <tr>
+                            <th>
+                                Documento Identidad
+                            </th>
+                            <th>
+                                Nombres
+                            </th>
+                            <th>
+                                Acciones
+                            </th>
+                        </tr>
+                    </thead>
+                    @foreach (var estudiante in Model.Estudiantes)
+                    {
+                        <tr>
+                            <td class="centered">@estudiante.DocumentoIdentidad</td>
+                            <td class="centered">@estudiante.Nombre</td>
+                            <td class="centered">
+
+                                @Html.ActionLink("Visualizar", "Actualizar", "DatosGeneralesEstudiante", new { area = "GestionMatricula", id = estudiante.Id, soloLectura = true }, null)
+
+                                <a href="#"></a>
+                            </td>
+                        </tr>
+                    }
+                </table>
+            </div>
+        </div>
+    </div>
+
+    <div class="centered">
+        @Html.PagedListPager(Model.Estudiantes, pagina => Url.Action("ListarEstudiantesPorGrupo", new { nivel = Model.Nivel, grado = Model.Grado, grupo = Model.Grupo, horario = Model.Horario, pagina = pagina }))
+    </div>
+}
+
+<br />
+<div class="form-group centered">
+    @Html.ActionLink("Regresar", "AdministrarEstudiantesPorGrupo", new { idAnioLectivo = ViewBag.IdAnioLectivo, idNivel = Model.IdNivel, consultar = true })
+</div>

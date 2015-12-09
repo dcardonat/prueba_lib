@@ -1,0 +1,284 @@
+﻿@model Libellus.Web.Areas.Administracion.Models.CuposPorNivel.CuposPorNivelConsultaViewModels
+
+@if (Model.CuposPorNivel == null || Model.CuposPorNivel.Count == 0)
+{
+    @Html.Hidden("mensajeSinRegistros", @Libellus.Mensajes.Mensaje.Mensaje1005)
+}
+else
+{
+    <div class="row">
+        <div class="col-md-12">
+            <div class="table-responsive">
+                <table class="@EstilosHelper.TablaLibellus">
+                    <tr>
+                        <th>
+                            @Html.DisplayNameFor(model => model.CuposPorNivel.First().NivelEducativo)
+                        </th>
+                        <th>
+                            @Html.DisplayNameFor(model => model.CuposPorNivel.First().EstudiantesGrupo)
+                        </th>
+                        <th>
+                            @Html.DisplayNameFor(model => model.CuposPorNivel.First().EstudiantesEsperados)
+                        </th>
+                        <th>
+                            @Html.DisplayNameFor(model => model.CuposPorNivel.First().CantidadEstudiantesMatriculados)
+                        </th>
+                        <th>
+                            @Html.DisplayNameFor(model => model.CuposPorNivel.First().CantidadGrupos)
+                        </th>
+                        <th>
+                            @Html.DisplayNameFor(model => model.CuposPorNivel.First().CantidadDocentes)
+                        </th>
+                        <th>
+                            @Html.DisplayNameFor(model => model.CuposPorNivel.First().TotalDocentes)
+                        </th>
+                        <th>Acción</th>
+                    </tr>
+                    @foreach (var item in Model.CuposPorNivel)
+                    {
+                        <tr id="nivel@(item.Consecutivo)" name="filasCuposPorNivel" data-idcuposnivel="@item.Id" data-consecutivo="@item.Consecutivo" data-idnivel="@item.IdNivelEducativo">
+                            <td>
+                                @Html.DisplayFor(modelItem => item.NivelEducativo)
+                            </td>
+                            <td>
+                                @Html.TextBoxFor(modelItem => item.EstudiantesGrupo, new { id = "estudiantesGrupo-" + item.IdNivelEducativo })
+                            </td>
+                            <td>
+                                @Html.TextBoxFor(modelItem => item.EstudiantesEsperados, new { id = "estudiantesEsperados-" + item.IdNivelEducativo })
+                            </td>
+                            <td name="cantidadEstudiantesMatriculados">
+                                @Html.DisplayFor(modelItem => item.CantidadEstudiantesMatriculados)
+                            </td>
+                            <td name="cantidadGrupos">
+                                @Html.DisplayFor(modelItem => item.CantidadGrupos)
+                            </td>
+                            @if (item.Consecutivo != (int)ConsecutivoMaestros.NivelSecundaria && item.Consecutivo != (int)ConsecutivoMaestros.NivelMedia && item.Consecutivo != (int)ConsecutivoMaestros.NivelMediaTecnica)
+                            {
+                                <td name="cantidadDocentes">
+                                    @Html.DisplayFor(modelItem => item.CantidadDocentes)
+                                </td>
+                            }
+                            else
+                            {
+                                <td name="cantidadDocentes" class="cantidadDocentes">
+                                    @Html.DisplayFor(modelItem => item.CantidadDocentes)
+                                </td>
+                            }
+                            @if (item.Consecutivo != (int)ConsecutivoMaestros.NivelSecundaria && item.Consecutivo != (int)ConsecutivoMaestros.NivelMedia && item.Consecutivo != (int)ConsecutivoMaestros.NivelMediaTecnica)
+                            {
+                                <td name="totalDocentes">
+                                    @Html.DisplayFor(modelItem => item.TotalDocentes)
+                                </td>
+                            }
+                            else if (item.Consecutivo == (int)ConsecutivoMaestros.NivelSecundaria)
+                            {
+                                <td id="cellSecundaria" name="totalDocentes" rowspan="3">
+                                    @Html.DisplayFor(modelItem => item.TotalDocentes)
+                                </td>
+                            }
+                            <td>
+                                <a href="#" onclick="Actualizar(nivel@(item.Consecutivo))">Actualizar</a>
+                            </td>
+                        </tr>
+                    }
+                </table>
+            </div>
+        </div>
+    </div>
+
+    <div class="form-group centered">
+        <input type="submit" id="submitAdministrar" value="Guardar cambios" class="btn btn-primary" tabindex="3" />
+    </div>
+}
+
+<script type="text/javascript">
+
+    function Actualizar(element) {
+        ConfirmarAccion("Actualizar estudiantes esperados", "¿Está seguro de actualizar el registro?", function () {
+            var fila = $(element);
+            fila.find('[name="item.EstudiantesEsperados"]').val(fila.find('[name="cantidadEstudiantesMatriculados"]').text().trim());
+            fila.find('[name="item.EstudiantesEsperados"]').keyup();
+        });
+    }
+
+    function CalcularTotalDocentes(rowId, cantidadDocentes, secundaria) {
+        var totalDocentes = 0;
+        var cont = 0;
+        if (secundaria) {
+            $('.cantidadDocentes').each(function (index, val) {
+                var valor = $(this).text().trim();
+                if (valor != '' && !isNaN(valor)) {
+                    totalDocentes += parseFloat(valor);
+                    cont++;
+                }
+            });
+            cont === 0 ? $('#cellSecundaria').html('') : $('#cellSecundaria').html(totalDocentes.toFixed(2));
+        } else {
+            $('#' + rowId + ' [name="totalDocentes"]').html(cantidadDocentes);
+        }
+    }
+
+    function CalcularCantidadDocentes(rowId, cantidadGrupos) {
+        var nivel = cantidadGrupos === '' ? -1 : $('#' + rowId).attr('data-consecutivo');
+        var secundaria = cantidadGrupos === '' ? true : false;
+        var cantidadDocentes;
+        switch (nivel) {
+            case '@((int)ConsecutivoMaestros.NivelPreescolar)':
+                cantidadDocentes = cantidadGrupos;
+                break;
+            case '@((int)ConsecutivoMaestros.NivelPrimaria)':
+                cantidadDocentes = cantidadGrupos;
+                break;
+            case '@((int)ConsecutivoMaestros.NivelSecundaria)':
+                cantidadDocentes = (cantidadGrupos * 1.36).toFixed(2);
+                secundaria = true;
+                break;
+            case '@((int)ConsecutivoMaestros.NivelMedia)':
+                cantidadDocentes = (cantidadGrupos * 1.36).toFixed(2);
+                secundaria = true;
+                break;
+            case '@((int)ConsecutivoMaestros.NivelMediaTecnica)':
+                cantidadDocentes = (cantidadGrupos * 1.7).toFixed(2);
+                secundaria = true;
+                break;
+            case '@((int)ConsecutivoMaestros.NivelClei)':
+                cantidadDocentes = cantidadGrupos;
+                break;
+            default:
+                cantidadDocentes = '';
+        }
+        $('#' + rowId + ' [name="cantidadDocentes"]').html(cantidadDocentes);
+        CalcularTotalDocentes(rowId, cantidadDocentes, secundaria)
+    }
+
+    function CalcularCantidadGrupos(element) {
+        var rowId = element.parent().parent().attr('id');
+        var estudiantesGrupo = $('#' + rowId + ' [name="item.EstudiantesGrupo"]').val();
+        var estudiantesEsperados = $('#' + rowId + ' [name="item.EstudiantesEsperados"]').val();
+        if (estudiantesGrupo && estudiantesEsperados && estudiantesGrupo != '0') {
+            var cantidadGrupos = Math.floor(estudiantesEsperados / estudiantesGrupo);
+            $('#' + rowId + ' [name="cantidadGrupos"]').html(cantidadGrupos);
+            CalcularCantidadDocentes(rowId, cantidadGrupos);
+        } else {
+            $('#' + rowId + ' [name="totalDocentes"]').html('');
+            CalcularCantidadDocentes(rowId, '');
+            $('#' + rowId + ' [name="cantidadGrupos"]').html('');
+            $('#' + rowId + ' [name="cantidadDocentes"]').html('');
+        }
+    }
+
+    function EstablecerOperacionesTabla() {
+        var value = '';
+        var regularExpression = /^\d+$/;
+        $('[name="item.EstudiantesGrupo"], [name="item.EstudiantesEsperados"]').on('keydown', function (e) {
+            var elemtValue = $(this).val();
+            if (regularExpression.test(elemtValue))
+                value = elemtValue;
+        }).on('keyup', function (e) {
+            var newElementValue = $(this).val();
+            if (!newElementValue || regularExpression.test(newElementValue)) {
+                var element = $(this);
+                CalcularCantidadGrupos(element);
+            } else if (!regularExpression.test(newElementValue)) {
+                $(this).val(value);
+                value = '';
+            }
+        });
+        $('[name="item.EstudiantesGrupo"]').keyup();
+    }
+
+    function InhabilitarCampos() {
+        if ('@Model.AnioLectivo.Cerrado' == 'True') {
+            $('[name="item.EstudiantesGrupo"], [name="item.EstudiantesEsperados"]').attr('disabled', 'disabled');
+        }
+    }
+
+    function HabilitarCampos() {
+
+        if ('@Model.AnioLectivo.Cerrado' == 'False') {
+            $('[name="item.EstudiantesGrupo"], [name="item.EstudiantesEsperados"]').removeAttr('disabled');
+        }
+    }
+
+    function ValidarCuposPorNivel(idCupoNivel) {
+
+        $('#submitAdministrar').on('click', function (event) {
+            event.preventDefault();
+
+            var validador = $('#formulario-cupos-nivel').validate({
+                errorClass: "input-validation-error field-validation-error",
+                errorElement: "div"
+            });
+
+            ReglasValidacion();
+
+            var cont = 0;
+
+            $('[name="item.EstudiantesGrupo"], [name="item.EstudiantesEsperados"]').each(function () {
+
+                if (!validador.element(this)) cont++;
+            });
+
+            if (cont === 0) {
+                GuardarCuposPornivel();
+            }
+        });
+    }
+
+    function ReglasValidacion() {
+        $('[name="item.EstudiantesGrupo"]').each(function () {
+            $(this).rules("add", {
+                required: true,
+                messages: {
+                    required: "@Mensaje.Mensaje1001"
+                }
+            });
+        });
+
+        $('[name="item.EstudiantesEsperados"]').each(function () {
+            $(this).rules("add", {
+                required: true,
+                messages: {
+                    required: "@Mensaje.Mensaje1001"
+                }
+            });
+        });
+    }
+
+    function GuardarCuposPornivel() {
+        var cuposPorNivel = [];
+        $('[name="filasCuposPorNivel"]').each(function (index, element) {
+            var fila = $(this);
+            cuposPorNivel.push({
+                Id: fila.attr('data-idcuposnivel'),
+                IdNivelEducativo: fila.attr('data-idnivel'),
+                EstudiantesGrupo: fila.find('[name="item.EstudiantesGrupo"]').val(),
+                EstudiantesEsperados: fila.find('[name="item.EstudiantesEsperados"]').val(),
+                IdAnio: $('[name="AnioSeleccionado"]').val(),
+                CantidadGrupos: Number(fila.find('[name="cantidadGrupos"]').text().replace(',', '.')),
+                CantidadDocentes: Number(fila.find('[name="cantidadDocentes"]').text().replace(',', '.')),
+            });
+        });
+        cuposPorNivel = JSON.stringify({ 'cuposPorNivel': cuposPorNivel });
+        $.ajax({
+            url: '@Url.Action("Administrar")',
+            type: 'POST',
+            data: cuposPorNivel,
+            contentType: 'application/json',
+            dataType: 'json',
+            success: function (respuesta) {
+                window.location.href = respuesta;
+            },
+            failure: function (respuesta) {
+            }
+        });
+    }
+
+    $(document).ready(function () {
+        InhabilitarCampos();
+        HabilitarCampos();
+        EstablecerOperacionesTabla();
+        ValidarCuposPorNivel();
+    });
+
+</script>

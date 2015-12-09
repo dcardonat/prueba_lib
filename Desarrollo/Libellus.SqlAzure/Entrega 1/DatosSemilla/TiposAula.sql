@@ -1,0 +1,6 @@
+﻿INSERT INTO dbo.Maestros (Descripcion, IdTipoMaestro, IdSede, Estado) VALUES ('Aula de clase', 8, 1, 1)
+INSERT INTO dbo.Maestros (Descripcion, IdTipoMaestro, IdSede, Estado) VALUES ('Aula de video', 8, 1, 1)
+INSERT INTO dbo.Maestros (Descripcion, IdTipoMaestro, IdSede, Estado) VALUES ('Sala de cómputo', 8, 1, 1)
+INSERT INTO dbo.Maestros (Descripcion, IdTipoMaestro, IdSede, Estado) VALUES ('Laboratorio de cocina', 8, 1, 1)
+INSERT INTO dbo.Maestros (Descripcion, IdTipoMaestro, IdSede, Estado) VALUES ('Sala de máquinas', 8, 1, 1)
+INSERT INTO dbo.Maestros (Descripcion, IdTipoMaestro, IdSede, Estado) VALUES ('Aula taller', 8, 1, 1)

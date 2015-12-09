@@ -1,0 +1,139 @@
+﻿@model  Libellus.Web.Areas.Administracion.Models.FuncionalidadesRolViewModel
+
+@{
+    ViewBag.Title = "Asociar Funcionalidades Por Roles";
+}
+
+<div class="content-header">
+    <h2 class="content-header-title">@ViewBag.Title</h2>
+</div>
+
+@using (Html.BeginForm("AsociarFuncionalidadesPorRol", "Funcionalidades", FormMethod.Post, new { role = "form", @class = "form-inline", id = "funcionalidadesPorRolForm" }))
+{
+    <div id="container-validationSummary">
+        @Html.ValidationSummary(false, "", new { @class = "alert alert-warning pge-error-icon" })
+    </div>
+    <div class="row">
+        <div class="col-md-6 form-group">
+            @Html.LabelFor(m => m.IdRol)
+            @Html.DropDownListFor(m => m.IdRol, Model.Roles, "", new { @class = "form-control" })
+        </div>
+        <div class="col-md-6 form-group">
+            <input type="submit" name="btnSubmit" value="Guardar Cambios" class="btn btn-primary">
+        </div>
+    </div>
+
+    <br />
+    <br />
+
+    <div>
+        <h4>Descripción de Iconos</h4>
+        <br />
+        <p>
+            <span style="margin-right: 5px" class="glyphicon glyphicon-home"></span><span>Modulo</span>
+            <span style="margin: 0 5px 0 30px" class="glyphicon glyphicon-th-list"></span><span>Grupo de Funcionalidades</span>
+            <span style="margin: 0 5px 0 30px" class="glyphicon glyphicon-cog"></span><span>Funcionalidad</span>
+            <span style="margin: 0 5px 0 30px" class="glyphicon glyphicon-flash"></span><span>Acciones Dependientes de una Funcionalidad</span>
+        </p>
+    </div>
+
+    <br />
+    <br />
+
+    <div id="arbolFuncionalidades" class="demo"></div>
+
+    @Html.HiddenFor(m => m.IdsFuncionalidades)
+}
+
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+    @Scripts.Render("~/js/underscore")
+    @Styles.Render("~/css/select2")
+    @Scripts.Render("~/js/select2")
+    @Styles.Render("~/css/jstree")
+    @Scripts.Render("~/js/jstree")
+   
+
+    <script type="text/javascript">
+
+        function inicializarSelect2() {
+            // Inicializa las funcionalidades del control select2.
+
+            $('[name="IdRol"]').select2({ width: 260, placeholder: "Seleccione" });
+
+            $('[name="IdRol"]').on('change', function (evento) {
+                inicializarJstree(evento.val);
+            });
+        }
+
+        function inicializarJstree(idRol) {
+            // Inicializa las funcionalidades del control jstree.
+
+            $('#arbolFuncionalidades').jstree('destroy');
+
+            $('#arbolFuncionalidades').jstree({
+                core: {
+                    data: {
+                        url: '@Url.Action("ConsultarFuncionalidadesPorRol")?idRol=' + idRol,
+                        data: function (node) {
+                            return { id: node.id };
+                        }
+                    }
+                },
+                types: {
+                    'default': {
+                        icon: 'glyphicon glyphicon-question-sign'
+                    },
+                    modulo: {
+                        icon: 'glyphicon glyphicon-home'
+                    },
+                    grupo: {
+                        icon: 'glyphicon glyphicon-th-list'
+                    },
+                    funcionalidad: {
+                        icon: 'glyphicon glyphicon-cog'
+                    },
+                    accion: {
+                        icon: 'glyphicon glyphicon-flash'
+                    }
+                },
+                plugins: ['checkbox', 'types']
+            }).on('ready.jstree', function (event, data) {
+                $('[name="IdsFuncionalidades"]').val($('#arbolFuncionalidades ul li:first').attr('init_data').split(','));
+                $(this).jstree("open_all");
+                $('[aria-level="1"]').wrap('<div class="funcionalidadesXrol-modulo"></div>').addClass('quitar-linea-padre-jstree');
+            }).on('select_node.jstree', function (event, data) {
+                $('[name="IdsFuncionalidades"]').val(
+                    _.without(
+                        _.union(
+                            $('[name="IdsFuncionalidades"]').val().split(','),
+                            [data.node.id],
+                            data.node.children_d,
+                            data.node.parents
+                        ),
+                        '#', ''
+                    )
+                );
+            }).on('deselect_node.jstree', function (event, data) {
+                $('#' + data.node.li_attr.id).siblings('li[aria-selected=true]').length > 0 ?
+                    $('[name="IdsFuncionalidades"]').val(_.difference($('[name="IdsFuncionalidades"]').val().split(','), [data.node.id], data.node.children_d)) :
+                    $('[name="IdsFuncionalidades"]').val(_.difference($('[name="IdsFuncionalidades"]').val().split(','), [data.node.id], data.node.parents, data.node.children_d));
+            });
+        }
+
+        $(document).ready(function () {
+
+            inicializarSelect2();
+        });
+    </script>
+
+    <style type="text/css">
+        .jstree-default .jstree-clicked {
+            background: transparent !important;
+            border-radius: 0px !important;
+            box-shadow: none !important;
+        }
+    </style>
+}
+

@@ -1,0 +1,2 @@
+﻿INSERT INTO dbo.InstitucionEducativa ( Nombre, ResolucionAprobacion, Nit, CodigoDane, Rut, Logo, Direccion, IdPais, IdDepartamento, IdMunicipio, Telefono, Fax, PaginaWeb )
+VALUES ( 'Institución de prueba', 'Resolución 150110', '89017888', '1230092', '918283834771', NULL, 'Ciudad ficticia', 1, 1, 1, '2670000', '1671010', 'http://www.instituciondeprueba.com' )

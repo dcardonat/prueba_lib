@@ -1,0 +1,279 @@
+﻿@model Libellus.Web.Areas.GestionAcademica.Models.RangosDesempenio.RangoDesempenioConsultaViewModels
+
+<div class="row">
+    @if (!ViewBag.SinParametrosPromocion)
+    {
+        <div class="col-md-4 form-group">
+            @Html.LabelFor(model => model.CalificacionMinima)
+            @Html.EditorFor(model => model.CalificacionMinima, new { htmlAttributes = new { @class = "form-control", disabled = "disabled", @readonly = "readonly", @tabindex = "2" } })
+            @Html.ValidationMessageFor(model => model.CalificacionMinima, "", new { @class = "text-danger" })
+        </div>
+        <div class="col-md-4 form-group">
+            @Html.LabelFor(model => model.CalificacionMaxima)
+            @Html.EditorFor(model => model.CalificacionMaxima, new { htmlAttributes = new { @class = "form-control", disabled = "disabled", @readonly = "readonly", @tabindex = "1" } })
+            @Html.ValidationMessageFor(model => model.CalificacionMaxima, "", new { @class = "text-danger" })
+        </div>
+    }
+    else
+    {
+        <script>
+            VisualizarMensajeNegocio(2, "@Mensaje.Mensaje1005", 3000);
+        </script>
+    }
+</div>
+
+<br />
+
+@if (Model.RangosDesempenio == null || Model.RangosDesempenio.Count == 0)
+{
+    @Html.Hidden("mensajeSinRegistros", @Libellus.Mensajes.Mensaje.Mensaje1005)
+}
+else
+{
+    <div class="row">
+        <div class="col-md-12">
+            <div class="table-responsive">
+                <table class="@EstilosHelper.TablaLibellus">
+                    <tr>
+                        <th>
+                            @Html.DisplayNameFor(model => model.RangosDesempenio.First().Desempenio)
+                        </th>
+                        <th>
+                            @Html.DisplayNameFor(model => model.RangosDesempenio.First().NotaMinima)
+                        </th>
+                        <th>
+                            @Html.DisplayNameFor(model => model.RangosDesempenio.First().NotaMaxima)
+                        </th>
+                    </tr>
+                    @foreach (var item in Model.RangosDesempenio)
+        {
+                    <tr id="desempenio@(item.IdDesempenio)" name="filas-rangos-desempenio" data-idrangodesempenio="@item.Id" data-iddesempenio="@item.IdDesempenio" data-consecutivo="@item.Consecutivo">
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Desempenio)
+                        </td>
+                        <td name="notaMinima">
+                            @Html.TextBox("nota-minima", item.NotaMinima, new { id = "nota-minima-" + item.IdDesempenio })
+                        </td>
+                        <td name="">
+                            @Html.TextBox("nota-maxima", item.NotaMaxima, new { id = "nota-maxima-" + item.IdDesempenio })
+                        </td>
+                    </tr>
+        }
+                </table>
+            </div>
+        </div>
+    </div>
+
+    <div class="form-group centered">
+        <input type="submit" id="submitAdministrar" value="Guardar cambios" class="btn btn-primary" tabindex="3" />
+        <input type="button" id="submitEliminar" value="Eliminar registros" class="btn btn-primary" tabindex="4" />
+    </div>
+}
+
+<script type="text/javascript">
+
+    function eliminarRegistros() {
+
+        $('#submitEliminar').on('click', function () {
+            $.ajax({
+                url: '@Url.Action("Eliminar")',
+                type: 'POST',
+                data: "{ 'anio' : '" + $('[name="AnioSeleccionado"]').val() + "' }",
+                contentType: 'application/json',
+                dataType: 'json',
+                success: function (respuesta) {
+                    window.location.href = respuesta;
+                },
+                failure: function (respuesta) {
+                }
+            });
+        });
+    }
+
+    function GuardarCambios() {
+
+        var listaRangosDesempenio = [];
+        $('[name="filas-rangos-desempenio"]').each(function (index, element) {
+            var fila = $(this);
+            listaRangosDesempenio.push({
+                Id: fila.attr('data-idrangodesempenio'),
+                IdDesempenio: fila.attr('data-idDesempenio'),
+                NotaMinima: fila.find('[name="nota-minima"]').val(),
+                NotaMaxima: fila.find('[name="nota-maxima"]').val(),
+                Consecutivo: fila.attr('data-consecutivo'),
+                Anio: $('[name="AnioSeleccionado"]').val()
+            });
+        });
+        listaRangosDesempenio = JSON.stringify({ 'listaRangosDesempenio': listaRangosDesempenio });
+        $.ajax({
+            url: '@Url.Action("Administrar")',
+            type: 'POST',
+            data: listaRangosDesempenio,
+            contentType: 'application/json',
+            dataType: 'json',
+            success: function (respuesta) {
+                window.location.href = respuesta;
+            },
+            failure: function (respuesta) {
+            }
+        });
+    }
+
+    function ValidarNotaMinimaMenorAMaxima(notaMinima, notaMaxima) {
+
+        return !notaMinima || !notaMaxima || Number(notaMinima.replace(',', '.')) < Number(notaMaxima.replace(',', '.'));
+    }
+
+    function ValidarNotaRangoDeCalificacion(nota) {
+
+        return nota.replace(',', '.') >= Number($('[name=CalificacionMinima]').val()) && nota.replace(',', '.') <= Number($('[name=CalificacionMaxima]').val());
+    }
+
+    function ValidarSecunciaNotasNotaMaxima(elemento) {
+
+        var notaMaxima = $(elemento).val();
+        var notaMinimaSiguiente = $(elemento).parent().parent().next().find('[name="nota-minima"]').val();
+        return !notaMaxima || !notaMinimaSiguiente || Number(notaMaxima.replace(',', '.')) < Number(notaMinimaSiguiente.replace(',', '.'));
+    }
+
+    function ValidarSecunciaNotasNotaMinima(elemento) {
+
+        var notaMinima = $(elemento).val();
+        var notaMaximaAnterior = $(elemento).parent().parent().prev().find('[name="nota-maxima"]').val();
+        return !notaMinima || !notaMaximaAnterior || Number(notaMinima.replace(',', '.')) > Number(notaMaximaAnterior.replace(',', '.'));
+    }
+
+    function ValidarConsecutivoNotaMaxima(elemento) {
+
+        var notaMaxima = $(elemento).val();
+        var notaMinimaSiguiente = $(elemento).parent().parent().next().find('[name="nota-minima"]').val();
+        return !notaMaxima || !notaMinimaSiguiente || Number(notaMaxima.replace(',', '.')) + 0.1 === Number(notaMinimaSiguiente.replace(',', '.'));
+    }
+
+    function ValidarConsecutivoNotaMinima(elemento) {
+
+        var notaMinima = $(elemento).val();
+        var notaMaximaAnterior = $(elemento).parent().parent().prev().find('[name="nota-maxima"]').val();
+        return !notaMinima || !notaMaximaAnterior || Number(notaMaximaAnterior.replace(',', '.')) + 0.1 === Number(notaMinima.replace(',', '.'));
+    }
+
+    function ValidarNumero(nota) {
+        var regularExpression = /^100(\,0{0,2})?$|^\d{1,2}(\,\d{1,2})?$/;
+        return regularExpression.test(nota);
+    }
+
+    function ReglasValidacion() {
+
+        $('[name="nota-minima"]').each(function () {
+            $(this).rules("add", {
+                required: true,
+                ValidarNumero: true,
+                ValidarNotaMinimaMenorAMaxima: true,
+                ValidarSecunciaNotasNotaMinima: true,
+                ValidarConsecutivoNotaMinima: true,
+                ValidarNotaRangoDeCalificacion: true,
+                messages: {
+                    required: "@Mensaje.Mensaje1001"
+                }
+            });
+        });
+
+        $('[name="nota-maxima"]').each(function () {
+            $(this).rules("add", {
+                required: true,
+                ValidarNumero: true,
+                ValidarNotaMinimaMenorAMaxima: true,
+                ValidarSecunciaNotasNotaMaxima: true,
+                ValidarConsecutivoNotaMaxima: true,
+                ValidarNotaRangoDeCalificacion: true,
+                messages: {
+                    required: "@Mensaje.Mensaje1001"
+                }
+            });
+        });
+
+        $.validator.addMethod("ValidarNotaMinimaMenorAMaxima", function (value, element, params) {
+            var fila = $(element).parent().parent();
+            return ValidarNotaMinimaMenorAMaxima(fila.find('[name="nota-minima"]').val(), fila.find('[name="nota-maxima"]').val());
+        }, '@Mensaje.Mensaje1017');
+
+        $.validator.addMethod("ValidarNotaRangoDeCalificacion", function (value, element, params) {
+            return ValidarNotaRangoDeCalificacion(value);
+        }, "@Mensaje.Mensaje1016");
+
+        $.validator.addMethod("ValidarSecunciaNotasNotaMaxima", function (value, element, params) {
+            return ValidarSecunciaNotasNotaMaxima(element);
+        }, "@Mensaje.Mensaje1018");
+
+        $.validator.addMethod("ValidarSecunciaNotasNotaMinima", function (value, element, params) {
+            return ValidarSecunciaNotasNotaMinima(element);
+        }, "@Mensaje.Mensaje1018");
+
+        $.validator.addMethod("ValidarConsecutivoNotaMaxima", function (value, element, params) {
+            return ValidarConsecutivoNotaMaxima(element);
+        }, "@Mensaje.Mensaje1018");
+
+        $.validator.addMethod("ValidarConsecutivoNotaMinima", function (value, element, params) {
+            return ValidarConsecutivoNotaMinima(element);
+        }, "@Mensaje.Mensaje1018");
+
+        $.validator.addMethod("ValidarNumero", function (value, element, params) {
+            return ValidarNumero(value);
+        }, "Formato incorrecto");
+    }
+
+    function ValidarRangosDesempenio(idRangoDesempenio) {
+
+        $('#submitAdministrar').on('click', function (event) {
+            event.preventDefault();
+
+            var validador = $('#formulario-rangos-desempenio').validate({
+                errorClass: "input-validation-error field-validation-error",
+                errorElement: "div"
+            });
+
+            ReglasValidacion();
+
+            var cont = 0;
+
+            $('[name="nota-minima"], [name="nota-maxima"]').each(function () {
+
+                if (!validador.element(this)) cont++;
+            });
+
+            if (cont === 0) {
+                GuardarCambios();
+            }
+        });
+    }
+
+    function EstablecerOperacionesTabla() {
+        $('[name=nota-minima]:first').val($('[name=CalificacionMinima]').val());
+        $('[name=nota-maxima]:last').val($('[name=CalificacionMaxima]').val());
+        $('[name=nota-minima]:first').prop('disabled', true);
+        $('[name=nota-maxima]:last').prop('disabled', true);
+    }
+
+    function InhabilitarCampos() {
+
+        if ($('[name="AnioSeleccionadoCerrado"]').val() == 'true') {
+            $('[name="item.NotaMinima"], [name="item.NotaMaxima"]').prop('disabled', false);
+            $("#submitAdministrar").removeProp('disabled');
+            $("#IdAnioLectivo").removeProp('disabled');
+        }
+        else {
+            $('[name="item.NotaMinima"], [name="item.NotaMaxima"]').prop('disabled', true);
+            $("#submitAdministrar").prop('disabled', true);
+            $("#IdAnioLectivo").removeProp('disabled');
+        }
+    }
+
+    $(document).ready(function () {
+
+        InhabilitarCampos();
+        EstablecerOperacionesTabla();
+        ValidarRangosDesempenio();
+        eliminarRegistros();
+    });
+
+</script>

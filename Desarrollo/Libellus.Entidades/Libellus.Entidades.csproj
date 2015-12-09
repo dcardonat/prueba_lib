@@ -1,0 +1,157 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="12.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{880E4E2F-F3BF-4055-BD97-15E64AF73216}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>Libellus.Entidades</RootNamespace>
+    <AssemblyName>Libellus.Entidades</AssemblyName>
+    <TargetFrameworkVersion>v4.5.1</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <SccProjectName>SAK</SccProjectName>
+    <SccLocalPath>SAK</SccLocalPath>
+    <SccAuxPath>SAK</SccAuxPath>
+    <SccProvider>SAK</SccProvider>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Pruebas|AnyCPU'">
+    <OutputPath>bin\Pruebas\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <Optimize>true</Optimize>
+    <DebugType>pdbonly</DebugType>
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <ErrorReport>prompt</ErrorReport>
+    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="EntityFramework">
+      <HintPath>..\packages\EntityFramework.6.1.2\lib\net45\EntityFramework.dll</HintPath>
+    </Reference>
+    <Reference Include="EntityFramework.SqlServer">
+      <HintPath>..\packages\EntityFramework.6.1.2\lib\net45\EntityFramework.SqlServer.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.AspNet.Identity.Core, Version=2.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\Microsoft.AspNet.Identity.Core.2.2.0\lib\net45\Microsoft.AspNet.Identity.Core.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.AspNet.Identity.EntityFramework">
+      <HintPath>..\packages\Microsoft.AspNet.Identity.EntityFramework.2.2.0\lib\net45\Microsoft.AspNet.Identity.EntityFramework.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.ComponentModel.DataAnnotations" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="ActividadComplementaria.cs" />
+    <Compile Include="AnioLectivo.cs" />
+    <Compile Include="AperturaExtemporaneaPeriodo.cs" />
+    <Compile Include="AreaNivel.cs" />
+    <Compile Include="Asignatura.cs" />
+    <Compile Include="AspectoEvaluativo.cs" />
+    <Compile Include="Aula.cs" />
+    <Compile Include="CancelacionMatriculas.cs" />
+    <Compile Include="Constantes\ConstantesApp.cs" />
+    <Compile Include="Constantes\ConstantesMenu.cs" />
+    <Compile Include="Constantes\ConstantesCookie.cs" />
+    <Compile Include="ContextoUsuario.cs" />
+    <Compile Include="Cupo.cs" />
+    <Compile Include="Departamento.cs" />
+    <Compile Include="DocenteArchivo.cs" />
+    <Compile Include="DocenteDatosPersonales.cs" />
+    <Compile Include="DocenteDatosResidenciales.cs" />
+    <Compile Include="DocenteDocumentoSoporte.cs" />
+    <Compile Include="DocenteEstado.cs" />
+    <Compile Include="DocenteEstudio.cs" />
+    <Compile Include="DocenteExperienciaLaboral.cs" />
+    <Compile Include="Constantes\MaestrosNoAdministrables.cs" />
+    <Compile Include="Enumerados\ConsecutivoMaestros.cs" />
+    <Compile Include="Enumerados\TiposMaestros.cs" />
+    <Compile Include="Enumerados\EstadoUsuario.cs" />
+    <Compile Include="Enumerados\Roles.cs" />
+    <Compile Include="EstudianteAntecedenteAcademico.cs" />
+    <Compile Include="EstudianteArchivo.cs" />
+    <Compile Include="EstudianteDatosFamiliares.cs" />
+    <Compile Include="FamiliarEstudiante.cs" />
+    <Compile Include="EstudianteDatosPersonales.cs" />
+    <Compile Include="EstudianteDatosResidenciales.cs" />
+    <Compile Include="EstudiantePorGrupo.cs" />
+    <Compile Include="Funcionalidad.cs" />
+    <Compile Include="GradoParametrizacion.cs" />
+    <Compile Include="GradosPorNivel.cs" />
+    <Compile Include="Grupo.cs" />
+    <Compile Include="GruposPorGrado.cs" />
+    <Compile Include="MatriculasDocumentos.cs" />
+    <Compile Include="Matricula.cs" />
+    <Compile Include="NivelParametrizacion.cs" />
+    <Compile Include="ParametrizacionEscolar.cs" />
+    <Compile Include="ParametroColegio.cs" />
+    <Compile Include="ParametrosNegocio.cs" />
+    <Compile Include="PeriodoParametrizacion.cs" />
+    <Compile Include="ProyeccionCuposPorNivel.cs" />
+    <Compile Include="InstitucionEducativa.cs" />
+    <Compile Include="IntensidadHoraria.cs" />
+    <Compile Include="Maestro.cs" />
+    <Compile Include="Municipio.cs" />
+    <Compile Include="Pais.cs" />
+    <Compile Include="ParametrizacionInstitucional.cs" />
+    <Compile Include="ParametroPromocion.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="RangosDesempenio.cs" />
+    <Compile Include="RegistroLegalizacion.cs" />
+    <Compile Include="RespuestaAutenticacionUsuario.cs" />
+    <Compile Include="Rol.cs" />
+    <Compile Include="RolesFuncionalidades.cs" />
+    <Compile Include="SalidaOcupacional.cs" />
+    <Compile Include="Sede.cs" />
+    <Compile Include="SoportePorRol.cs" />
+    <Compile Include="SoportePorRolesDocumento.cs" />
+    <Compile Include="TipoMaestro.cs" />
+    <Compile Include="TiposComplejos\DocumentoSoportePorRolSeleccionado.cs" />
+    <Compile Include="Usuario.cs" />
+    <Compile Include="UsuarioAdministrativo.cs" />
+    <Compile Include="UsuarioAplicacion.cs" />
+    <Compile Include="UsuarioRol.cs" />
+    <Compile Include="UsuariosEstado.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Libellus.Mensajes\Libellus.Mensajes.csproj">
+      <Project>{675161d6-0659-4c4b-aa2d-bf48f0c7be9d}</Project>
+      <Name>Libellus.Mensajes</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

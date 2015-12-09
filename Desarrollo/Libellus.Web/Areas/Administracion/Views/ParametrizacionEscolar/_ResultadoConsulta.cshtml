@@ -1,0 +1,91 @@
+﻿@model IPagedList<Libellus.Web.Areas.Administracion.Models.ParametrizacionEscolar.ParametrizacionEscolarViewModel>
+
+<div id="resultado">
+    @if (Model.Count() > 0)
+    {
+        <div class="row">
+            <div class="col-md-12">
+                <div class="table-responsive">
+                    <table class="@EstilosHelper.TablaLibellus">
+                        <tr>
+                            <th class="col-md-2">
+                                @Html.DisplayNameFor(model => model.First().IdTipoParametrizacion)
+                            </th>
+                            <th class="col-md-1">
+                                @Html.DisplayNameFor(model => model.First().IdAnioLectivo)
+                            </th>
+                            <th class="col-md-2">
+                                @Html.DisplayNameFor(model => model.First().IdSemestre)
+                            </th>
+                            <th class="col-md-2">
+                                @Html.DisplayNameFor(model => model.First().IdJornadaAcademica)
+                            </th>
+                            <th class="col-md-1">
+                                @Html.DisplayNameFor(model => model.First().Periodos)
+                            </th>
+                            <th class="col-md-1">
+                                @Html.DisplayNameFor(model => model.First().SemanasLectivas)
+                            </th>
+                            <th class="col-md-1">
+                                @Html.DisplayNameFor(model => model.First().PorcentajeInasistencia)
+                            </th>
+                            <th class="col-md-2" colspan="2">
+                                Acciones
+                            </th>
+                        </tr>
+                        @foreach (var item in Model)
+                        {
+                            <tr>
+                                <td class="centered">
+                                    @Html.DisplayFor(modelItem => item.TipoParametrizacion.Descripcion)
+                                </td>
+                                <td class="centered">
+                                    @Html.DisplayFor(modelItem => item.AnioLectivo.Anio)
+                                </td>
+                                <td class="centered">
+                                    @Html.DisplayFor(modelItem => item.Semestre.Descripcion)
+                                </td>
+                                <td class="centered">
+                                    @Html.DisplayFor(modelItem => item.JornadaAcademica.Descripcion)
+                                </td>
+                                <td class="centered">
+                                    @Html.DisplayFor(modelItem => item.Periodos)
+                                </td>
+                                <td class="centered">
+                                    @Html.DisplayFor(modelItem => item.SemanasLectivas)
+                                </td>
+                                <td class="centered">
+                                    @Html.DisplayFor(modelItem => item.PorcentajeInasistencia)
+                                </td>
+                                <td class="col-md-1 centered">
+                                    @if (!item.AnioLectivo.Cerrado)
+                                    {
+                                        @Html.ActionLink("Editar", "Editar", new { id = item.Id })
+                                    }
+                                </td>
+                                <td class="col-md-1 centered">
+                                    @if(!item.AnioLectivo.Cerrado)
+                                    {
+                                        @Html.BotonEliminar("Eliminar", "ParametrizacionEscolar", new { id = item.Id })
+                                    }
+                                </td>
+                            </tr>
+                        }
+                    </table>
+                </div>
+
+            </div>
+        </div>
+
+        <div class="centered">
+            @Html.PagedListPager(Model, pagina => Url.Action("Consultar", new { pagina }))
+        </div>
+        @Html.Partial("_ExportarExcel")
+    }
+    else
+    {
+        <script>
+            VisualizarMensajeNegocio(2, "@Mensaje.Mensaje1005");
+        </script>
+    }
+</div>

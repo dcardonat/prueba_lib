@@ -1,0 +1,105 @@
+﻿@model Libellus.Web.Areas.Administracion.Models.ParametrizacionEscolar.ParametrizacionEscolarViewModel
+
+@{
+    ViewBag.Title = "Crear parametrización";
+}
+
+@Styles.Render("~/css/select2")
+@Styles.Render("~/css/datetimepicker")
+
+<div class="content-header">
+    <h2 class="content-header-title">@ViewBag.Title</h2>
+</div>
+
+@using (Html.BeginForm("Crear", "ParametrizacionEscolar", FormMethod.Post))
+{
+    @Html.AntiForgeryToken()
+    Html.RenderPartial("_Administrar");
+
+    <br />
+    <div class="form-group centered">
+        @Html.BotonCancelar("Consultar", "ParametrizacionEscolar", null, new { tabindex = "8" })
+        <input type="submit" value="Crear parametrización" class="btn btn-primary" tabindex="7" />
+    </div>
+}
+
+@section Scripts {
+
+    @Scripts.Render("~/bundles/jqueryval")
+    @Scripts.Render("~/js/select2")
+    @Scripts.Render("~/js/datetimepicker")
+    @Scripts.Render("~/js/underscore")
+    @Scripts.Render("~/js/cascadingDropDown")
+
+    <script type="text/javascript">
+
+        $.validator.setDefaults({
+            ignore: '.ignorar'
+        });
+
+        $("#SemanasLectivas").CascadingDropDown("#IdTipoParametrizacion", '@Url.Action("ObtenerSemanasLectivas")', {
+            idSelectedValue: '@Model.SemanasLectivas'
+        });
+
+        $("#cmbNiveles").CascadingDropDown("#IdTipoParametrizacion", '@Url.Action("ObtenerNiveles")');
+
+        $('#fechaInicial').datetimepicker({
+            format: 'DD/MM/YYYY',
+            locale: 'es'
+        });
+
+        $('#fechaFinal').datetimepicker({
+            format: 'DD/MM/YYYY',
+            locale: 'es'
+        });
+
+        $("#fechaInicial").on("dp.change", function (e) {
+            $('#fechaFinal').data("DateTimePicker").minDate(e.date);
+        });
+
+        $("#fechaFinal").on("dp.change", function (e) {
+            $('#fechaInicial').data("DateTimePicker").maxDate(e.date);
+        });
+
+        var adicionarPeriodos = function (value, index, ar) {
+            var plantilla = _.template($("#plantillaPeriodos").html());
+            $("#valoresPeriodos").append(plantilla({
+                id: value.Id,
+                periodo: value.Periodo,
+                fechaInicial: value.FechaInicial,
+                fechaFinal: value.FechaFinal,
+                index: index
+            }));
+        };
+
+        var adicionarAreas = function (value, index, ar) {
+            var plantilla = _.template($("#plantillaAreasNivel").html());
+            $("#valoresAreasNivel").append(plantilla({
+                idArea: value.IdArea,
+                area: value.Area,
+                idNivelParametrizacion: value.IdNivelParametrizacion,
+                index: index
+            }));
+        };
+
+        $("form").submit(function () {
+
+            listaPeriodos.forEach(adicionarPeriodos);
+            areasNivel.forEach(adicionarAreas);
+
+        });
+    </script>
+
+    <script type="text/html" id="plantillaPeriodos">
+        <input type="hidden" name="PeriodosParametrizacion[<%= index %>].Id" value="<%= id %>" />
+        <input type="hidden" name="PeriodosParametrizacion[<%= index %>].Periodo" value="<%= periodo %>" />
+        <input type="hidden" name="PeriodosParametrizacion[<%= index %>].FechaInicial" value="<%= fechaInicial %>" />
+        <input type="hidden" name="PeriodosParametrizacion[<%= index %>].FechaFinal" value="<%= fechaFinal %>" />
+    </script>
+
+    <script type="text/html" id="plantillaAreasNivel">
+        <input type="hidden" name="AreasNivel[<%= index %>].IdArea" value="<%= idArea %>" />
+        <input type="hidden" name="AreasNivel[<%= index %>].Area" value="<%= area %>" />
+        <input type="hidden" name="AreasNivel[<%= index %>].IdNivelParametrizacion" value="<%= idNivelParametrizacion %>" />
+    </script>
+}

@@ -1,0 +1,165 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="12.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{8F7591CF-3D18-453C-84EE-94B187190274}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>Libellus.Repositorio</RootNamespace>
+    <AssemblyName>Libellus.Repositorio</AssemblyName>
+    <TargetFrameworkVersion>v4.5.1</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <SccProjectName>SAK</SccProjectName>
+    <SccLocalPath>SAK</SccLocalPath>
+    <SccAuxPath>SAK</SccAuxPath>
+    <SccProvider>SAK</SccProvider>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Pruebas|AnyCPU'">
+    <OutputPath>bin\Pruebas\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <Optimize>true</Optimize>
+    <DebugType>pdbonly</DebugType>
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <ErrorReport>prompt</ErrorReport>
+    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="EntityFramework">
+      <HintPath>..\packages\EntityFramework.6.1.1\lib\net45\EntityFramework.dll</HintPath>
+    </Reference>
+    <Reference Include="EntityFramework.SqlServer">
+      <HintPath>..\packages\EntityFramework.6.1.1\lib\net45\EntityFramework.SqlServer.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.AspNet.Identity.Core">
+      <HintPath>..\packages\Microsoft.AspNet.Identity.Core.2.2.0\lib\net45\Microsoft.AspNet.Identity.Core.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.AspNet.Identity.EntityFramework">
+      <HintPath>..\packages\Microsoft.AspNet.Identity.EntityFramework.2.2.0\lib\net45\Microsoft.AspNet.Identity.EntityFramework.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.ComponentModel.DataAnnotations" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Runtime.Serialization" />
+    <Reference Include="System.Security" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Administracion\Clases\RepositorioAnioLectivo.cs" />
+    <Compile Include="Administracion\Clases\RepositorioAperturaPeriodos.cs" />
+    <Compile Include="Administracion\Clases\RepositorioCuposPorNivel.cs" />
+    <Compile Include="Administracion\Clases\RepositorioGruposPorGrado.cs" />
+    <Compile Include="Administracion\Clases\RepositorioIntensidadHoraria.cs" />
+    <Compile Include="Administracion\Clases\RepositorioAsignaturas.cs" />
+    <Compile Include="Administracion\Clases\RepositorioAulas.cs" />
+    <Compile Include="Administracion\Clases\RepositorioDocente.cs" />
+    <Compile Include="Administracion\Clases\RepositorioDocumentacionSoporteRoles.cs" />
+    <Compile Include="Administracion\Clases\RepositorioGradosPorNivel.cs" />
+    <Compile Include="Administracion\Clases\RepositorioInsititucionEducativa.cs" />
+    <Compile Include="Administracion\Clases\RepositorioParametrizacionEscolar.cs" />
+    <Compile Include="Administracion\Clases\RepositorioParametrizacionInstitucional.cs" />
+    <Compile Include="Administracion\Clases\RepositorioSalidasOcupacionales.cs" />
+    <Compile Include="Administracion\Clases\RepositorioSedes.cs" />
+    <Compile Include="Administracion\Clases\RepositorioUsuariosAdministrativos.cs" />
+    <Compile Include="Administracion\Interfaces\IRepositorioAnioLectivo.cs" />
+    <Compile Include="Administracion\Interfaces\IRepositorioAperturaPeriodos.cs" />
+    <Compile Include="Administracion\Interfaces\IRepositorioDocente.cs" />
+    <Compile Include="Administracion\Interfaces\IRepositorioDocumentacionSoporteRoles.cs" />
+    <Compile Include="Administracion\Interfaces\IRepositorioGradosPorNivel.cs" />
+    <Compile Include="Administracion\Interfaces\IRepositorioCuposPorNivel.cs" />
+    <Compile Include="Administracion\Interfaces\IRepositorioGruposPorGrado.cs" />
+    <Compile Include="Administracion\Interfaces\IRepositorioInstitucionEducativa.cs" />
+    <Compile Include="Administracion\Interfaces\IRepositorioIntensidadHoraria.cs" />
+    <Compile Include="Administracion\Interfaces\IRepositorioParametrizacionEscolar.cs" />
+    <Compile Include="Administracion\Interfaces\IRepositorioSalidasOcupacionales.cs" />
+    <Compile Include="Administracion\Interfaces\IRepositorioSedes.cs" />
+    <Compile Include="Administracion\Interfaces\IRepositorioUsuariosAdministrativos.cs" />
+    <Compile Include="Administracion\Interfaces\IRepositorioParametrizacionInstitucional.cs" />
+    <Compile Include="General\Clases\RepositorioParametros.cs" />
+    <Compile Include="General\Interfaces\IRepositorioParametros.cs" />
+    <Compile Include="GestionAcademica\Clases\RepositorioAspectosEvaluativos.cs" />
+    <Compile Include="GestionAcademica\Clases\RepositorioGrupo.cs" />
+    <Compile Include="GestionAcademica\Clases\RepositorioParametrosPromocion.cs" />
+    <Compile Include="GestionAcademica\Interfaces\IRepositorioGrupo.cs" />
+    <Compile Include="GestionAcademica\Interfaces\IRepositorioParametrosPromocion.cs" />
+    <Compile Include="GestionAcademica\Interfaces\IRepositorioRangosDesempenio.cs" />
+    <Compile Include="GestionAcademica\Interfaces\IRepositorioAspectosEvaluativos.cs" />
+    <Compile Include="MapeoEntidades\MapeoAcademica.cs" />
+    <Compile Include="MapeoEntidades\MapeoAdministracion.cs" />
+    <Compile Include="MapeoEntidades\MapeoMatricula.cs" />
+    <Compile Include="Matriculas\Clases\RepositorioAntecedentesAcademicos.cs" />
+    <Compile Include="Matriculas\Clases\RepositorioCupos.cs" />
+    <Compile Include="Matriculas\Clases\RepositorioEstudiante.cs" />
+    <Compile Include="Matriculas\Clases\RepositorioMatriculas.cs" />
+    <Compile Include="Matriculas\Interfaces\IRepositorioAntecedentesAcademicos.cs" />
+    <Compile Include="Matriculas\Interfaces\IRepositorioCupos.cs" />
+    <Compile Include="Matriculas\Interfaces\IRepositorioEstudiante.cs" />
+    <Compile Include="Matriculas\Interfaces\IRepositorioMatriculas.cs" />
+    <Compile Include="Seguridad\Clases\RepositorioRolesFuncionalidades.cs" />
+    <Compile Include="Seguridad\Clases\RepositorioRoles.cs" />
+    <Compile Include="Seguridad\Interfaces\IRepositorioRolesFuncionalidades.cs" />
+    <Compile Include="Seguridad\Interfaces\IRepositorioRoles.cs" />
+    <Compile Include="Seguridad\Clases\RepositorioFuncionalidades.cs" />
+    <Compile Include="Administracion\Clases\RepositorioMaestros.cs" />
+    <Compile Include="Seguridad\Clases\RepositorioUsuarios.cs" />
+    <Compile Include="Administracion\Interfaces\IRepositorioActividadesComplementarias.cs" />
+    <Compile Include="Administracion\Clases\RepositorioActividadesComplementarias.cs" />
+    <Compile Include="Administracion\Interfaces\IRepositorioAsignaturas.cs" />
+    <Compile Include="Administracion\Interfaces\IRepositorioAulas.cs" />
+    <Compile Include="Seguridad\Interfaces\IRepositorioFuncionalidades.cs" />
+    <Compile Include="Administracion\Interfaces\IRepositorioMaestros.cs" />
+    <Compile Include="Seguridad\Interfaces\IRepositorioUsuarios.cs" />
+    <Compile Include="Base\IRepositorioBase.cs" />
+    <Compile Include="Contextos\LibellusDbContext.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Base\RepositorioBase.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Libellus.Entidades\Libellus.Entidades.csproj">
+      <Project>{880e4e2f-f3bf-4055-bd97-15e64af73216}</Project>
+      <Name>Libellus.Entidades</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Catalogos\" />
+    <Folder Include="GobiernoEscolar\" />
+    <Folder Include="PromocionEscolar\" />
+    <Folder Include="Reportes\" />
+    <Folder Include="SeguimientoEscolar\" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="App.config" />
+    <Compile Include="GestionAcademica\Clases\RepositorioRangosDesempenio.cs" />
+    <None Include="packages.config" />
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

@@ -1,0 +1,22 @@
+﻿<div class="form-group" style="text-align: center !important;">
+    <button type="button" id="exportarExcel" class="btn btn-success centered">Exportar a Excel</button>
+</div>
+<input type="hidden" id="tokenExportarExcel" name="tokenExportarExcel" />
+
+@Html.Script(
+    @<script type="text/javascript" src="~/Scripts/jquery.cookie.js"></script>
+)
+
+@Html.Script(
+    @<script type="text/javascript">
+        $(document).ready(function () {
+            $("#exportarExcel").bind("click", function () {
+
+                $('[name="tokenExportarExcel"]').val(new Date().getTime());
+
+                IniciarDescargaArchivo("exportarExcel");
+                window.location.href = "@Url.Action("ExportarInformacionExcel")" + "?token=" + $('[name="tokenExportarExcel"]').val();
+            });
+        });
+    </script>
+)

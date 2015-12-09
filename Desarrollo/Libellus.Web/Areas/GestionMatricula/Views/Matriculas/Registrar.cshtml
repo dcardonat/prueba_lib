@@ -1,0 +1,142 @@
+﻿@model Libellus.Web.Areas.GestionMatricula.Models.Matriculas.RegistroMatriculaViewModel
+
+@{
+    ViewBag.Title = "Registro de matrícula";
+}
+
+<div class="content-header">
+    <h2 class="content-header-title">@ViewBag.Title</h2>
+</div>
+
+@using (Html.BeginForm())
+{
+    <div class="row">
+        <div class="form-group col-md-4">
+            @Html.LabelFor(model => model.Anio)
+            @Html.TextBoxFor(model => model.Anio, new { @class = "form-control", tabindex = "1", disabled = "disabled" })
+        </div>
+        <div class="form-group col-md-4">
+            @Html.LabelFor(model => model.Estudiante)
+            @Html.TextBoxFor(model => model.Estudiante, new { @class = "form-control", tabindex = "2", disabled = "disabled" })
+        </div>
+        <div class="form-group col-md-4">
+            @Html.LabelFor(model => model.TipoDocumento)
+            @Html.TextBoxFor(model => model.TipoDocumento, new { @class = "form-control", tabindex = "3", disabled = "disabled" })
+        </div>
+    </div>
+    <div class="row">
+        <div class="form-group col-md-4">
+            @Html.LabelFor(model => model.DocumentoIdentidad)
+            @Html.TextBoxFor(model => model.DocumentoIdentidad, new { @class = "form-control", tabindex = "4", disabled = "disabled" })
+        </div>
+        <div class="form-group col-md-4">
+            @Html.LabelFor(model => model.NivelEducativo)
+            @Html.TextBoxFor(model => model.NivelEducativo, new { @class = "form-control", tabindex = "5", disabled = "disabled" })
+        </div>
+        <div class="form-group col-md-4">
+            @Html.LabelFor(model => model.GradoAspira)
+            @Html.TextBoxFor(model => model.GradoAspira, new { @class = "form-control", tabindex = "6", disabled = "disabled" })
+        </div>
+    </div>
+    <div class="row">
+        <div class="form-group col-md-4">
+            @Html.LabelFor(model => model.EstadoMatricula)
+            @Html.TextBoxFor(model => model.EstadoMatricula, new { @class = "form-control", tabindex = "7", disabled = "disabled" })
+        </div>
+        <div class="form-group col-md-4">
+            @Html.LabelFor(model => model.Traslado)
+            @Html.TextBoxFor(model => model.Traslado, new { @class = "form-control", tabindex = "8", disabled = "disabled" })
+        </div>
+        <div class="form-group col-md-4">
+            @Html.LabelFor(model => model.CantidadActualMatriculadosGrado)
+            @Html.TextBoxFor(model => model.CantidadActualMatriculadosGrado, new { @class = "form-control", tabindex = "9", disabled = "disabled" })
+        </div>
+    </div>
+    <br /> <br />
+
+    if (Model.Documentos.Count() > 0)
+    {
+        <div class="content-header">
+            <h1 class="content-header-subtitle">Estado documentos soporte</h1>
+        </div>
+        <div class="row">
+            <div class="col-md-12">
+                <div class="table-responsive">
+                    <table class="@EstilosHelper.TablaLibellus">
+                        <tr>
+                            <th>
+                                @Html.DisplayNameFor(model => model.Documentos.First().Documento)
+                            </th>
+                            <th>
+                                @Html.DisplayNameFor(model => model.Documentos.First().Recibido)
+                            </th>
+                        </tr>
+
+                        @foreach (var item in Model.Documentos)
+                        {
+                            <tr name="fila-documento" data-id="@item.Id" data-id-matricula="@item.IdMatricula" data-id-documento="@item.IdDocumento">
+                                <td class="centered">@item.Documento</td>
+                                <td class="centered">@Html.CheckBoxFor(modelItem => item.Recibido)</td>
+                            </tr>
+                        }
+                    </table>
+                </div>
+            </div>
+        </div>
+    }
+
+    <br />
+    <div class="form-group centered">
+        @Html.BotonCancelar("Consultar", "Matriculas", new { tabindex = "10" })
+        <input type="submit" id="registrar-matricula" value="Registrar" class="btn btn-primary" tabindex="11" />
+        @Html.ActionLink("Hoja de vida", "Actualizar", "DatosGeneralesEstudiante", new { area = "GestionMatricula", id = @Model.IdEstudiante, soloLectura = true, @class = "btn btn-primary", tabindex = "12" }, null)
+    </div>
+}
+
+@section Scripts {
+
+    <script type="text/javascript">
+
+        function ObtenerInformacion() {
+
+            var documentos = [];
+            $('[name="fila-documento"]').each(function (index, element) {
+                var documento = $(element);
+                documentos.push({
+                    Id: documento.attr('data-id'),
+                    IdMatricula: documento.attr('data-id-matricula'),
+                    IdDocumento: documento.attr('data-id-documento'),
+                    Recibido: documento.find('[name="item.Recibido"]')[0].checked
+                });
+            });
+            return JSON.stringify({ 'documentos': documentos });
+        }
+
+        function RagistrarMatricula() {
+
+            $('#registrar-matricula').on('click', function (evento) {
+
+                evento.preventDefault();
+                $.ajax({
+                    url: '@Url.Action("Registrar")',
+                    type: 'POST',
+                    data: ObtenerInformacion(),
+                    contentType: 'application/json',
+                    dataType: 'json',
+                    success: function (respuesta) {
+                        window.location.href = respuesta;
+                    },
+                    failure: function (respuesta) {
+                    }
+                });
+            });
+        }
+
+        $(document).ready(function () {
+
+            RagistrarMatricula();
+        });
+
+    </script>
+
+}

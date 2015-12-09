@@ -1,0 +1,79 @@
+﻿@model Libellus.Web.Areas.Administracion.Models.CuposPorNivel.CuposPorNivelConsultaViewModels
+
+@{
+    ViewBag.Title = "Proyección y definición grupos y docentes por nivel";
+    object valorAnio = ViewBag.AnioLectivo;
+}
+
+<div id="mensaje"></div>
+
+<div class="content-header">
+    <h2 class="content-header-title">@ViewBag.Title</h2>
+</div>
+
+@using (Html.BeginForm("Administrar", "CuposPorNivel", FormMethod.Post, new { area = "Administracion", id = "formulario-cupos-nivel" }))
+{
+    <div class="row">
+        <div class="form-group col-md-4">
+            @Html.Partial("_AniosLectivos", @valorAnio)
+            @Html.ValidationMessageFor(model => model.IdAnioLectivo, "", new { @class = "text-danger" })
+            @Html.Hidden("AnioSeleccionado")
+        </div>
+    </div>
+    <br />
+    <div id="informacionCuposPorNivel">
+        @if (Model.CuposPorNivel != null && Model.CuposPorNivel.Count > 0)
+        {
+            Html.RenderPartial("_InformacionCuposPorNivel");
+        }
+    </div>
+}
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+    @Scripts.Render("~/bundles/jquerycookies")
+
+    <script type="text/javascript">
+
+        function ConsultarInformacionCuposPorNivel() {
+            $.get('@Url.Action("ConsultarInformacionCuposPorNivel")?anio=' + $('[name="AnioSeleccionado"]').val(), function (data) {
+                $("#informacionCuposPorNivel").html(data);
+            });
+        }
+
+        $(document).ready(function () {
+
+            if ('@Model.IdAnioLectivo' != '') {
+                $('[name="AnioSeleccionado"]').val('@Model.IdAnioLectivo');
+                ConsultarInformacionCuposPorNivel();
+                if ('@Model.AnioLectivo.Cerrado' == 'True') {
+                    $("#submitAdministrar").attr('disabled', 'disabled');
+                }
+                else {
+                    $("#submitAdministrar").removeAttr('disabled');
+                }
+            }
+
+            $("#IdAnioLectivo").change(function (e) {
+               
+                if ($("#IdAnioLectivo").val() == '') {
+                    $("#informacionCuposPorNivel").html("");
+                    $("#submitAdministrar").attr('disabled', 'disabled');
+                }
+                else {
+                    $('[name="AnioSeleccionado"]').val($("#IdAnioLectivo").val());
+                    ConsultarInformacionCuposPorNivel();
+                    var cerrado = $("#IdAnioLectivo").trigger("EstadoAnio").data("resultado");
+
+                    if (cerrado == 'true') {
+                        $("#submitAdministrar").removeAttr('disabled');
+                    }
+                    else {
+                        $("#submitAdministrar").attr('disabled', 'disabled');
+                    }
+                }
+            });
+        });
+
+    </script>
+}

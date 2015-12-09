@@ -1,0 +1,5 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ParametrosColegio>
+  <ParametroColegio CodigoColegio ="1010" nombreColegio="Base de datos pruebas" CadenaConexion="8HmMzyvEoXGF2ITBA+XJHoPERvGBf/K3NThjnJLoGkmaHaKt7gwq8hNEtawWfg8XTp9tT3NU1tsAckxonDOI498WxItXXG9ZGHodc37nUoqG/5wXKyqB1NaBQouPg5X+9DhlEGFT9D7gtX1pfB0ML5sRg4Dm9n9HIKeSFDgz2XTU18R9cLxtVX0gDZYq8IBwH4W7G2HhK+DKgBgVOFMpOO9pQx4kIjJ8zMn9p2iuZ+2JwPGX4kSXSstrP+x8B9ObfulK4AU4Y75ty4ooyqI0K9/6Tk8PdsLhyq0suHdbjhLyqKxS90VxEDQ66UR4IpYlszLl3xBuHyxNo5wdQ05yXg==" />
+  <ParametroColegio CodigoColegio ="1011" nombreColegio="Base datos desarrollo" CadenaConexion="fdPOW28cfZNI5BavLTI0hHX3MCe2sv8WBG0Ow0EcgIdIclYIA5U61NdIii/AqV9oPszJSltkqC3RIWZ1WSqwzedVTA/I8HmiB3vO2dxEBhTR8jhiyCJ9omVB3GkdABtNLgfJwJpx4JZ3utIEhef597S+ZNgWQ2i96Rr7vtOs8V6yKUIU2O3f1JpPYEcBjmJgTZ3Atc7+9Pnm/13DW0pGgmWEDVtHWr2qTpZmGmWt2x1AZzpSwW6kdaF06rhctVrr9MCFReqApKkPqnYJTVXwUhIVf3gPw0+2UlnTaBXBEF8="/>
+</ParametrosColegio>

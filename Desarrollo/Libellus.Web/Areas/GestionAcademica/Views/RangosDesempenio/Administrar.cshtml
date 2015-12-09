@@ -1,0 +1,80 @@
+﻿@model Libellus.Web.Areas.GestionAcademica.Models.RangosDesempenio.RangoDesempenioConsultaViewModels
+
+@{ Html.EnableClientValidation(false); }
+
+@{
+    ViewBag.Title = "Rangos de desempeño";
+    object valorAnio = ViewBag.AnioLectivo;
+}
+
+<div id="mensaje"></div>
+
+<div class="content-header">
+    <h2 class="content-header-title">@ViewBag.Title</h2>
+</div>
+
+@using (Html.BeginForm("Administrar", "RangosDesempenio", FormMethod.Post, new { area = "GestionAcademica", id = "formulario-rangos-desempenio" }))
+{
+    <div class="row">
+        <div class="form-group col-md-4">
+            @Html.Partial("_AniosLectivos", @valorAnio)
+            @Html.ValidationMessageFor(model => model.IdAnioLectivo, "", new { @class = "text-danger" })
+            @Html.Hidden("AnioSeleccionado")
+            @Html.Hidden("AnioSeleccionadoCerrado")
+        </div>
+    </div>
+    
+    <br />
+    @Html.Hidden("tokenExportarExcel")
+
+    <div id="informacionRangoDesempenio">
+        @if (Model.RangosDesempenio != null && Model.RangosDesempenio.Count > 0)
+        {
+            Html.RenderPartial("_InformacionRangoDesempenio");
+        }
+    </div>
+}
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+    @Scripts.Render("~/bundles/jquerycookies")
+
+    <script type="text/javascript">
+
+        function ConsultarInformacionRangoDesempenio() {
+            $.get('@Url.Action("ConsultarRangosDesempenio")?pagina=1&anio=' + $('[name="AnioSeleccionado"]').val(), function (data) {
+                $("#informacionRangoDesempenio").html(data);
+            });
+        }
+
+        $(document).ready(function () {
+
+            if ('@Model.IdAnioLectivo' != '') {
+                $('[name="AnioSeleccionado"]').val('@Model.IdAnioLectivo');
+
+                if ('@Model.AnioLectivo.Cerrado' == 'True') {
+                    $('[name="AnioSeleccionadoCerrado"]').val('false');
+                }
+                else {
+                    $('[name="AnioSeleccionadoCerrado"]').val('true');
+                }
+
+                ConsultarInformacionRangoDesempenio();
+            }
+
+            $("#IdAnioLectivo").change(function (e) {
+                if ($("#IdAnioLectivo").val() == '') {
+                    $("#informacionParametroPromocion").html("");
+                    $("#submitAdministrar").prop('disabled', true);
+                }
+                else {
+                    $('[name="AnioSeleccionado"]').val($("#IdAnioLectivo").val());
+                    var cerrado = $("#IdAnioLectivo").trigger("EstadoAnio").data("resultado");
+                    $('[name="AnioSeleccionadoCerrado"]').val(cerrado);
+                    ConsultarInformacionRangoDesempenio();
+                }
+            });
+        });
+
+</script>
+}

@@ -1,0 +1,90 @@
+﻿@model Libellus.Web.Areas.GestionMatricula.Models.CancelacionMatricula.CancelacionMatriculaViewModel
+
+@{
+    Html.EnableClientValidation(false);
+    ViewBag.Title = "Cancelación de matrícula / Salida ocupacional";
+}
+
+<div class="content-header">
+    <h2 class="content-header-title">@ViewBag.Title</h2>
+</div>
+
+@using (Html.BeginForm("CancelarMatricula", "CancelacionMatricula", FormMethod.Post, new { id = "formulario-cancelar-matricula" }))
+{
+    @Html.AntiForgeryToken()
+
+    <ul id="tabs" class="nav nav-tabs">
+        <li class=" active">
+            <a href="#datosCancelacionMatricula" data-toggle="tab" id="tabCancelacionMatricula">
+                Cancelación matrícula
+            </a>
+        </li>
+        <li>
+            <a href="#datosCancelacionSalidaOcupacional" data-toggle="tab" id="tabCancelacionSalidaOcupacional">
+                Cancelación salida ocupacional
+            </a>
+        </li>
+    </ul>
+
+    <div id="contenidos" class="tab-content">
+        <div class="tab-pane fade in active" id="datosCancelacionMatricula">
+            @Html.Partial("_CancelarMatricula")
+        </div>
+        <div class="tab-pane fade" id="datosCancelacionSalidaOcupacional">
+            @Html.Partial("_CancelarSalidaOcupacional")
+        </div>
+    </div>
+    <br />
+    <div class="form-group centered">
+        @Html.HiddenFor(model => model.IdMatricula)
+        @Html.BotonCancelar("Consultar", "CancelacionMatricula", null, new { tabindex = "4" })
+        <input type="submit" id="Cancelar-matricula" class="btn btn-primary" value="Guardar" />
+    </div>
+}
+
+@section Scripts {
+
+    @Scripts.Render("~/bundles/jqueryval")
+
+    <script type="text/javascript">
+
+        function validarFormulario() {
+            var validador = $('#formulario-cancelar-matricula').validate({
+                rules: {
+                    IdMotivo: {
+                        required: true
+                    },
+                    IdMotivoSalidaOcupacional: {
+                        required: true
+                    }
+                },
+                messages: {
+                    IdMotivo: '@Mensaje.Mensaje1001',
+                    IdMotivoSalidaOcupacional: '@Mensaje.Mensaje1001'
+                },
+                errorClass: "input-validation-error field-validation-error",
+                errorElement: "div"
+            });
+        }
+
+        $(document).ready(function () {
+
+            if ('@Model.SalidaOcupacional' == '') {
+                $('#tabCancelacionSalidaOcupacional').hide()
+            }
+
+            $('#tabCancelacionSalidaOcupacional').click(function (e) {
+                e.preventDefault()
+                if ('@Model.SalidaOcupacional' !== '') {
+                    $(this).tab('show')
+                }
+                else {
+                    $('#tabCancelacionSalidaOcupacional').hide()
+                }
+            })
+
+            validarFormulario();
+        });
+
+    </script>
+}

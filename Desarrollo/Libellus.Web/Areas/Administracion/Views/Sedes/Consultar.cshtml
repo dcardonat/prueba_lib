@@ -1,0 +1,22 @@
+﻿@model Libellus.Web.Areas.Administracion.Models.SedesViewModel
+@{
+    ViewBag.Title = "Seleccionar sede";
+}
+
+<div class="content-header">
+    <h2 class="content-header-title">@ViewBag.Title</h2>
+</div>
+
+@using (Html.BeginForm("Consultar", "Sedes", FormMethod.Post))
+{<div class="form-group" style="text-align: center !important;">
+        <br />
+        <div class="row">
+            <div>
+                @Html.LabelFor(model => model.Nombre)
+                @Html.DropDownList("sede", new SelectList(ViewBag.Sedes, "Id", "Nombre"), new { @class = "form-control" })
+            </div>
+        </div>
+        <br />
+        <input type="submit" class="btn btn-primary" value="Ingresar" />
+    </div>
+}

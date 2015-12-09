@@ -1,0 +1,97 @@
+﻿.centered {
+    text-align: center !important;
+}
+
+.centeredTable th {
+    text-align: center !important;
+    background-color: #156AC1 !important;
+    color: #fff !important;
+}
+
+/* Estilo importante para el menu de la aplicacion */
+.dropDownLeft {
+    left: initial !important;
+    right: 100% !important;
+}
+
+/* styles for validation helpers */
+.field-validation-error {
+    color: #b94a48;
+}
+
+.field-validation-valid {
+    display: none;
+}
+
+input.input-validation-error {
+    border: 1px solid #b94a48;
+    background-color: rgba(255, 245, 245, 0.72);
+}
+
+input[type="checkbox"].input-validation-error {
+    border: 0 none;
+}
+
+.validation-summary-errors {
+    color: #b94a48;
+}
+
+.validation-summary-valid {
+    display: none;
+}
+
+textarea.input-validation-error {
+    border: 1px solid #b94a48;
+    background-color: rgba(255, 245, 245, 0.72);
+}
+
+select.input-validation-error {
+    border: 1px solid #b94a48;
+    background-color: rgba(255, 245, 245, 0.72);
+}
+
+input[type="radio"].input-validation-error {
+    border-color: #b94a48;
+}
+
+.cargaSincronica {
+    color: silver;
+    font-style: italic;
+}
+
+.funcionalidadesXrol-modulo {
+    display: inline-block;
+    border: 1px #ddd solid;
+    border-top: 5px #ddd solid;
+    margin: 2% 4%;
+    min-width: 400px;
+    max-width: 442px;
+    min-height: 50px;
+    overflow: auto;
+    font: 12px Verdana, sans-serif;
+    box-shadow: -1px 4px 4px #ccc;
+    padding: 10px;
+    border-radius: 0 0 5px 5px;
+    vertical-align: top;
+}
+
+.quitar-linea-padre-jstree {
+    background-image: none !important;
+}
+
+#loading {
+    display: none;
+    position: fixed;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(255,255,255,0.3);
+    z-index: 1000;
+}
+
+span.form-control.disabled {
+    cursor: not-allowed;
+    background-color: #eee;
+    opacity: 1;
+}

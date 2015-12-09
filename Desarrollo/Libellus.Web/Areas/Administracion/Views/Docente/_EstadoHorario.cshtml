@@ -1,0 +1,23 @@
+﻿@model Libellus.Web.Areas.Administracion.Models.Docente.DocenteViewModel
+
+<div class="row">
+    <div class="col-md-4 form-group">
+        @Html.LabelFor(model => model.EstadoHorario.IdEstado)
+        @Html.DropDownListFor(model => model.EstadoHorario.IdEstado, Model.EstadoHorario.Estados, new { @class = "form-control", tabindex = "1" })
+        @Html.ValidationMessageFor(model => model.EstadoHorario.IdEstado, "", new { @class = "text-danger" })
+    </div>
+
+    <div class="col-md-4 form-group">
+        @Html.LabelFor(model => model.EstadoHorario.IdHorario)
+        @Html.DropDownListFor(model => model.EstadoHorario.IdHorario, Model.EstadoHorario.Horarios, new { @class = "form-control", tabindex = "2" })
+        @Html.ValidationMessageFor(model => model.EstadoHorario.IdHorario, "", new { @class = "text-danger" })
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-md-12 form-group">
+        @Html.LabelFor(model => model.EstadoHorario.Observaciones)
+        @Html.TextAreaFor(model => model.EstadoHorario.Observaciones, 4, 10, new { @class = "form-control", tabindex = "3" })
+        @Html.ValidationMessageFor(model => model.EstadoHorario.Observaciones, "", new { @class = "text-danger" })
+    </div>
+</div>

@@ -1,0 +1,202 @@
+﻿@model Libellus.Web.Areas.GestionMatricula.Models.DatosGeneralesEstudiante.EstudianteViewModel
+
+@{
+    ViewBag.Title = "Actualizar datos restringidos del estudiante";
+}
+
+<div class="content-header">
+    <h2 class="content-header-title">Actualización de datos restringidos del estudiante</h2>
+</div>
+@using (Html.BeginForm())
+{
+    @Html.Hidden("Id", null, new { id = "idEstudiante" })
+
+    <div class="row">
+        <div class="form-group col-md-4">
+            @Html.LabelFor(model => model.Usuario.IdTipoIdentificacion)
+            @Html.DropDownList("IdTipoDocumentoConsulta", ViewBag.TiposDocumento as IEnumerable<SelectListItem>, new { @class = "form-control", tabindex = "1", id = "cmbTipoDocumentoConsulta", data_val = "true", data_val_required = "Campo requerido." })
+            @Html.ValidationMessage("IdTipoDocumentoConsulta", new { @class = "text-danger" })
+        </div>
+
+        <div class="form-group col-md-4">
+            @Html.LabelFor(model => model.Usuario.Identificacion)
+            @Html.TextBox("DocumentoConsulta", null, new { @class = "form-control", maxlength = "14", tabindex = "2", id = "txtDocumentoConsulta", data_val = "true", data_val_required = "Campo requerido." })
+            @Html.ValidationMessage("DocumentoConsulta", new { @class = "text-danger" })
+        </div>
+    </div>
+
+    <br />
+    <div class="form-group centered">
+        <input type="button" value="Consultar" class="btn btn-primary" tabindex="3" id="btnConsultar" />
+    </div>
+
+    <div class="content-header"></div>
+    <div class="row">
+        <div class="form-group col-md-4">
+            @Html.LabelFor(model => model.Usuario.IdTipoIdentificacion)
+            @Html.DropDownList("IdTipoIdentificacion", ViewBag.TiposDocumento as IEnumerable<SelectListItem>, new { @class = "form-control", tabindex = "3", id = "cmbTipoDocumento", data_val = "true", data_val_required = "Campo requerido." })
+            @Html.ValidationMessage("IdTipoIdentificacion", new { @class = "text-danger" })
+        </div>
+
+        <div class="form-group col-md-4">
+            @Html.LabelFor(model => model.Usuario.Identificacion)
+            @Html.TextBox("Identificacion", null, new { @class = "form-control", tabindex = "4", id = "txtDocumento", maxlength = "14", data_val = "true", data_val_required = "Campo requerido." })
+            @Html.ValidationMessage("Identificacion", new { @class = "text-danger" })
+        </div>
+
+        <div class="form-group col-md-4">
+            @Html.LabelFor(model => model.Usuario.Clave)
+            @Html.TextBox("Clave", null, new { @class = "form-control", tabindex = "5", maxlength = "15", id = "txtClave", data_val = "true", data_val_required = "Campo requerido." })
+            @Html.ValidationMessage("Clave", new { @class = "text-danger" })
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="form-group col-md-4">
+            @Html.LabelFor(model => model.Nombre)
+            @Html.TextBox("Nombre", null, new { @class = "form-control", tabindex = "6", maxlength = "100", id = "txtNombre", data_val = "true", data_val_required = "Campo requerido." })
+            @Html.ValidationMessage("Nombre", new { @class = "text-danger" })
+        </div>
+
+        <div class="form-group col-md-4">
+            @Html.LabelFor(model => model.PrimerApellido)
+            @Html.TextBox("PrimerApellido", null, new { @class = "form-control", tabindex = "7", maxlength = "30", id = "txtPrimerApellido", data_val = "true", data_val_required = "Campo requerido." })
+            @Html.ValidationMessage("PrimerApellido", new { @class = "text-danger" })
+        </div>
+
+        <div class="form-group col-md-4">
+            @Html.LabelFor(model => model.SegundoApellido)
+            @Html.TextBox("SegundoApellido", null, new { @class = "form-control", tabindex = "8", maxlength = "30", id = "txtSegundoApellido" })
+            @Html.ValidationMessage("SegundoApellido", new { @class = "text-danger" })
+        </div>
+    </div>
+    <br />
+    <div class="form-group centered">
+        @Html.BotonCancelar("Bienvenida", "Home", new { area = "" }, new { tabindex = "10" })
+        <input type="button" value="@ViewBag.Title" onclick="Actualizar(this)" class="btn btn-primary" tabindex="9" id="btnActualizar" />
+    </div>
+    <div class="form-group centered">
+        <input type="button" value="Actualizar datos generales" class="btn btn-success" id="btnDatosGenerales" />
+    </div>
+}
+
+@section Scripts{
+    @Scripts.Render("~/bundles/jqueryval")
+
+    <script type="text/javascript">
+
+        function Actualizar(e) {
+
+            var valTipoDocumento = $("#cmbTipoDocumento").valid();
+            var valDocumento = $("#txtDocumento").valid();
+            var valClave = $("#txtClave").valid();
+            var valNombre = $("#txtNombre").valid();
+            var valPrimerApellido = $("#txtPrimerApellido").valid();
+            var valSegundoApellido = $("#txtSegundoApellido").valid();
+
+            if (valTipoDocumento && valDocumento && valClave && valNombre && valPrimerApellido && valSegundoApellido) {
+                ConfirmarAccion("Actualizar datos", "¿Está seguro que desea actualizar los datos?", function () {
+                    var datos = {
+                        id: $("#idEstudiante").val(),
+                        tipoDocumento: $("#cmbTipoDocumento").val(),
+                        documento: $("#txtDocumento").val(),
+                        clave: $("#txtClave").val(),
+                        nombre: $("#txtNombre").val(),
+                        primerApellido: $("#txtPrimerApellido").val(),
+                        segundoApellido: $("#txtSegundoApellido").val()
+                    };
+
+                    var opciones = {
+                        url: '@Url.Action("ActualizarEstudiante")',
+                        data: datos,
+                        type: 'POST'
+                    };
+
+                    $.ajax(opciones).success(function (data) {
+                        if (data == "True") {
+                            $("#idEstudiante").val("0");
+                            $("#cmbTipoDocumento").val("");
+                            $("#txtDocumento").val("");
+                            $("#txtClave").val("");
+                            $("#txtNombre").val("");
+                            $("#txtPrimerApellido").val("");
+                            $("#txtSegundoApellido").val("");
+                            $("#cmbTipoDocumentoConsulta").val("");
+                            $("#txtDocumentoConsulta").val("");
+                            VisualizarMensajeNegocio(1, '@MensajesEstaticos.Mensaje002');
+                        }
+                        else {
+                            VisualizarMensajeNegocio(2, '@MensajesEstaticos.Mensaje1007');
+                        }
+
+                    }).error(function () {
+                        VisualizarMensajeNegocio(3, '@MensajesEstaticos.Mensaje1000');
+                    });
+                });
+            }
+        };
+
+        var llenarCampos = function (data) {
+            if (data.Resultado) {
+                $("#idEstudiante").val(data.IdEstudiante);
+                $("#cmbTipoDocumento").val(data.TipoDocumento);
+                $("#txtDocumento").val(data.Documento);
+                $("#txtClave").val(data.Clave);
+                $("#txtNombre").val(data.Nombre);
+                $("#txtPrimerApellido").val(data.PrimerApellido);
+                $("#txtSegundoApellido").val(data.SegundoApellido);
+            }
+            else {
+                $("#idEstudiante").val("0");
+                $("#cmbTipoDocumento").val("");
+                $("#txtDocumento").val("");
+                $("#txtClave").val("");
+                $("#txtNombre").val("");
+                $("#txtPrimerApellido").val("");
+                $("#txtSegundoApellido").val("");
+                VisualizarMensajeNegocio(2, '@MensajesEstaticos.Mensaje1005');
+            }
+        };
+
+        var consultar = function () {
+            var validTipoDocumento = $("#cmbTipoDocumentoConsulta").valid();
+            var validDocumento = $("#txtDocumentoConsulta").valid();
+
+            if (validTipoDocumento && validDocumento) {
+                var datos = {
+                    tipoDocumento: $("#cmbTipoDocumentoConsulta").val() == "" ? 0 : $("#cmbTipoDocumentoConsulta").val(),
+                    documento: $("#txtDocumentoConsulta").val()
+                };
+
+                var opciones = {
+                    url: '@Url.Action("ConsultarEstudiante")',
+                    data: datos,
+                    type: 'POST'
+                };
+
+                $.ajax(opciones).success(function (data) {
+                    llenarCampos(data);
+                }).error(function () {
+                    VisualizarMensajeNegocio(3, '@MensajesEstaticos.Mensaje1000');
+                });
+            }
+        };
+
+        $(document).ready(function () {
+            $("#btnConsultar").click(consultar);
+
+            $("#btnDatosGenerales").click(function () {
+                var id = $("#idEstudiante").val();
+                var url = '@Url.Action("Actualizar", "DatosGeneralesEstudiante", new { id = "identificador", soloLectura = "false" })';
+                url = url.replace("identificador", id);
+                url = url.replace("false", false);
+                if (id > 0) {
+                    location.href = url;
+                }
+                else {
+                    VisualizarMensajeNegocio(2, '@MensajesEstaticos.Mensaje1007');
+                }
+            });
+        });
+    </script>
+}

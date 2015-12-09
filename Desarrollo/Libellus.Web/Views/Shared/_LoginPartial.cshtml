@@ -1,0 +1,31 @@
+﻿@if (Request.IsAuthenticated)
+{
+    <div class="navbar-right">
+        @using (Html.BeginForm())
+        {
+            <nav id="navbar-login" class="navbar navbar-default">
+                <div class="container-fluid">
+                    <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+                        <ul id="navbar-nav-login" class="nav navbar-nav">
+                            <li class="dropdown">
+                                <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
+                                    <span>@Libellus.Utilidades.UtilidadesApp.ObtenerInformacionCookie("UsuarioLogin")</span>
+                                    <span class="caret"></span>
+                                </a>
+                                <ul id="dropdown-menu-login" class="dropdown-menu">
+                                    <li>
+                                        @Html.ActionLink("Cambiar contraseña", "CambiarContrasenia", "Account", new { area = "" }, null)
+                                    </li>
+                                    <li role="separator" class="divider"></li>
+                                    <li>
+                                        @Html.ActionLink("Cerrar sesión", "LogOff", "Account", new { area = "" }, null)
+                                    </li>
+                                </ul>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </nav>
+        }
+    </div>
+}

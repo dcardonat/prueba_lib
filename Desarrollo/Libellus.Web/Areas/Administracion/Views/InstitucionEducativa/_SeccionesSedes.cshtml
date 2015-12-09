@@ -1,0 +1,46 @@
+﻿@model Libellus.Web.Areas.Administracion.Models.InstitucionEducativa.InstitucionEducativaViewModel
+
+<div class="row">
+    <div class="form-group col-md-4">
+        @Html.LabelFor(model => model.Sedes.First().Nombre)
+        @Html.TextBox("NombreSede", null, new { @class = "form-control ignorar", id = "txtSede", data_val = "true", data_val_required = "Campo requerido.", maxlength = "50" })
+        @Html.ValidationMessage("NombreSede", new { @class = "text-danger" })
+    </div>
+
+    <div class="form-group col-md-4">
+        @Html.LabelFor(model => model.Sedes.First().Seccion)
+        @Html.TextBox("SeccionSede", null, new { @class = "form-control ignorar", id = "txtSeccion", data_val = "true", data_val_required = "Campo requerido.", maxlength = "10" })
+        @Html.ValidationMessage("SeccionSede", new { @class = "text-danger" })
+    </div>
+
+    <div class="form-group col-md-4">
+        @Html.Hidden("IdSede", "0", new { id = "hdnIdSede" })
+    </div>
+
+</div>
+
+<div class="form-group centered">
+    <a href="javascript:void(0)" id="btnCancelarAgregarSede" class="btn btn-link">Cancelar</a>
+    <a href="javascript:void(0)" id="btnAgregarSede" class="btn btn-primary">Agregar sede</a>
+</div>
+
+<table class="@EstilosHelper.TablaLibellus" id="tblSedes">
+    <tr>
+        <th hidden="hidden"></th>
+        <th class="col-md-6">@Html.DisplayNameFor(model => model.Sedes.First().Nombre)</th>
+        <th class="col-md-4">@Html.DisplayNameFor(model => model.Sedes.First().Seccion)</th>
+        <th>Acción</th>
+    </tr>
+    @if (Model.Sedes.Count() > 0)
+    {
+        foreach (var item in Model.Sedes)
+        {
+            <tr class="@string.Format("filaSede id{0}", item.Id)">
+                <td hidden="hidden" class="centered idsede">@Html.DisplayFor(modelItem => item.Id)</td>
+                <td class="centered sede">@Html.DisplayFor(modelItem => item.Nombre)</td>
+                <td class="centered seccion">@Html.DisplayFor(modelItem => item.Seccion)</td>
+                <td class="centered"><a href="javascript:void(0)" id="editarSede">Editar</a></td>
+            </tr>
+        }
+    }
+</table>

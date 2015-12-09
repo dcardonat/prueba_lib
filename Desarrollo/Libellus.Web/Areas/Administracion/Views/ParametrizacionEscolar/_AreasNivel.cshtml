@@ -1,0 +1,132 @@
+﻿@model Libellus.Web.Areas.Administracion.Models.ParametrizacionEscolar.ParametrizacionEscolarViewModel
+
+<div class="row">
+    <div class="col-md-5 form-group">
+        @Html.LabelFor(model => model.IdNivel)
+        @Html.DropDownListFor(model => model.IdNivel, new List<SelectListItem>(), new { @class = "form-control ignorar", id = "cmbNiveles", tabindex = "1", data_val = "true", data_val_required = "Campo requerido." })
+        @Html.ValidationMessage("IdNivel", new { @class = "text-danger" })
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-md-5 form-group">
+        @Html.Label("Áreas")
+        @Html.DropDownList("IdArea", new List<SelectListItem>(), new { @class = "form-control ignorar", id = "cmbAreas", tabindex = "2", size = 18, data_val = "true", data_val_required = "Campo requerido." })
+        @Html.ValidationMessage("IdArea", new { @class = "text-danger" })
+    </div>
+
+    <div class="col-md-1" style="margin-right: 25px !important; margin-top: 12% !important">
+        <a href="javascript:void(0)" id="btnAdicionarArea" class="btn btn-danger" style="width:45px !important; margin-left: 23px !important" title="Adicionar">></a>
+        <a href="javascript:void(0)" id="btnRemoverArea" class="btn btn-danger" style="width:45px !important; margin-top: 5px !important; margin-left: 23px !important" title="Remover"><</a>
+    </div>
+
+    <div class="col-md-5 form-group">
+        @Html.Label("Áreas por nivel")
+        @Html.DropDownList("areasNivel", new List<SelectListItem>(), new { @class = "form-control ignorar", id = "cmbAreasNivel", tabindex = "3", size = 18, data_val = "true", data_val_required = "Campo requerido." })
+        @Html.ValidationMessage("areasNivel", new { @class = "text-danger" })
+    </div>
+</div>
+
+<div id="valoresAreasNivel"></div>
+
+@Html.Script(
+    @<script type="text/javascript">
+        var areasNivel = [];
+        if (@Model.AreasNivel.Count() > 0) {
+            @foreach (var d in @Model.AreasNivel)
+            {
+                @: areaNivel = { IdArea: "@d.IdArea", Area: "@d.Area", IdNivelParametrizacion: "@d.IdNivelParametrizacion", Id: "@d.Id", IdAreaNivel: "@d.IdAreaNivel" };
+                @: areasNivel.push(areaNivel);
+            }
+        }
+
+        var adicionarArea = function () {
+            $("#cmbNiveles").valid();
+            $("#cmbAreas").valid();
+
+            if ($("#cmbNiveles").valid() && $("#cmbAreas").valid()) {
+                var nivel = $("#cmbNiveles").val();
+                var area = $("#cmbAreas").val();
+                var areaText = $("#cmbAreas option:selected").text();
+
+                var areaNivel = {
+                    IdArea: area,
+                    Area: areaText,
+                    IdNivelParametrizacion: nivel,
+                    Id: 0,
+                    IdAreaNivel: 0
+                };
+
+                areasNivel.push(areaNivel);
+
+                $('#cmbAreas option[value="' + area + '"]').remove();
+                $("#cmbAreasNivel").append('<option value="' + area + '">' + areaText + '</option>');
+            }
+        };
+
+        var removerArea = function () {
+            $("#cmbAreasNivel").valid();
+            if ($("#cmbAreasNivel").valid()) {
+                var nivel = $("#cmbNiveles").val();
+                var area = $("#cmbAreasNivel").val();
+                var areaText = $("#cmbAreasNivel option:selected").text();
+
+                var indice = _.findIndex(areasNivel, function (obj) {
+                    return obj.IdArea == area && obj.IdNivelParametrizacion == nivel;
+                });
+
+                areasNivel.splice(indice, 1);
+
+                $('#cmbAreasNivel option[value="' + area + '"]').remove();
+                $("#cmbAreas").append('<option value="' + area + '">' + areaText + '</option>');
+            }
+        };
+
+        var limpiarAreas = function () {
+            $("#cmbAreas option").remove();
+            $("#cmbAreasNivel option").remove();
+        };
+
+        var cambiarNivel = function () {
+            var nivel = $("#cmbNiveles").val();
+            if (nivel == "") {
+                limpiarAreas();
+            }
+            else {
+                $.ajax({
+                    url: '@Url.Action("ConsultarAreas")',
+                type: 'GET',
+                dataType: 'json',
+                contentType: 'application/json',
+                error: function (error) {
+                    alert(error.responseText);
+                    InformarAccion("Mensaje de error", "@Mensaje.Mensaje1000");
+                },
+                success: function (response) {
+                    limpiarAreas();
+                    var areasNivelSeleccionadas = _.where(areasNivel, { IdNivelParametrizacion: nivel });
+                    areasNivelSeleccionadas.forEach(function (element, index) {
+                        $("#cmbAreasNivel").append('<option value="' + element.IdArea + '">' + element.Area + '</option>');
+                    });
+
+                    var valores = _.pluck(areasNivelSeleccionadas, 'IdArea');
+                    $(response).each(function (index, element) {
+                        if (!_.contains(valores, element.Value)) {
+                            $("#cmbAreas").append('<option value="' + element.Value + '">' + element.Text + '</option>');
+                        }
+                    });
+                },
+            });
+        }
+    };
+
+    $(document).ready(function () {
+
+        $("#cmbNiveles").change(cambiarNivel);
+        $("#btnAdicionarArea").click(adicionarArea);
+        $("#btnRemoverArea").click(removerArea);
+
+    });
+
+    </script>
+    )

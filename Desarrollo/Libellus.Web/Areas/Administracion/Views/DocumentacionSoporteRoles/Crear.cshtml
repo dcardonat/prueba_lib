@@ -1,0 +1,29 @@
+﻿@model Libellus.Web.Areas.Administracion.Models.DocumentacionSoporteRoles.SoporteRolViewModel
+
+@{
+    ViewBag.Title = "Crear documentación para soporte";
+}
+@Styles.Render("~/css/select2")
+
+<div class="content-header">
+    <h2 class="content-header-title">@ViewBag.Title</h2>
+</div>
+
+@using (Html.BeginForm("Crear", "DocumentacionSoporteRoles", FormMethod.Post))
+{
+    @Html.AntiForgeryToken()
+
+    Html.RenderPartial("_FiltroEncabezado");
+    Html.RenderPartial("_AdministrarDocumentos");
+
+    <br />
+    <div class="form-group centered">
+        @Html.BotonCancelar("Consultar", "DocumentacionSoporteRoles")
+        <input type="submit" value="Crear documentación para soporte" class="btn btn-primary" />
+    </div>
+}
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+    @Scripts.Render("~/js/select2")
+}

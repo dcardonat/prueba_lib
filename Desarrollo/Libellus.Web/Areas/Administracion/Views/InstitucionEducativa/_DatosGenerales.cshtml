@@ -1,0 +1,92 @@
+﻿@model Libellus.Web.Areas.Administracion.Models.InstitucionEducativa.InstitucionEducativaViewModel
+
+@Html.HiddenFor(model => model.Id)
+@Html.HiddenFor(model => model.UrlLogo, new { id = "urlImagen" })
+
+<div class="row">
+    <div class="form-group col-md-4">
+        @Html.LabelFor(model => model.Nombre)
+        @Html.EditorFor(model => model.Nombre, new { htmlAttributes = new { @class = "form-control", maxlength = "100" } })
+        @Html.ValidationMessageFor(model => model.Nombre, "", new { @class = "text-danger" })
+    </div>
+
+    <div class="form-group col-md-4">
+        @Html.LabelFor(model => model.ResolucionAprobacion)
+        @Html.EditorFor(model => model.ResolucionAprobacion, new { htmlAttributes = new { @class = "form-control", maxlength = "50" } })
+        @Html.ValidationMessageFor(model => model.ResolucionAprobacion, "", new { @class = "text-danger" })
+    </div>
+
+    <div class="form-group col-md-4">
+        @Html.LabelFor(model => model.Nit)
+        @Html.EditorFor(model => model.Nit, new { htmlAttributes = new { @class = "form-control", maxlength = "15", placeholder = "999999999-9" } })
+        @Html.ValidationMessageFor(model => model.Nit, "", new { @class = "text-danger" })
+    </div>
+</div>
+
+<div class="row">
+    <div class="form-group col-md-4">
+        @Html.LabelFor(model => model.CodigoDane)
+        @Html.EditorFor(model => model.CodigoDane, new { htmlAttributes = new { @class = "form-control", maxlength = "15", placeholder = "999999999-9" } })
+        @Html.ValidationMessageFor(model => model.CodigoDane, "", new { @class = "text-danger" })
+    </div>
+
+    <div class="form-group col-md-4">
+        @Html.LabelFor(model => model.Rut)
+        @Html.EditorFor(model => model.Rut, new { htmlAttributes = new { @class = "form-control", maxlength = "200" } })
+        @Html.ValidationMessageFor(model => model.Rut, "", new { @class = "text-danger" })
+    </div>
+
+    <div class="form-group col-md-4">
+        @Html.LabelFor(model => model.Direccion)
+        @Html.EditorFor(model => model.Direccion, new { htmlAttributes = new { @class = "form-control", maxlength = "50" } })
+        @Html.ValidationMessageFor(model => model.Direccion, "", new { @class = "text-danger" })
+    </div>
+</div>
+
+<div class="row">
+    <div class="form-group col-md-4">
+        @Html.LabelFor(model => model.IdPais)
+        @Html.DropDownListFor(model => model.IdPais, Model.Paises, new { @class = "form-control", id = "cmbPais" })
+        @Html.ValidationMessageFor(model => model.IdPais, "", new { @class = "text-danger" })
+    </div>
+
+    <div class="form-group col-md-4">
+        @Html.LabelFor(model => model.IdDepartamento)
+        @Html.DropDownListFor(model => model.IdDepartamento, Model.Departamentos, new { @class = "form-control", id = "cmbDepartamento" })
+        @Html.ValidationMessageFor(model => model.IdDepartamento, "", new { @class = "text-danger" })
+    </div>
+
+    <div class="form-group col-md-4">
+        @Html.LabelFor(model => model.IdMunicipio)
+        @Html.DropDownListFor(model => model.IdMunicipio, Model.Municipios, new { @class = "form-control", id = "cmbMunicipio" })
+        @Html.ValidationMessageFor(model => model.IdMunicipio, "", new { @class = "text-danger" })
+    </div>
+</div>
+
+<div class="row">
+    <div class="form-group col-md-4">
+        @Html.LabelFor(model => model.Telefono)
+        @Html.EditorFor(model => model.Telefono, new { htmlAttributes = new { @class = "form-control", maxlength = "15" } })
+        @Html.ValidationMessageFor(model => model.Telefono, "", new { @class = "text-danger" })
+    </div>
+
+    <div class="form-group col-md-4">
+        @Html.LabelFor(model => model.Fax)
+        @Html.EditorFor(model => model.Fax, new { htmlAttributes = new { @class = "form-control", maxlength = "15" } })
+        @Html.ValidationMessageFor(model => model.Fax, "", new { @class = "text-danger" })
+    </div>
+
+    <div class="form-group col-md-4">
+        @Html.LabelFor(model => model.PaginaWeb)
+        @Html.EditorFor(model => model.PaginaWeb, new { htmlAttributes = new { @class = "form-control", maxlength = "100" } })
+        @Html.ValidationMessageFor(model => model.PaginaWeb, "", new { @class = "text-danger" })
+    </div>
+</div>
+
+<div class="row">
+    <div class="form-group col-md-4">
+        @Html.LabelFor(model => model.UrlLogo)
+        <input type="file" id="imglogo" name="postedLogo" class="file" />
+    </div>
+</div>
+

@@ -1,0 +1,35 @@
+﻿@model IPagedList<Libellus.Web.Areas.Administracion.Models.ParametrizacionEscolar.ParametrizacionEscolarViewModel>
+
+@{
+    ViewBag.Title = "Consultar";
+    object valorAnio = ViewBag.AnioLectivo;
+}
+
+<div class="content-header">
+    <h2 class="content-header-title">Parametrización anual y semestral</h2>
+</div>
+
+<p>
+    @Html.ActionLink("Crear parametrización", "Crear")
+</p>
+
+@using (Html.BeginForm("Consultar", "ParametrizacionEscolar", FormMethod.Get, new { data_otf_ajax = "true", data_otf_target = "#resultado" }))
+{
+    <div class="row">
+        <div class="form-group col-md-4">
+            @Html.Partial("_AniosLectivos", valorAnio)
+        </div>
+
+        <div class="form-group col-md-4">
+            @Html.LabelFor(model => model.First().IdJornadaAcademica)
+            @Html.DropDownList("Jornada", ViewBag.Jornadas as IEnumerable<SelectListItem>, new { @class = "form-control", tabindex = "2" })
+        </div>
+    </div>
+
+    <br />
+    <div class="form-group centered">
+        <input type="submit" value="Consultar" class="btn btn-primary" tabindex="3" />
+    </div>
+}
+
+@Html.Partial("_ResultadoConsulta", Model)

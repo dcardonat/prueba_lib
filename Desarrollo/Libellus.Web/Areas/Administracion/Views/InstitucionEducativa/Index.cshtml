@@ -1,0 +1,422 @@
+﻿@model Libellus.Web.Areas.Administracion.Models.InstitucionEducativa.InstitucionEducativaViewModel
+
+@{
+    ViewBag.Title = "Institución educativa";
+}
+
+@Styles.Render("~/css/datetimepicker")
+@Styles.Render("~/css/fileInput")
+
+<div class="content-header">
+    <h2 class="content-header-title">@ViewBag.Title</h2>
+</div>
+
+@using (Html.BeginForm("Administrar", "InstitucionEducativa", FormMethod.Post, new { enctype = "multipart/form-data", id="miForm" }))
+{
+    @Html.AntiForgeryToken()
+
+    <ul id="tabs" class="nav nav-tabs">
+        <li class=" active">
+            <a href="#datosGenerales" data-toggle="tab" id="tabDatosGenerales">
+                Datos generales
+            </a>
+        </li>
+        <li>
+            <a href="#sedes" data-toggle="tab">
+                Secciones y sedes
+            </a>
+        </li>
+        <li>
+            <a href="#registrosLegalizacion" data-toggle="tab">
+                Registros de legalización
+            </a>
+        </li>
+    </ul>
+
+    <div id="contenidos" class="tab-content">
+        <div class="tab-pane fade in active" id="datosGenerales">
+            @Html.Partial("_DatosGenerales")
+        </div>
+        <div class="tab-pane fade" id="sedes">
+            @Html.Partial("_SeccionesSedes")
+        </div>
+        <div class="tab-pane fade" id="registrosLegalizacion">
+            @Html.Partial("_RegistrosLegalizacion")
+        </div>
+    </div>
+
+    <br />
+    <div class="form-group centered">
+        @Html.BotonCancelar("Bienvenida", "Home", new { area = "" })
+        <input type="submit" value="@ViewBag.TituloBoton" class="btn btn-primary" />
+    </div>
+}
+
+@section Scripts {
+
+    @Scripts.Render("~/bundles/jqueryval")
+    @Scripts.Render("~/js/underscore")
+    @Scripts.Render("~/js/cascadingDropDown")
+    @Scripts.Render("~/js/datetimepicker")
+    @Scripts.Render("~/js/fileInput")
+
+    <script type="text/javascript">
+
+        $.validator.setDefaults({
+            ignore: '.ignorar'
+        });
+
+        if ($("#urlImagen").val() === "") {
+            $("#imglogo").fileinput({
+                showUpload: false,
+                showRemove: false,
+                language: 'es',
+                allowedFileExtensions: ["jpg", "png"]
+            });
+        }
+        else {
+            $("#imglogo").fileinput({
+                showUpload: false,
+                showRemove: false,
+                language: 'es',
+                allowedFileExtensions: ["jpg", "png"],
+                initialPreview: [
+                    "<img src='" + $("#urlImagen").val() + "' class='file-preview-image'",
+                ]
+            });
+        }
+
+        function EliminarRegistroLegalizacion(btn) {
+            ConfirmarAccion("Eliminar registro de legalización", "¿Está seguro de eliminar el registro seleccionado?", function () {
+                $(btn).closest("tr").remove();
+            });
+        }
+
+        function EliminarSede(btn) {
+            ConfirmarAccion("Eliminar sede", "¿Está seguro de eliminar el registro seleccionado?", function () {
+                $(btn).closest("tr").remove();
+            });
+        }
+
+        var validarSede = function (id, sede, seccion) {
+            var existe = false;
+            $(".filaSede").each(function (index, element) {
+                var regSede = $(element).find(".sede").text().toLowerCase();
+                var regSeccion = $(element).find(".seccion").text().toLowerCase();
+
+                if (sede == regSede && seccion == regSeccion) {
+                    existe = true;
+                }
+            });
+
+            return existe;
+        }
+
+        var validarRegistro = function (tipoRegistro, fechaExpedicion, textoLegalizacion, vigenciaDesde, vigenciaHasta) {
+            var existe = false;
+            $(".filaRegistroLegalizacion").each(function (index, element) {
+                var regTipoRegistro = $(element).find(".tipoRegistro").text().toLowerCase();
+                var regFechaExpedicion = $(element).find(".fechaExpedicion").text().toLowerCase();
+                var regTextoLegalizacion = $(element).find(".textoLegalizacion").text().toLowerCase();
+                var regVigenciaDesde = $(element).find(".vigenciaDesde").text().toLowerCase();
+                var regVigenciaHasta = $(element).find(".vigenciaHasta").text().toLowerCase();
+
+                if (tipoRegistro == regTipoRegistro &&
+                    fechaExpedicion == regFechaExpedicion &&
+                    textoLegalizacion == regTextoLegalizacion &&
+                    vigenciaDesde == regVigenciaDesde &&
+                    vigenciaHasta == regVigenciaHasta) {
+                    existe = true;
+                }
+            });
+
+            return existe;
+        }
+
+        $(document).ready(function () {
+
+            $('a[data-toggle="tab"]').on('shown.bs.tab', function (e) {
+                if (!$("#miForm").valid()) {
+                    $("#tabDatosGenerales").tab('show');
+                }
+            });
+
+            $('#fechaExpedicion').datetimepicker({
+                format: 'DD/MM/YYYY',
+                locale: 'es'
+            });
+
+            $('#dtpVigenciaDesde').datetimepicker({
+                format: 'DD/MM/YYYY',
+                locale: 'es'
+            });
+
+            $('#dtpVigenciaHasta').datetimepicker({
+                format: 'DD/MM/YYYY',
+                locale: 'es'
+            });
+
+            $("#fechaExpedicion").on("dp.change", function (e) {
+                $('#dtpVigenciaDesde').data("DateTimePicker").minDate(e.date);
+            });
+
+            $("#dtpVigenciaDesde").on("dp.change", function (e) {
+                $('#dtpVigenciaHasta').data("DateTimePicker").minDate(e.date);
+            });
+
+            $("#dtpVigenciaHasta").on("dp.change", function (e) {
+                $('#fechaExpedicion').data("DateTimePicker").maxDate(e.date);
+                $('#dtpVigenciaDesde').data("DateTimePicker").maxDate(e.date);
+            });
+
+            $("#cmbDepartamento").CascadingDropDown("#cmbPais", '@Url.Action("ConsultarDepartamentos", "Geografia", new { area = "" })', {
+                idSelectedValue: '@Model.IdDepartamento'
+            });
+
+            $("#cmbMunicipio").CascadingDropDown("#cmbDepartamento", '@Url.Action("ConsultarMunicipios", "Geografia", new { area = "" })', {
+                idSelectedValue: '@Model.IdMunicipio'
+            });
+
+            $("#btnCancelarAgregarSede").hide();
+            $("#btnCancelarAgregarRegistro").hide();
+
+            $("#btnAgregarSede").click(function () {
+
+                $("#txtSede").valid();
+                $("#txtSeccion").valid();
+
+                if ($("#txtSede").valid() && $("#txtSeccion").valid()) {
+                    var sede = $("#txtSede");
+                    var seccion = $("#txtSeccion");
+                    var idSede = $("#hdnIdSede");
+
+                    if (validarSede(idSede.val(), sede.val().toLowerCase(), seccion.val().toLowerCase())) {
+                        alert("El registro ya existe en la lista. Por favor verifique.");
+                    }
+                    else {
+                        if (idSede.val() === "0") {
+                            var plantillaFila = _.template($("#agregarSede").html());
+                            $("#tblSedes tbody").append(plantillaFila({
+                                sede: sede.val(),
+                                seccion: seccion.val(),
+                                idSede: idSede.val()
+                            }));
+                        }
+                        else {
+                            var fila = $("#tblSedes").find(".id" + idSede.val());
+                            fila.find(".sede").text(sede.val());
+                            fila.find(".seccion").text(seccion.val());
+                        }
+
+                        seccion.val("");
+                        sede.val("");
+                        idSede.val("0");
+
+                        $("#btnAgregarSede").text("Agregar sede");
+                        $("#btnCancelarAgregarSede").hide();
+                    }
+                }
+            });
+
+            $("#btnAgregarRegistro").click(function () {
+
+                $("#txtTipoRegistro").valid();
+                $("#txtFechaExpedicion").valid();
+                $("#txtTextoLegalizacion").valid();
+                $("#txtVigenciaDesde").valid();
+                $("#txtVigenciaHasta").valid();
+
+                if ($("#txtTipoRegistro").valid() &&
+                    $("#txtFechaExpedicion").valid() &&
+                    $("#txtTextoLegalizacion").valid() &&
+                    $("#txtVigenciaDesde").valid() &&
+                    $("#txtVigenciaHasta").valid()) {
+                    var tipoRegistro = $("#txtTipoRegistro");
+                    var fechaExpedicion = $("#txtFechaExpedicion");
+                    var textoLegalizacion = $("#txtTextoLegalizacion");
+                    var vigenciaDesde = $("#txtVigenciaDesde");
+                    var vigenciaHasta = $("#txtVigenciaHasta");
+                    var idRegistroLegalizacion = $("#hdnIdRegistroLegalizacion");
+
+                    if (validarRegistro(tipoRegistro.val().toLowerCase(), fechaExpedicion.val().toLowerCase(), textoLegalizacion.val().toLowerCase(), vigenciaDesde.val().toLowerCase(), vigenciaHasta.val().toLowerCase())) {
+                        alert("El registro ya existe en la lista. Por favor verifique.");
+                    }
+                    else {
+                        if (idRegistroLegalizacion.val() == "0") {
+                            var plantillaFila = _.template($("#agregarRegistroLegalizacion").html());
+                            $("#tblRegistros tbody").append(plantillaFila({
+                                val_tipoRegistro: tipoRegistro.val(),
+                                val_fechaExpedicion: fechaExpedicion.val(),
+                                val_textoLegalizacion: textoLegalizacion.val(),
+                                val_vigenciaDesde: vigenciaDesde.val(),
+                                val_vigenciaHasta: vigenciaHasta.val(),
+                                val_idRegistroLegalizacion: idRegistroLegalizacion.val()
+                            }));
+                        }
+                        else {
+                            var fila = $("#tblRegistros").find(".id" + idRegistroLegalizacion.val());
+                            fila.find(".tipoRegistro").text(tipoRegistro.val());
+                            fila.find(".fechaExpedicion").text(fechaExpedicion.val());
+                            fila.find(".textoLegalizacion").text(textoLegalizacion.val());
+                            fila.find(".vigenciaDesde").text(vigenciaDesde.val());
+                            fila.find(".vigenciaHasta").text(vigenciaHasta.val());
+                        }
+
+                        tipoRegistro.val("");
+                        fechaExpedicion.val("");
+                        textoLegalizacion.val("");
+                        vigenciaDesde.val("");
+                        vigenciaHasta.val("");
+                        idRegistroLegalizacion.val("0");
+
+                        $("#btnAgregarRegistro").text("Agregar registro");
+                        $("#btnCancelarAgregarRegistro").hide();
+                    }
+                }
+            });
+
+            $(document).on("click", "#editarSede", function () {
+                var fila = $(this).closest("tr");
+                var idSede = fila.find(".idsede").text();
+                var sede = fila.find(".sede").text();
+                var seccion = fila.find(".seccion").text();
+
+                $("#btnAgregarSede").text("Editar sede");
+                $("#btnCancelarAgregarSede").show();
+                $("#txtSede").val($.trim(sede)).focus();
+                $("#txtSeccion").val($.trim(seccion)).focus();
+                $("#hdnIdSede").val($.trim(idSede));
+
+                $("#txtSede").focus();
+
+            });
+
+            $(document).on("click", "#btnCancelarAgregarSede", function () {
+                var sede = $("#txtSede");
+                var seccion = $("#txtSeccion");
+                var idSede = $("#hdnIdSede");
+
+                seccion.val("");
+                sede.val("");
+                idSede.val("0");
+
+                $("#btnAgregarSede").text("Agregar sede");
+                $("#btnCancelarAgregarSede").hide();
+            });
+
+            $(document).on("click", "#editarRegistroLegalizacion", function () {
+                var fila = $(this).closest("tr");
+                var idRegistroLegalizacion = fila.find(".idRegistroLegalizacion").text();
+                var tipoRegistro = fila.find(".tipoRegistro").text();
+                var fechaExpedicion = fila.find(".fechaExpedicion").text();
+                var textoLegalizacion = fila.find(".textoLegalizacion").text();
+                var vigenciaDesde = fila.find(".vigenciaDesde").text();
+                var vigenciaHasta = fila.find(".vigenciaHasta").text();
+
+                $("#btnAgregarRegistro").text("Editar registro");
+                $("#btnCancelarAgregarRegistro").show();
+
+                $("#txtTipoRegistro").val($.trim(tipoRegistro)).focus();
+                $("#txtFechaExpedicion").val($.trim(fechaExpedicion)).focus();
+                $("#txtTextoLegalizacion").val($.trim(textoLegalizacion)).focus();
+                $("#txtVigenciaDesde").val($.trim(vigenciaDesde)).focus();
+                $("#txtVigenciaHasta").val($.trim(vigenciaHasta)).focus();
+                $("#hdnIdRegistroLegalizacion").val($.trim(idRegistroLegalizacion));
+
+                $("#txtTipoRegistro").focus();
+            });
+
+            $(document).on("click", "#btnCancelarAgregarRegistro", function () {
+                var tipoRegistro = $("#txtTipoRegistro");
+                var fechaExpedicion = $("#txtFechaExpedicion");
+                var textoLegalizacion = $("#txtTextoLegalizacion");
+                var vigenciaDesde = $("#txtVigenciaDesde");
+                var vigenciaHasta = $("#txtVigenciaHasta");
+                var idRegistroLegalizacion = $("#hdnIdRegistroLegalizacion");
+
+                tipoRegistro.val("");
+                fechaExpedicion.val("");
+                textoLegalizacion.val("");
+                vigenciaDesde.val("");
+                vigenciaHasta.val("");
+                idRegistroLegalizacion.val("0");
+
+                $("#btnAgregarRegistro").text("Agregar registro");
+                $("#btnCancelarAgregarRegistro").hide();
+            });
+
+            $("form").submit(function () {
+
+                $(".filaSede").each(function (index, element) {
+                    var idsede = $(element).find(".idsede").text();
+                    var sede = $(element).find(".sede").text();
+                    var seccion = $(element).find(".seccion").text();
+                    var plantilla = _.template($("#registroSede").html());
+                    $(element).append(plantilla({
+                        sede: $.trim(sede),
+                        seccion: $.trim(seccion),
+                        index: index,
+                        idsede: idsede
+                    }));
+                });
+
+                $(".filaRegistroLegalizacion").each(function (index, element) {
+                    var idRegistroLegalizacion = $(element).find(".idRegistroLegalizacion").text();
+                    var tipoRegistro = $(element).find(".tipoRegistro").text();
+                    var fechaExpedicion = $(element).find(".fechaExpedicion").text();
+                    var textoLegalizacion = $(element).find(".textoLegalizacion").text();
+                    var vigenciaDesde = $(element).find(".vigenciaDesde").text();
+                    var vigenciaHasta = $(element).find(".vigenciaHasta").text();
+                    var plantilla = _.template($("#registroLegalizacion").html());
+                    $(element).append(plantilla({
+                        val_tipoRegistro: tipoRegistro,
+                        val_fechaExpedicion: fechaExpedicion,
+                        val_textoLegalizacion: textoLegalizacion,
+                        val_vigenciaDesde: vigenciaDesde,
+                        val_vigenciaHasta: vigenciaHasta,
+                        index: index,
+                        val_idRegistroLegalizacion: idRegistroLegalizacion
+                    }));
+                });
+            });
+
+        });
+    </script>
+
+    <script type="text/html" id="agregarSede">
+        <tr class="filaSede">
+            <td class="centered idsede" hidden="hidden"><%= idSede %></td>
+            <td class="centered sede"><%= sede %></td>
+            <td class="centered seccion"><%= seccion %></td>
+            <td class="centered"><a href="javascript:void(0)" onclick="EliminarSede(this)" id="eliminarSede">Eliminar</a></td>
+        </tr>
+    </script>
+
+    <script type="text/html" id="agregarRegistroLegalizacion">
+        <tr class="filaRegistroLegalizacion">
+            <td class="centered idRegistroLegalizacion" hidden="hidden"><%= val_idRegistroLegalizacion %></td>
+            <td class="centered tipoRegistro"><%= val_tipoRegistro %></td>
+            <td class="centered fechaExpedicion"><%= val_fechaExpedicion %></td>
+            <td class="centered textoLegalizacion"><%= val_textoLegalizacion %></td>
+            <td class="centered vigenciaDesde"><%= val_vigenciaDesde %></td>
+            <td class="centered vigenciaHasta"><%= val_vigenciaHasta %></td>
+            <td class="centered"></td>
+            <td class="centered"><a href="javascript:void(0)" onclick="EliminarRegistroLegalizacion(this)" id="eliminarRegistroLegalizacion">Eliminar</a></td>
+        </tr>
+    </script>
+
+    <script type="text/html" id="registroSede">
+        <td hidden="hidden"><input type="hidden" name="Sedes[<%= index %>].Id" value="<%= idsede %>" /></td>
+        <td hidden="hidden"><input type="hidden" name="Sedes[<%= index %>].Nombre" value="<%= sede %>" /></td>
+        <td hidden="hidden"><input type="hidden" name="Sedes[<%= index %>].Seccion" value="<%= seccion %>" /></td>
+    </script>
+
+    <script type="text/html" id="registroLegalizacion">
+        <td hidden="hidden"><input type="hidden" name="RegistrosLegalizacion[<%= index %>].Id" value="<%= val_idRegistroLegalizacion %>" /></td>
+        <td hidden="hidden"><input type="hidden" name="RegistrosLegalizacion[<%= index %>].TipoRegistro" value="<%= val_tipoRegistro %>" /></td>
+        <td hidden="hidden"><input type="hidden" name="RegistrosLegalizacion[<%= index %>].FechaExpedicion" value="<%= val_fechaExpedicion %>" /></td>
+        <td hidden="hidden"><input type="hidden" name="RegistrosLegalizacion[<%= index %>].TextoLegalizacion" value="<%= val_textoLegalizacion %>" /></td>
+        <td hidden="hidden"><input type="hidden" name="RegistrosLegalizacion[<%= index %>].VigenciaDesde" value="<%= val_vigenciaDesde %>" /></td>
+        <td hidden="hidden"><input type="hidden" name="RegistrosLegalizacion[<%= index %>].VigenciaHasta" value="<%= val_vigenciaHasta %>" /></td>
+    </script>
+}

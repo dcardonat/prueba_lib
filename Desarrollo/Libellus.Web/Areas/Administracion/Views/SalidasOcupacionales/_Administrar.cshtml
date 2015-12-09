@@ -1,0 +1,29 @@
+﻿@model Libellus.Web.Areas.Administracion.Models.SalidasOcupacionales.SalidaOcupacionalViewModel
+
+@Html.HiddenFor(model => model.Id)
+@Html.HiddenFor(model => model.IdSede)
+
+<div class="row">
+    <div class="col-md-4 form-group">
+        @Html.LabelFor(model => model.Descripcion)
+        @Html.TextBoxFor(model => model.Descripcion, new { @class = "form-control", maxlength = "30", tabindex = "1" })
+        @Html.ValidationMessageFor(model => model.Descripcion, "", new { @class = "text-danger" })
+    </div>
+
+    <div class="col-md-4 form-group">
+        @Html.LabelFor(model => model.IntensidadHoraria)
+        @Html.TextBoxFor(model => model.IntensidadHoraria, new { @class = "form-control", maxlength = "2", tabindex = "2" })
+        @Html.ValidationMessageFor(model => model.IntensidadHoraria, "", new { @class = "text-danger" })
+    </div>
+
+    @if (!ViewBag.NuevoRegistro)
+    {
+        <div class="col-md-4 form-group">
+            @Html.LabelFor(model => model.Estado)
+            <div class="checkbox">
+                @Html.EditorFor(model => model.Estado) Activo
+            </div>
+        </div>
+    }
+
+</div>

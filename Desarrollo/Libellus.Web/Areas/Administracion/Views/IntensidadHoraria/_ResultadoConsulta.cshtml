@@ -1,0 +1,86 @@
+﻿@model IPagedList<Libellus.Web.Areas.Administracion.Models.IntensidadHoraria.IntensidadHorariaViewModel>
+
+<div id="resultado">
+    @if (Model.Count > 0)
+    {
+        <div class="row">
+            <div class="col-md-12">
+                <div class="table-responsive">
+                    <table class="@EstilosHelper.TablaLibellus">
+                        <tr>
+                            <th class="col-md-2">
+                                @Html.DisplayNameFor(model => model.First().IdAnioLectivo)
+                            </th>
+                            <th class="col-md-2">
+                                @Html.DisplayNameFor(model => model.First().IdGrado)
+                            </th>
+                            <th class="col-md-2">
+                                @Html.DisplayNameFor(model => model.First().IdArea)
+                            </th>
+                            <th class="col-md-2">
+                                @Html.DisplayNameFor(model => model.First().IdAsignatura)
+                            </th>
+                            <th class="col-md-2">
+                                @Html.DisplayNameFor(model => model.First().HorasSemana)
+                            </th>
+                            <th colspan="2" class="col-md-2">
+                                Acciones
+                            </th>
+                        </tr>
+
+                        @foreach (var item in Model)
+                        {
+                        <tr>
+                            <td class="centered">
+                                @Html.DisplayFor(modelItem => item.AnioLectivo.Anio)
+                            </td>
+                            <td class="centered">
+                                @Html.DisplayFor(modelItem => item.Grado.Descripcion)
+                            </td>
+                            <td class="centered">
+                                @Html.DisplayFor(modelItem => item.Asignatura.Maestro.Descripcion)
+                            </td>
+                            <td class="centered">
+                                @Html.DisplayFor(modelItem => item.Asignatura.Descripcion)
+                            </td>
+                            <td class="centered">
+                                @Html.DisplayFor(modelItem => item.HorasSemana)
+                            </td>
+                            <td class="centered col-md-1">
+                                @if (!item.AnioLectivo.Cerrado)
+                                    {
+                                    @Html.ActionLink("Editar", "Editar", new { id = item.Id });
+                                    }
+                            </td>
+                            <td class="centered col-md-1">
+                                @if (!item.AnioLectivo.Cerrado)
+                                    {
+                                    @Html.BotonEliminar("Eliminar", "IntensidadHoraria", new { id = item.Id })
+                                    }
+                            </td>
+                        </tr>
+                        }
+                        <tfoot>
+                            <tr>
+                                <td class="centered" colspan="4"><strong>Total</strong></td>
+                                <td class="centered"><strong>@Model.Sum(e => e.HorasSemana)</strong></td>
+                                <td colspan="2"></td>
+                            </tr>
+                        </tfoot>
+                    </table>
+                </div>
+            </div>
+        </div>
+        
+        <div class="centered paginacion" data-otf-target="#resultado">
+            @Html.PagedListPager(Model, pagina => Url.Action("Consultar", new { pagina }))
+        </div>
+        @Html.Partial("_ExportarExcel")
+    }
+    else
+    {
+        <script>
+            VisualizarMensajeNegocio(2, "@Mensaje.Mensaje1005");
+        </script>
+    }
+</div>

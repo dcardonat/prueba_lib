@@ -1,0 +1,31 @@
+﻿@model Libellus.Web.Areas.Administracion.Models.ParametrizacionEscolar.ParametrizacionEscolarViewModel
+
+<ul id="tabs" class="nav nav-tabs">
+    <li class=" active">
+        <a href="#parametrizacion" data-toggle="tab">
+            Parametrización año escolar
+        </a>
+    </li>
+    <li>
+        <a href="#areasNivel" data-toggle="tab">
+            Áreas por nivel
+        </a>
+    </li>
+    <li>
+        <a href="#periodos" data-toggle="tab">
+            Periodos
+        </a>
+    </li>
+</ul>
+
+<div id="contenidos" class="tab-content">
+    <div class="tab-pane fade in active" id="parametrizacion">
+        @Html.Partial("_Parametrizacion")
+    </div>
+    <div class="tab-pane fade" id="areasNivel">
+        @Html.Partial("_AreasNivel")
+    </div>
+    <div class="tab-pane fade" id="periodos">
+        @Html.Partial("_Periodos")
+    </div>
+</div>

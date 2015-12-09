@@ -1,0 +1,79 @@
+﻿@model Libellus.Web.Areas.GestionMatricula.Models.DatosGeneralesEstudiante.EstudianteViewModel
+
+@{
+    bool soloLectura = ViewBag.SoloLectura;
+}
+
+<div class="row">
+    <div class="form-group col-md-4">
+        @Html.LabelFor(model => model.DatosResidenciales.IdPais)
+        @Html.DropDownListDisabledFor(model => model.DatosResidenciales.IdPais, Model.ComboPaises, soloLectura, new { @class = "form-control", tabindex = "2", id = "cmbPais" })
+        @Html.ValidationMessageFor(model => model.DatosResidenciales.IdPais, "", new { @class = "text-danger" })
+    </div>
+
+    <div class="form-group col-md-4">
+        @Html.LabelFor(model => model.DatosResidenciales.IdDepartamento)
+        @if (soloLectura)
+        {
+            @Html.TextBoxDisabledFor(model => model.Departamento, soloLectura, new { @class = "form-control", tabindex = "2" })
+        }
+        else
+        {
+            @Html.DropDownListDisabledFor(model => model.DatosResidenciales.IdDepartamento, new List<SelectListItem>(), soloLectura, new { @class = "form-control", tabindex = "2", id = "cmbDepartamento" })
+        }
+        @Html.ValidationMessageFor(model => model.DatosResidenciales.IdDepartamento, "", new { @class = "text-danger" })
+    </div>
+
+    <div class="form-group col-md-4">
+        @Html.LabelFor(model => model.DatosResidenciales.IdMunicipio)
+        @if (soloLectura)
+        {
+            @Html.TextBoxDisabledFor(model => model.Municipio, soloLectura, new { @class = "form-control", tabindex = "2" })
+        }
+        else
+        {
+            @Html.DropDownListDisabledFor(model => model.DatosResidenciales.IdMunicipio, new List<SelectListItem>(), soloLectura, new { @class = "form-control", tabindex = "2", id = "cmbMunicipio" })
+        }
+        @Html.ValidationMessageFor(model => model.DatosResidenciales.IdMunicipio, "", new { @class = "text-danger" })
+    </div>
+</div>
+
+<div class="row">
+    <div class="form-group col-md-4">
+        @Html.LabelFor(model => model.DatosResidenciales.Direccion)
+        @Html.TextBoxDisabledFor(model => model.DatosResidenciales.Direccion, soloLectura, new { @class = "form-control", tabindex = "2" })
+        @Html.ValidationMessageFor(model => model.DatosResidenciales.Direccion, "", new { @class = "text-danger" })
+    </div>
+
+    <div class="form-group col-md-4">
+        @Html.LabelFor(model => model.DatosResidenciales.Barrio)
+        @Html.TextBoxDisabledFor(model => model.DatosResidenciales.Barrio, soloLectura, new { @class = "form-control", tabindex = "2" })
+        @Html.ValidationMessageFor(model => model.DatosResidenciales.Barrio, "", new { @class = "text-danger" })
+    </div>
+
+    <div class="form-group col-md-4">
+        @Html.LabelFor(model => model.DatosResidenciales.IdEstrato)
+        @Html.DropDownListDisabledFor(model => model.DatosResidenciales.IdEstrato, Model.ComboEstratos, soloLectura, new { @class = "form-control", tabindex = "2" })
+        @Html.ValidationMessageFor(model => model.DatosResidenciales.IdEstrato, "", new { @class = "text-danger" })
+    </div>
+</div>
+
+<div class="row">
+    <div class="form-group col-md-4">
+        @Html.LabelFor(model => model.DatosResidenciales.TelefonoFijo)
+        @Html.TextBoxDisabledFor(model => model.DatosResidenciales.TelefonoFijo, soloLectura, new { @class = "form-control", tabindex = "2" })
+        @Html.ValidationMessageFor(model => model.DatosResidenciales.TelefonoFijo, "", new { @class = "text-danger" })
+    </div>
+
+    <div class="form-group col-md-4">
+        @Html.LabelFor(model => model.DatosResidenciales.TelefonoMovil)
+        @Html.TextBoxDisabledFor(model => model.DatosResidenciales.TelefonoMovil, soloLectura, new { @class = "form-control", tabindex = "2" })
+        @Html.ValidationMessageFor(model => model.DatosResidenciales.TelefonoMovil, "", new { @class = "text-danger" })
+    </div>
+
+    <div class="form-group col-md-4">
+        @Html.LabelFor(model => model.Usuario.Correo)
+        @Html.TextBoxDisabledFor(model => model.Usuario.Correo, soloLectura, new { @class = "form-control", tabindex = "2" })
+        @Html.ValidationMessageFor(model => model.Usuario.Correo, "", new { @class = "text-danger" })
+    </div>
+</div>

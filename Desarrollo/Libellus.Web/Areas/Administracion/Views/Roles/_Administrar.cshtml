@@ -1,0 +1,17 @@
+﻿@model Libellus.Web.Areas.Administracion.Models.RolViewModel
+<div class="row">
+    <div class="col-md-4 form-group">
+        @Html.LabelFor(model => model.Nombre)
+        @Html.EditorFor(model => model.Nombre, new { htmlAttributes = new { @class = "form-control", @tabindex = "1" } })
+        @Html.ValidationMessageFor(model => model.Nombre, "", new { @class = "text-danger" })
+    </div>
+    @if (!ViewBag.NuevoRegistro)
+    {
+        <div class="col-md-4 form-group">
+            @Html.LabelFor(model => model.Estado)
+            <div class="checkbox">
+                @Html.EditorFor(model => model.Estado, new { htmlAttributes = new { @tabindex = "2" } }) Activo
+            </div>
+        </div>
+    }
+</div>

@@ -1,0 +1,120 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 2013
+VisualStudioVersion = 12.0.31101.0
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Libellus.Negocio", "Libellus.Negocio\Libellus.Negocio.csproj", "{C8ABD0F8-A487-485D-9D44-B6D6178678E5}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Libellus.Repositorio", "Libellus.Repositorio\Libellus.Repositorio.csproj", "{8F7591CF-3D18-453C-84EE-94B187190274}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Libellus.Entidades", "Libellus.Entidades\Libellus.Entidades.csproj", "{880E4E2F-F3BF-4055-BD97-15E64AF73216}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Libellus.Utilidades", "Libellus.Utilidades\Libellus.Utilidades.csproj", "{17E3035E-C972-41D3-AD9D-2DEA71185ABC}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Modelo", "Modelo", "{0A5E59EB-DFBB-446B-8D2B-E198B5EEAD11}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Transversal", "Transversal", "{2B72A3DD-5387-4DB2-887A-CA1A1A8EA0F9}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Vista_Controlador", "Vista_Controlador", "{D6C60689-4411-4984-A818-D17B0BFDA284}"
+EndProject
+Project("{00D1A9C2-B5F0-4AF3-8072-F6C62B433612}") = "Libellus.SqlAzure", "Libellus.SqlAzure\Libellus.SqlAzure.sqlproj", "{9828E6BF-79AE-410B-A4C5-6842ACF4F81A}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Libellus.Web", "Libellus.Web\Libellus.Web.csproj", "{36C65686-A27D-44DD-9ED9-07DE82ECB19E}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Libellus.Mensajes", "Libellus.Mensajes\Libellus.Mensajes.csproj", "{675161D6-0659-4C4B-AA2D-BF48F0C7BE9D}"
+EndProject
+Global
+	GlobalSection(TeamFoundationVersionControl) = preSolution
+		SccNumberOfProjects = 8
+		SccEnterpriseProvider = {4CA58AB2-18FA-4F8D-95D4-32DDF27D184C}
+		SccTeamFoundationServer = https://ismlibellus.visualstudio.com/defaultcollection
+		SccLocalPath0 = .
+		SccProjectUniqueName1 = Libellus.Negocio\\Libellus.Negocio.csproj
+		SccProjectTopLevelParentUniqueName1 = Libellus.sln
+		SccProjectName1 = Libellus.Negocio
+		SccLocalPath1 = Libellus.Negocio
+		SccProjectUniqueName2 = Libellus.Repositorio\\Libellus.Repositorio.csproj
+		SccProjectTopLevelParentUniqueName2 = Libellus.sln
+		SccProjectName2 = Libellus.Repositorio
+		SccLocalPath2 = Libellus.Repositorio
+		SccProjectUniqueName3 = Libellus.Entidades\\Libellus.Entidades.csproj
+		SccProjectTopLevelParentUniqueName3 = Libellus.sln
+		SccProjectName3 = Libellus.Entidades
+		SccLocalPath3 = Libellus.Entidades
+		SccProjectUniqueName4 = Libellus.Utilidades\\Libellus.Utilidades.csproj
+		SccProjectTopLevelParentUniqueName4 = Libellus.sln
+		SccProjectName4 = Libellus.Utilidades
+		SccLocalPath4 = Libellus.Utilidades
+		SccProjectUniqueName5 = Libellus.SqlAzure\\Libellus.SqlAzure.sqlproj
+		SccProjectTopLevelParentUniqueName5 = Libellus.sln
+		SccProjectName5 = Libellus.SqlAzure
+		SccLocalPath5 = Libellus.SqlAzure
+		SccProjectUniqueName6 = Libellus.Web\\Libellus.Web.csproj
+		SccProjectTopLevelParentUniqueName6 = Libellus.sln
+		SccProjectName6 = Libellus.Web
+		SccLocalPath6 = Libellus.Web
+		SccProjectUniqueName7 = Libellus.Mensajes\\Libellus.Mensajes.csproj
+		SccProjectTopLevelParentUniqueName7 = Libellus.sln
+		SccProjectName7 = Libellus.Mensajes
+		SccLocalPath7 = Libellus.Mensajes
+	EndGlobalSection
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Pruebas|Any CPU = Pruebas|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{C8ABD0F8-A487-485D-9D44-B6D6178678E5}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C8ABD0F8-A487-485D-9D44-B6D6178678E5}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C8ABD0F8-A487-485D-9D44-B6D6178678E5}.Pruebas|Any CPU.ActiveCfg = Pruebas|Any CPU
+		{C8ABD0F8-A487-485D-9D44-B6D6178678E5}.Pruebas|Any CPU.Build.0 = Pruebas|Any CPU
+		{C8ABD0F8-A487-485D-9D44-B6D6178678E5}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C8ABD0F8-A487-485D-9D44-B6D6178678E5}.Release|Any CPU.Build.0 = Release|Any CPU
+		{8F7591CF-3D18-453C-84EE-94B187190274}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{8F7591CF-3D18-453C-84EE-94B187190274}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{8F7591CF-3D18-453C-84EE-94B187190274}.Pruebas|Any CPU.ActiveCfg = Pruebas|Any CPU
+		{8F7591CF-3D18-453C-84EE-94B187190274}.Pruebas|Any CPU.Build.0 = Pruebas|Any CPU
+		{8F7591CF-3D18-453C-84EE-94B187190274}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{8F7591CF-3D18-453C-84EE-94B187190274}.Release|Any CPU.Build.0 = Release|Any CPU
+		{880E4E2F-F3BF-4055-BD97-15E64AF73216}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{880E4E2F-F3BF-4055-BD97-15E64AF73216}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{880E4E2F-F3BF-4055-BD97-15E64AF73216}.Pruebas|Any CPU.ActiveCfg = Pruebas|Any CPU
+		{880E4E2F-F3BF-4055-BD97-15E64AF73216}.Pruebas|Any CPU.Build.0 = Pruebas|Any CPU
+		{880E4E2F-F3BF-4055-BD97-15E64AF73216}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{880E4E2F-F3BF-4055-BD97-15E64AF73216}.Release|Any CPU.Build.0 = Release|Any CPU
+		{17E3035E-C972-41D3-AD9D-2DEA71185ABC}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{17E3035E-C972-41D3-AD9D-2DEA71185ABC}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{17E3035E-C972-41D3-AD9D-2DEA71185ABC}.Pruebas|Any CPU.ActiveCfg = Pruebas|Any CPU
+		{17E3035E-C972-41D3-AD9D-2DEA71185ABC}.Pruebas|Any CPU.Build.0 = Pruebas|Any CPU
+		{17E3035E-C972-41D3-AD9D-2DEA71185ABC}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{17E3035E-C972-41D3-AD9D-2DEA71185ABC}.Release|Any CPU.Build.0 = Release|Any CPU
+		{9828E6BF-79AE-410B-A4C5-6842ACF4F81A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{9828E6BF-79AE-410B-A4C5-6842ACF4F81A}.Pruebas|Any CPU.ActiveCfg = Pruebas|Any CPU
+		{9828E6BF-79AE-410B-A4C5-6842ACF4F81A}.Pruebas|Any CPU.Deploy.0 = Pruebas|Any CPU
+		{9828E6BF-79AE-410B-A4C5-6842ACF4F81A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{36C65686-A27D-44DD-9ED9-07DE82ECB19E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{36C65686-A27D-44DD-9ED9-07DE82ECB19E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{36C65686-A27D-44DD-9ED9-07DE82ECB19E}.Pruebas|Any CPU.ActiveCfg = Pruebas|Any CPU
+		{36C65686-A27D-44DD-9ED9-07DE82ECB19E}.Pruebas|Any CPU.Build.0 = Pruebas|Any CPU
+		{36C65686-A27D-44DD-9ED9-07DE82ECB19E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{36C65686-A27D-44DD-9ED9-07DE82ECB19E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{675161D6-0659-4C4B-AA2D-BF48F0C7BE9D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{675161D6-0659-4C4B-AA2D-BF48F0C7BE9D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{675161D6-0659-4C4B-AA2D-BF48F0C7BE9D}.Pruebas|Any CPU.ActiveCfg = Pruebas|Any CPU
+		{675161D6-0659-4C4B-AA2D-BF48F0C7BE9D}.Pruebas|Any CPU.Build.0 = Pruebas|Any CPU
+		{675161D6-0659-4C4B-AA2D-BF48F0C7BE9D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{675161D6-0659-4C4B-AA2D-BF48F0C7BE9D}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{C8ABD0F8-A487-485D-9D44-B6D6178678E5} = {0A5E59EB-DFBB-446B-8D2B-E198B5EEAD11}
+		{8F7591CF-3D18-453C-84EE-94B187190274} = {0A5E59EB-DFBB-446B-8D2B-E198B5EEAD11}
+		{880E4E2F-F3BF-4055-BD97-15E64AF73216} = {0A5E59EB-DFBB-446B-8D2B-E198B5EEAD11}
+		{17E3035E-C972-41D3-AD9D-2DEA71185ABC} = {2B72A3DD-5387-4DB2-887A-CA1A1A8EA0F9}
+		{9828E6BF-79AE-410B-A4C5-6842ACF4F81A} = {2B72A3DD-5387-4DB2-887A-CA1A1A8EA0F9}
+		{36C65686-A27D-44DD-9ED9-07DE82ECB19E} = {D6C60689-4411-4984-A818-D17B0BFDA284}
+		{675161D6-0659-4C4B-AA2D-BF48F0C7BE9D} = {2B72A3DD-5387-4DB2-887A-CA1A1A8EA0F9}
+	EndGlobalSection
+EndGlobal

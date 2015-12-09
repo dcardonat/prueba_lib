@@ -1,0 +1,25 @@
+﻿@model Libellus.Web.Areas.Administracion.Models.DocumentacionSoporteRoles.SoporteRolViewModel
+
+@Html.HiddenFor(model => model.ValoresDocumentos)
+<div class="row">
+    <div class="form-group col-md-12">
+        @Html.LabelFor(model => model.TiposDocumentosSeleccionados)
+        @Html.DropDownListFor(model => model.TiposDocumentosSeleccionados, Model.Documentos, new { @class = "form-control", multiple = "multiple" })
+        @Html.ValidationMessageFor(model => model.TiposDocumentosSeleccionados, "", new { @class = "text-danger" })
+    </div>
+</div>
+
+
+@Html.Script(
+
+    @<script type="text/javascript">
+
+        var v = $("#ValoresDocumentos").val();
+        var valores = v.split(",");
+
+        $("#TiposDocumentosSeleccionados").select2({
+            placeholder: "Seleccione los documentos..."
+        }).select2('val', valores);
+
+    </script>
+    )

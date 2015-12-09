@@ -1,0 +1,46 @@
+﻿@model object
+<label for="IdAnioLectivo">Año</label>
+<select name="IdAnioLectivo" id="IdAnioLectivo" class="form-control" tabindex="1">
+    <option value="">Seleccione</option>
+</select>
+<input type="hidden" name="AnioLectivo" id="AnioLectivo" />
+
+@Html.Script(
+    @<script type="text/javascript">
+
+        var cargarAnios = function () {
+            var opciones = {
+                url: '@Url.Action("ObtenerAniosLectivos", "General", new { area = "" })',
+                type: 'GET',
+                dataType: 'json',
+                contentType: 'application/json',
+            };
+
+            $.ajax(opciones).success(function (data) {
+                $(data).each(function (index, element) {
+                    if (element.Value == "@Model") {
+                        $("#IdAnioLectivo").append('<option value="' + element.Value + '" selected="selected" estadoAnio="' + element.Estado + '">' + element.Text + '</option>');
+                    }
+                    else {
+                        $("#IdAnioLectivo").append('<option value="' + element.Value + '" estadoAnio="' + element.Estado + '">' + element.Text + '</option>');
+                    }
+                });
+            }).error(function (error) {
+                InformarAccion("Mensaje de error", "@Mensaje.Mensaje1000");
+            });
+        };
+
+        var eventoEstadoAnio = function () {
+            $(this).data("resultado", $("#IdAnioLectivo option:selected").attr("estadoAnio"));
+            var anio = $("#IdAnioLectivo option:selected").text();
+            $("#AnioLectivo").val(anio);
+        };
+
+        $(document).ready(function () {
+
+            cargarAnios();
+            $("#IdAnioLectivo").on("EstadoAnio", eventoEstadoAnio);
+
+        });
+    </script>
+    )

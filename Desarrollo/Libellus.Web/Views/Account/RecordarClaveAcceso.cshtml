@@ -1,0 +1,47 @@
+﻿@model Libellus.Web.Areas.Administracion.Models.RecuperarContraseniaViewModels
+@{
+    ViewBag.Title = "Recuperar contraseña";
+}
+
+<div class="content-header">
+    <h2 class="content-header-title">@ViewBag.Title</h2>
+</div>
+
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+
+    <div class="row">
+        <div class="col-md-4 form-group">
+            @Html.LabelFor(model => model.nombreUsuario)
+            @Html.EditorFor(model => model.nombreUsuario, new { htmlAttributes = new { @class = "form-control", @tabindex = "1", maxlength = "20" } })
+            @Html.ValidationMessageFor(model => model.nombreUsuario, "", new { @class = "text-danger" })
+        </div>
+        <div class="col-md-4 form-group">
+            @Html.LabelFor(model => model.CodigoColegio)
+            @Html.EditorFor(model => model.CodigoColegio, new { htmlAttributes = new { @class = "form-control", @tabindex = "2", maxlength = "4" } })
+            @Html.ValidationMessageFor(model => model.CodigoColegio, "", new { @class = "text-danger" })
+        </div>
+    </div>
+
+    <br />
+
+    <div class="form-group centered">
+        @Html.BotonCancelar("Login", "Account")
+        <input type="submit" value="Recuperar contraseña" class="btn btn-primary" tabindex="3" />
+    </div>
+}
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+
+    <script type="text/javascript">
+
+
+
+    </script>
+}
+
+
+
+

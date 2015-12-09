@@ -1,0 +1,44 @@
+﻿@model Libellus.Web.Areas.Administracion.Models.Asignaturas.AsignaturaViewModel
+
+@{
+    ViewBag.Title = "Editar asignatura";
+}
+
+<div class="content-header">
+    <h2 class="content-header-title">@ViewBag.Title</h2>
+</div>
+
+@using (Html.BeginForm("Editar", "Asignaturas", FormMethod.Post))
+{
+    @Html.AntiForgeryToken()
+    @Html.HiddenFor(model => model.Id)
+    <div class="row">
+        <div class="form-group col-md-4">
+            @Html.LabelFor(model => model.Descripcion)
+            @Html.EditorFor(model => model.Descripcion, new { htmlAttributes = new { @class = "form-control", maxlength = "50", tabindex = "1" } })
+            @Html.ValidationMessageFor(model => model.Descripcion, "", new { @class = "text-danger" })
+        </div>
+
+        <div class="form-group col-md-4">
+            @Html.LabelFor(model => model.IdMaestro)
+            @Html.DropDownListFor(model => model.IdMaestro, Model.Areas, new { @class = "form-control", tabindex = "2" })
+            @Html.ValidationMessageFor(model => model.IdMaestro, "", new { @class = "text-danger" })
+        </div>
+
+        <div class="form-group col-md-4">
+            @Html.LabelFor(model => model.Estado)
+            <div class="checkbox">
+                @Html.EditorFor(model => model.Estado) Activo
+            </div>
+        </div>
+    </div>
+
+    <div class="form-group centered">
+        @Html.BotonCancelar("Consultar", "Asignaturas", null, new { tabindex = "4" })
+        <input type="submit" value="Editar asignatura" class="btn btn-primary" tabindex="3" />
+    </div>
+}
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}
